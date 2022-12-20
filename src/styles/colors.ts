@@ -1,0 +1,15 @@
+export const COLORS = {
+  accentColor: '#19A2F7',
+  secondary: '#627488',
+  textColor: '#4B5059',
+  white: '#FFFFFF',
+  background: '#F5F6F8',
+  lightGray: '#E6E6E7',
+  mediumGray: '#CDD1D4',
+  gray: '#898A8D',
+  black: '#000000',
+  red: '#ED5565',
+  kakao: '#FEE500',
+  pink: '#E73E8F',
+  transparent: 'transparent',
+};
