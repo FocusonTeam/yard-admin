@@ -9,7 +9,7 @@ export default function Layout() {
       <SideBar />
       <div className='flex-1'>
         <Header />
-        <div className="bg-slate-100 p-3">{<Outlet />}</div>
+        <div className="bg-slate-100">{<Outlet />}</div>
       </div>
     </div>
   )
