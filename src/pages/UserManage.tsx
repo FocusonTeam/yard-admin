@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function ArticleDetail() {
+export default function UserManage() {
   return (
     <div>
-      article
+      Usermanage
     </div>
   )
 }

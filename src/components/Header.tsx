@@ -1,56 +1,67 @@
-import React from 'react';
+import React, { Fragment, useState } from 'react';
+import { Menu, Transition } from '@headlessui/react';
+import { useNavigate } from 'react-router-dom';
 
-import { Button } from './atoms/Button';
-import './header.css';
+export default function Header() {
 
-type User = {
-  name: string;
-};
+  const [username, setUsername] = useState<string>("이서라");
 
-interface HeaderProps {
-  user?: User;
-  onLogin: () => void;
-  onLogout: () => void;
-  onCreateAccount: () => void;
-}
+  const navigate = useNavigate();
 
-export const Header = ({ user, onLogin, onLogout, onCreateAccount }: HeaderProps) => (
-  <header>
-    <div className="wrapper">
-      <div>
-        <svg width="32" height="32" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-          <g fill="none" fillRule="evenodd">
-            <path
-              d="M10 0h12a10 10 0 0110 10v12a10 10 0 01-10 10H10A10 10 0 010 22V10A10 10 0 0110 0z"
-              fill="#FFF"
-            />
-            <path
-              d="M5.3 10.6l10.4 6v11.1l-10.4-6v-11zm11.4-6.2l9.7 5.5-9.7 5.6V4.4z"
-              fill="#555AB9"
-            />
-            <path
-              d="M27.2 10.6v11.2l-10.5 6V16.5l10.5-6zM15.7 4.4v11L6 10l9.7-5.5z"
-              fill="#91BAF8"
-            />
-          </g>
-        </svg>
-        <h1>Acme</h1>
-      </div>
-      <div>
-        {user ? (
-          <>
-            <span className="welcome">
-              Welcome, <b>{user.name}</b>!
-            </span>
-            <Button size="small" onClick={onLogout} label="Log out" />
-          </>
-        ) : (
-          <>
-            <Button size="small" onClick={onLogin} label="Log in" />
-            <Button primary size="small" onClick={onCreateAccount} label="Sign up" />
-          </>
-        )}
+  return (
+    <div className='bg-white h-16 px-4 flex justify-between items-center'>
+      <div>아직은 필요없음</div>
+      {/* <SearchBar /> */}
+      <div className="flex items-center gap-2 mr-2">
+        <div>
+          {username} 님
+        </div>
+        <Menu as="div" className="relative">
+					<div>
+						<Menu.Button className="ml-2 bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-neutral-200">
+							<span className="sr-only">Open user menu</span>
+							<div
+								className="h-10 w-10 rounded-full bg-sky-500 bg-cover bg-no-repeat bg-center"
+								style={{ backgroundImage: 'url("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png")' }}
+							>
+								<span className="sr-only">Seora</span>
+							</div>
+						</Menu.Button>
+					</div>
+					<Transition
+						as={Fragment}
+						enter="transition ease-out duration-100"
+						enterFrom="transform opacity-0 scale-95"
+						enterTo="transform opacity-100 scale-100"
+						leave="transition ease-in duration-75"
+						leaveFrom="transform opacity-100 scale-100"
+						leaveTo="transform opacity-0 scale-95"
+					>
+						<Menu.Items className="origin-top-right z-10 absolute right-0 mt-2 w-48 rounded-sm shadow-md p-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+							<Menu.Item>
+								{({ active }) => (
+									<div
+										onClick={() => navigate('/yard-admin/settings')}
+										className='active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200'
+										
+									>
+										Settings
+									</div>
+								)}
+							</Menu.Item>
+							<Menu.Item>
+								{({ active }) => (
+									<div
+										className='active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200'
+									>
+										Sign out
+									</div>
+								)}
+							</Menu.Item>
+						</Menu.Items>
+					</Transition>
+				</Menu>
       </div>
     </div>
-  </header>
-);
+  )
+}
