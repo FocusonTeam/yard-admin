@@ -26,7 +26,7 @@ export const DashboardStat = ({
           {icon}
 				</div>
 				<div className="pl-4">
-					<span className="text-sm text-gray-500 font-light">{label}</span>
+					<span className="text-sm text-gray-600 font-normal">{label}</span>
 					<div className="flex items-center">
 						<strong className="text-xl text-gray-700 font-semibold">{count}</strong>
             {increase ? (
@@ -42,5 +42,5 @@ export const DashboardStat = ({
 };
 
 function BoxWrapper({ children } : any) {
-	return <div className="bg-white rounded-sm p-4 flex-1 border border-gray-200 flex items-center">{children}</div>
+	return <div className="bg-white drop-shadow-md rounded-md p-4 flex-1 flex items-center">{children}</div>
 };

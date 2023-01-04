@@ -66,7 +66,7 @@ const data = [
 
 export default function MonthlyChart() {
 	return (
-		<div className="h-[22rem] bg-white p-4 rounded-sm border border-gray-200 flex flex-col flex-1">
+		<div className="h-[22rem] bg-white p-4 drop-shadow-md rounded-md flex flex-col flex-1">
 			<strong className="text-gray-700 font-medium">월별 유저 현황</strong>
 			<div className="mt-3 w-full flex-1 text-xs">
 				<ResponsiveContainer width="100%" height="100%">
