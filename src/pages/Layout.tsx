@@ -14,3 +14,12 @@ export default function Layout() {
     </div>
   )
 }
+
+export function HeaderLayout() {
+  return (
+    <div className='flex flex-col'>
+        <Header />
+        <div className="bg-slate-100">{<Outlet />}</div>
+    </div>
+  )
+}

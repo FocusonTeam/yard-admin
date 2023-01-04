@@ -2,7 +2,7 @@ import React from "react";
 import { MdArticle, MdOutlineLogout } from 'react-icons/md';
 import { RiHome6Fill, RiUserSettingsFill, RiSettings4Fill, RiInstagramFill } from 'react-icons/ri';
 import { NavLink } from "react-router-dom";
-import useWindowSize from "../helper/useWindowSize";
+import useWindowSize from "../hooks/useWindowSize";
 
 
 const SideBar = () => {
@@ -35,11 +35,11 @@ const SideBar = () => {
   // )  
 
   return (
-    <div className="bg-white w-24 flex flex-col text-black shadow-md" >
+    <div className="bg-white w-24 flex flex-col text-black border" >
         <div className="flex items-center gap-2 px-2.5 py-3 mb-2 mt-2">
           <img src={require("../assets/images/yardlogo.png")} />
         </div>
-        <div className="flex-1 px-2">
+        <div className="flex-1 px-2 py-2">
           {menus.map((menu, index) => {
             return(
               <NavLink key={index} to={menu.path}>

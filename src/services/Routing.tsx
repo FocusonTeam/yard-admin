@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, createBrowserRouter, BrowserRouter }from 'react-router-dom';
 import styled, { ThemeProvider } from "styled-components";
-import { useThemeContext } from './themeContext';
+import { useThemeContext } from '../hooks/themeContext';
 import { lightTheme, darkTheme } from "../styles/theme";
 import { GlobalStyles } from "../styles/global";
 import Home from '../pages/Home/Home';
@@ -9,9 +9,10 @@ import Articles from "../pages/Article/Articles";
 import Login from "../pages/Login";
 import WriteArticle from '../pages/Article/WriteArticle';
 import SnsManage from '../pages/SnsManage';
-import Layout from '../pages/Layout';
+import Layout, { HeaderLayout } from '../pages/Layout';
 import Setting from '../pages/Setting';
 import UserManage from '../pages/UserManage';
+import ArticleEdit from '../pages/Article/ArticleEdit';
 
 const Routing = () => {
 
@@ -26,10 +27,13 @@ const Routing = () => {
                         <Route index element={<Home />} />
                         <Route path="articles" element={<Articles/>}/>
                         <Route path="articles/:articleId" element={<ArticleDetail/>}/>
-                        <Route path="write" element={<WriteArticle />} />
+                        <Route path='article-edit/:articleId' element={<ArticleEdit />}/>
                         <Route path="manage-sns" element={<SnsManage/>}/>
                         <Route path="manage-users" element={<UserManage/>}/>
                         <Route path="setting" element={<Setting />} />
+                    </Route>
+                    <Route path="/yard-admin/" element={<HeaderLayout/>}>
+                        <Route path="write" element={<WriteArticle />}/>
                     </Route>
                     <Route path="/yard-admin/login" element={<Login />}/>
                 </Routes>     

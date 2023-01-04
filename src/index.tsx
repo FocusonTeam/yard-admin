@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { ThemeContextProvider } from './helper/themeContext';
+import { ThemeContextProvider } from './hooks/themeContext';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

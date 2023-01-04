@@ -1,44 +1,42 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import {COLORS} from '../../styles/colors';
+import {COLORS} from '../styles/colors';
 import { useNavigate } from 'react-router-dom';
+import { ArticleUnitFragment } from '../generated/graphql';
 
 interface ArticleProps {
-  id: number;
-  thumbnail: any;
-  title : string;
-  area: string;
-  domestic: boolean;
-  subtitle: string;
-  writer: string;
-  deploy: number;
+  articleUnit : ArticleUnitFragment;
 }
 
 
-const ArticleCard = (props : ArticleProps) => {
+const ArticleCard = ({articleUnit, ...props} : ArticleProps) => {
 
   const navigate = useNavigate();
 
   return (
-    <Container onClick = {() => {
-      navigate(`/yard-admin/articles/${props.id}`);
+    <Container onClick = {(e) => {
+      navigate(`/yard-admin/articles/${articleUnit.id}`, 
+      {
+        state : {
+          id : articleUnit.id
+      }});
     }}>
       <ArticleContainer>
-        <Thumbnail src={props.thumbnail}/>
+        {articleUnit.thumbnail && <Thumbnail src={articleUnit.thumbnail.path}/> }
         <ArticleInfo>
           <TitleInfo>
-            <Title>{props.title.length < 14
-                ? props.title
-                : props.title.slice(0, 14) + '...'}
+            <Title>{articleUnit.title.length < 14
+                ? articleUnit.title
+                : articleUnit.title.slice(0, 14) + '...'}
             </Title>
-            <Area domestic={props.domestic}>{props.area}</Area>
+            <Area domestic={articleUnit.area.domestic}>{articleUnit.area.region2depth}</Area>
           </TitleInfo>
-          <SubTitle>{props.subtitle}</SubTitle>
+          <SubTitle>{articleUnit.category.category}</SubTitle>
         </ArticleInfo>
-        <Writer>작성자 : {props.writer}</Writer>
+        <Writer>작성자 : {articleUnit.editor}</Writer>
       </ArticleContainer>
-      { props.deploy === 0 ? (<></>) : 
-        (props.deploy === 1? (
+      { articleUnit.state === "INPROGRESS" ? (<></>) : 
+        (articleUnit.state === "DONE"? (
           <CoverContainer>검토 중</CoverContainer>) : 
         (
           <CoverContainer>배포완료</CoverContainer>

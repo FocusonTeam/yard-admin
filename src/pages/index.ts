@@ -3,6 +3,7 @@ export * from './Login';
 export * from './Article/ArticleDetail';
 export * from './Article/Articles';
 export * from './Article/WriteArticle';
+export * from './Article/ArticleEdit';
 export * from './SnsManage';
 export * from './Setting';
 export * from './UserManage';

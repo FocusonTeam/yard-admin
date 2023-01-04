@@ -1,0 +1,89 @@
+# fragment Tokens on AdminTokens {
+#   accessToken
+#   refreshToken
+# }
+
+
+fragment ArticleUnit on Article {
+  id
+  title
+  area {
+    id
+    region2depth
+    domestic
+  }
+  category {
+    category
+  }
+  editor
+  thumbnail {
+    id
+    path
+  }
+  state
+}
+
+fragment ArticleDetail on Article {
+  id
+  updatedAt
+  title
+  contents
+  views
+  state
+  category {
+    ...ArticleCategory
+  }
+  area {
+    id
+    region2depth
+    domestic
+  }
+  thumbnail {
+    id
+    path
+  }
+  editor
+  places {
+    ...ArticlePlace
+  }
+  articleContents{
+    ...ArticleContent
+  }
+  images {
+    id
+    path
+  }
+}
+
+fragment ArticleCategory on ArticleCategory {
+  id
+  category
+}
+
+fragment ArticleContent on ArticleContent {
+  id
+  index
+  image {
+    id
+    path
+  }
+  place {
+    ...ArticlePlace
+  }
+  subtitle
+  content
+}
+
+fragment ArticlePlace on ArticlePlace {
+  id
+  placeName
+  placeURL
+  category
+}
+
+fragment ArticleImage on Image {
+  id
+  path
+  mimetype
+  encoding
+}

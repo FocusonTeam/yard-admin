@@ -10,7 +10,7 @@ export default function Header() {
 
   return (
     <div className='bg-white h-16 px-4 flex justify-between items-center'>
-      <div>아직은 필요없음</div>
+      <div>{/** 상단바에 추후에 둘 것 */}</div>
       {/* <SearchBar /> */}
       <div className="flex items-center gap-2 mr-2">
         <div>

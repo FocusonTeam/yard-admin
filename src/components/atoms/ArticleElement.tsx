@@ -1,22 +1,14 @@
+import { useEncodeUri } from 'hooks';
 import React from 'react'
 import styled from 'styled-components';
 
 
-
-interface ArticleElementProps {
-  acId: number;
-  image: any;
-  subhead : string;
-  contents: string;
-}
-
-
-export default function ArticleElement(props: ArticleElementProps) {
+export default function ArticleElement(props: any) {
   return (
     <>
       <Contents>
         <div>
-          <img className='object-fit: scale-down' src={props.image}/>
+          <img className='object-fit: scale-down' src={useEncodeUri(props.image)}/>
         </div>
         <div className='font-semibold text-lg'>{props.subhead}</div>
         <div className='font-medium text-base'>{props.contents}</div>

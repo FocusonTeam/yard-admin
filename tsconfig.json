@@ -9,6 +9,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "sourceMap": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
@@ -18,7 +19,16 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": "./src",
+    "paths": {
+      "@utils": ["./utils"],
+      "@styles": ["./styles"],
+      "@pages": ["./pages"],
+      "@helper": ["./helper"],
+      "@components": ["./components"],
+      "@services": ["./services"]
+    }
   },
   "include": [
     "src"

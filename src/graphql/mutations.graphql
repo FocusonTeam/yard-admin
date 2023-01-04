@@ -1,0 +1,43 @@
+mutation addArticleCategory($category : String!){
+  addArticleCategory(category: $category)
+}
+
+mutation editArticleCategory($id: Int!, $category: String!){
+  editArticleCategory(id: $id, category: $category)
+}
+
+mutation removeArticleCategory($id: Int!){
+  removeArticleCategory(id: $id)
+}
+
+mutation createArticle($input: CreateArticleInput!){
+  createArticle(input: $input){
+    ...ArticleDetail
+  }
+}
+
+mutation editArticle($input : EditArticleInput!){
+  editArticle(input: $input){
+    ...ArticleDetail
+  }
+}
+
+mutation deleteArticle($id : Float!){
+  deleteArticle(id: $id)
+}
+
+mutation changeArticleState($id: Float!, $state: String!){
+  changeArticleState(id: $id, state: $state){
+    ...ArticleDetail
+  }
+}
+
+mutation createAdmin($id: String!, $password: String!, $owner: String!){
+  createAdmin(id: $id, password: $password, owner: $owner)
+}
+
+# mutation regenerateToken($id: String!, $refreshToken: String!){
+#   regenerateToken(id: $id, refreshToken: $refreshToken){
+#     ...AdminTokens
+#   }
+# }

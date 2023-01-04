@@ -1,0 +1,44 @@
+# query adminLogin($id: String!, $password : String!){
+#   adminLogin(id : $id, password: $password){
+#     ...Token  
+#   }
+# }
+
+query countPosting {
+  countPosting
+}
+
+query countProfile {
+  countProfile
+}
+
+query getArticle($id : Int!){
+  getArticle(id: $id){
+    ...ArticleDetail
+  }
+}
+
+query getArticles($areaId: Int) {
+  getArticles(areaId : $areaId) {
+    ...ArticleUnit
+  }
+}
+
+query getArticleCategories {
+  getArticleCategories {
+    id
+    category
+  }
+}
+
+query searchArticles($keyword : String, $areaId : Int){
+  searchArticles(keyword: $keyword, areaId : $areaId){
+    ...ArticleUnit
+  }
+}
+
+query getArticleForEdit($id : Int!){
+  getArticleForEdit(id: $id) {
+    ...ArticleDetail
+  }
+}

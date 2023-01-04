@@ -1,11 +1,13 @@
 import React from 'react';
 import './button.css';
+import { COLORS } from '../../styles/colors';
 
 interface ButtonProps {
   primary?: boolean;
   backgroundColor?: string;
-  size?: 'small' | 'medium' | 'large';
   label: string;
+  labelColor? : string;
+  tailStyle? : string;
   onClick?: () => void;
 }
 
@@ -14,16 +16,26 @@ interface ButtonProps {
  */
 export const Button = ({
   primary = false,
-  size = 'medium',
   backgroundColor,
   label,
+  labelColor,
+  tailStyle,
   ...props
 }: ButtonProps) => {
-  const mode = primary ? 'storybook-button--primary' : 'storybook-button--secondary';
+
+  let tailstyle = ``;
+
+  if(primary){
+    backgroundColor = `${COLORS.accentColor}`
+    tailstyle = `p-3 text-neutral-50 rounded-md font-semibold bg-blue-600`
+  }else{
+    tailstyle = `${tailStyle}`;
+  }
+
   return (
     <button
       type="button"
-      className={['storybook-button', `storybook-button--${size}`, mode].join(' ')}
+      className={tailstyle}
       style={{ backgroundColor }}
       {...props}
     >
