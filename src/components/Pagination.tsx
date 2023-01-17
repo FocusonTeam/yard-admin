@@ -25,11 +25,11 @@ const Pagination = ({ totalPosts, postsPerPage, setCurrentPage, currentPage } : 
 };
 
 const PageContainer = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
 `
 
 const PageButton = styled.button`

@@ -1,9 +1,14 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
 import styled from 'styled-components'
 import {COLORS, FONTS} from '../styles/index';
+import { useAdminLoginLazyQuery, useLoginExtensionLazyQuery, useLoginExtensionQuery } from '../generated/graphql';
+import { YardLogo } from 'assets/images';
+import { getLoginToken, getStorage, setCookie, setLoginToken, getCookie, removeLoginToken, setStorage } from '../utils/storageUtils';
+import { isLoggedVar, userIdVar, userNameVar } from '../models/fragmentVar';
 
-export default function Login() {
+const Login = () => {
 
   const navigate = useNavigate();
 
@@ -11,44 +16,80 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [mismatchError, setMismatchError] = useState<Boolean>();
 
-  const loginWithAccount = () => {
+  const [loginResult, setLoginResult] = useAdminLoginLazyQuery();
+  const [loginExt, loginExtResult] = useLoginExtensionLazyQuery();
 
-    console.log(adminID, password);
 
-    if(adminID === "admin" && password === "1234"){
-      setMismatchError(false);
-      navigate("/yard-admin/");
-      console.log("로그인 성공!");
-    }else{
-      setMismatchError(true);
+  // 쿠키에 있는 토큰 먼저 꺼내서 로그인 되어있는지 확인
+  // 새로고침시 로그인 자동 연장
+
+  const onChange = useCallback((e : any) => {
+    const {name, value} = e.target;
+    if(name === "adminID"){
+      setAdminID(value);
+    }
+    if(name === "password"){
+      setPassword(value);
+    }
+  }, [adminID, password]);
+
+  const handleEnterPress = (e:any) => {
+    if(e.key === 'Enter'){
+      loginWithAccount();
     }
   }
 
+  const loginWithAccount = useCallback(async() => {
+
+    const result = await loginResult({variables: {id : adminID, password: password}});
+    if(result.data){
+
+      console.log(adminID, password);
+      setMismatchError(false);
+
+      setLoginToken('accessToken', result.data.adminLogin.accessToken);
+      setLoginToken('refreshToken', result.data.adminLogin.refreshToken);
+      setStorage('adminID', adminID);
+
+      userIdVar(adminID);
+      userNameVar(result.data.adminLogin.owner || "user");
+      isLoggedVar(true);
+
+      navigate("/yard-admin/");
+    }
+    if(result.error){
+      console.log(result.error);
+      isLoggedVar(false);
+      setMismatchError(true);
+    }
+
+  }, [loginResult, setLoginToken, navigate, adminID, password, userNameVar]);
+
   return (
     <Container>
-      <img src={require("../assets/images/yardlogo.png")} alt="yard" />
-      <form onSubmit={loginWithAccount}>
-        <input
-          type="text"
-          value={adminID}
-          placeholder="ID"
-          onChange={({ target }) => setAdminID(target.value)}
-        />
-        <div>
-          <input
-            type="password"
-            value={password}
-            placeholder="PASSWORD"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        { mismatchError ? <ErrorMsg>계정 정보가 일치하지 않습니다.</ErrorMsg> : <></>}
-        <button type="submit">Login</button>
-      </form>
+      <Logo src={YardLogo} alt="yard" />
+      <AccountInput
+        name="adminID"
+        placeholder="* ID" 
+        required
+        type="text" 
+        defaultValue={adminID}
+        onChange={onChange} />
+      <AccountInput
+        name="password"
+        placeholder="* Password" 
+        required
+        type="password"
+        defaultValue={password}
+        onKeyPress={handleEnterPress}
+        onChange={onChange} />
+      { mismatchError ? <ErrorMsg>계정 정보가 일치하지 않습니다.</ErrorMsg> : <></>}
+      <LoginButton onClick={loginWithAccount} >Login</LoginButton>
     </Container>
   )
 }
 
+export default Login
 
 const Container = styled.div`
   display:flex;
@@ -57,33 +98,38 @@ const Container = styled.div`
   justify-content: center;
   padding: 20vh;
   background-color: white;
-  gap: 5rem;
-  img {
-    width: auto;
-    max-height: 15vh;
-  }
-  input {
-    width: 300px;
-    padding: 0.5rem 4rem;
-    background-color: white;
-    border: 2px solid #eee;
-    border-radius: 5rem;
-    margin-top: 10px;
-  }
-  button {
-      width: 300px;
-      padding: 0.5rem 3rem;
-      border-radius: 5rem;
-      border: none;
-      background-color: ${COLORS.accentColor};
-      color: ${COLORS.white};
-      font-size: 1rem;
-      margin-top: 10px;
-      cursor: pointer;
-  }
 `;
 
-const ErrorMsg = styled.text`
+const Logo = styled.img`
+  min-width: 200px;
+  max-height: 10vh;
+  margin-bottom: 100px;
+`
+
+const AccountInput = styled.input`
+  width: 300px;
+  padding: 0.5rem 3rem;
+  color: ${COLORS.charcol};
+  font-size: large;
+  background: white;
+  border: 0.2px solid;
+  border-color: ${COLORS.lightGray};
+  border-radius: 1rem;
+  margin-bottom: 20px;
+`;
+
+const LoginButton = styled.div`
+  width: 300px;
+  padding: 0.5rem 3rem;
+  border-radius: 1rem;
+  background-color: ${COLORS.accentColor};
+  color: ${COLORS.white};
+  font-size: 1.2rem;
+  text-align: center;
+  font-weight: 800;
+`
+
+const ErrorMsg = styled.div`
     color: ${COLORS.red};
     font-size: ${FONTS.body.fontSize}px;
     font-weight: ${FONTS.body.fontWeight};

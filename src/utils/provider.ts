@@ -11,7 +11,8 @@ export const phoneSize = [
 			width : 375,
 			height: 812
 		},
-		className: "w-[375px] h-[812px] rounded-3xl pt-[44px] pb-[34px] bg-white overflow-y-scroll"
+		className: "w-[375px] h-[812px] rounded-3xl pt-[44px] pb-[34px] bg-white overflow-y-scroll",
+		safeArea: "w-[375px] h-[812px] rounded-3xl pt-[44px] pb-[34px] bg-cover bg-center",
 	},
 	{
 		name: "iPhone 12",
@@ -19,7 +20,8 @@ export const phoneSize = [
 			width: 390,
 			height: 844
 		},
-		className: "w-[390px] h-[844px] rounded-3xl pt-[44px] pb-[34px] bg-white overflow-y-scroll"
+		className: "w-[390px] h-[844px] rounded-3xl pt-[44px] pb-[34px] bg-white overflow-y-scroll",
+		safeArea: "",
 	},
 	{
 		name:"iPhone 14 Pro Max",
@@ -27,7 +29,8 @@ export const phoneSize = [
 			width:430,
 			height:932
 		},
-		className: "w-[390px] h-[844px] rounded-3xl pt-[54px] pb-[34px] bg-white overflow-y-scroll"
+		className: "w-[390px] h-[844px] rounded-3xl pt-[54px] pb-[34px] bg-white overflow-y-scroll",
+		safeArea: "",
 	},
 	{
 		name:"Galaxy S21",
@@ -35,7 +38,8 @@ export const phoneSize = [
 			width:384,
 			height:854
 		},
-		className: "w-[384px] h-[854px] rounded-2xl pt-[18px] bg-white overflow-y-scroll"
+		className: "w-[384px] h-[854px] rounded-2xl pt-[18px] bg-white overflow-y-scroll",
+		safeArea: "",
 	},
 	{
 		name:"Galaxy Z Flip 3",
@@ -43,6 +47,7 @@ export const phoneSize = [
 			width:360,
 			height:880
 		},
-		className: "w-[360px] h-[880px] rounded-2xl pt-[18px] bg-white overflow-y-scroll"
+		className: "w-[360px] h-[880px] rounded-2xl pt-[18px] bg-white overflow-y-scroll",
+		safeArea: "",
 	}
 ]

@@ -27,10 +27,16 @@
       "@pages": ["./pages"],
       "@helper": ["./helper"],
       "@components": ["./components"],
-      "@services": ["./services"]
+      "@services": ["./services"],
+      "@models": ["./models"],
+      "@hooks": ["./hooks"],
+      "@assets": ["./assets"],
     }
   },
   "include": [
     "src"
+  ],
+  "exclude": [
+    "node_modules"
   ]
 }

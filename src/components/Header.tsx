@@ -1,12 +1,15 @@
 import React, { Fragment, useState } from 'react';
 import { Menu, Transition } from '@headlessui/react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useReactiveVar } from '@apollo/client';
+import { isLoggedVar, userNameVar } from 'models/fragmentVar';
+import useLogout from 'hooks/useLogout';
 
 export default function Header() {
 
-  const [username, setUsername] = useState<string>("이서라");
-
   const navigate = useNavigate();
+
+	const username = useReactiveVar(userNameVar);
 
   return (
     <div className='bg-white h-16 px-4 flex justify-between items-center'>
@@ -52,6 +55,7 @@ export default function Header() {
 							<Menu.Item>
 								{({ active }) => (
 									<div
+										onClick={useLogout}
 										className='active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200'
 									>
 										Sign out

@@ -10,6 +10,7 @@ export const COLORS = {
   gray: '#898A8D',
   charcol: '#101010',
   black: '#000000',
+  blackText: '#181a1c',
   red: '#ED5565',
   kakao: '#FEE500',
   pink: '#E73E8F',

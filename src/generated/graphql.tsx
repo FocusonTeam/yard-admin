@@ -37,15 +37,17 @@ export type AcceptInput = {
   terms?: InputMaybe<Scalars["Boolean"]>;
 };
 
-export type AdminTokens = {
-  __typename?: "AdminTokens";
+export type AdminLoginResult = {
+  __typename?: "AdminLoginResult";
   accessToken: Scalars["String"];
-  refreshToken: Scalars["String"];
+  owner?: Maybe<Scalars["String"]>;
+  refreshToken?: Maybe<Scalars["String"]>;
 };
 
-export type AdminTokensInput = {
+export type AdminLoginResultInput = {
   accessToken: Scalars["String"];
-  refreshToken: Scalars["String"];
+  owner?: InputMaybe<Scalars["String"]>;
+  refreshToken?: InputMaybe<Scalars["String"]>;
 };
 
 export type Area = {
@@ -151,14 +153,14 @@ export type Article = {
   area: Area;
   articleContents?: Maybe<Array<ArticleContent>>;
   category: ArticleCategory;
-  contents: Scalars["String"];
+  contents?: Maybe<Scalars["String"]>;
   createdAt?: Maybe<Scalars["DateTime"]>;
   editor: Scalars["String"];
   id: Scalars["Int"];
   images?: Maybe<Array<Image>>;
   places?: Maybe<Array<ArticlePlace>>;
   state: ArticleState;
-  thumbnail: Image;
+  thumbnail?: Maybe<Image>;
   title: Scalars["String"];
   updatedAt?: Maybe<Scalars["DateTime"]>;
   views: Scalars["Int"];
@@ -180,32 +182,32 @@ export type ArticleCategoryInput = {
 export type ArticleContent = {
   __typename?: "ArticleContent";
   article?: Maybe<Article>;
-  content: Scalars["String"];
+  content?: Maybe<Scalars["String"]>;
   createdAt?: Maybe<Scalars["DateTime"]>;
   id: Scalars["Int"];
-  image: Image;
-  index: Scalars["Int"];
+  image?: Maybe<Image>;
+  index?: Maybe<Scalars["Int"]>;
   place?: Maybe<ArticlePlace>;
   source?: Maybe<Scalars["String"]>;
-  subtitle: Scalars["String"];
+  subtitle?: Maybe<Scalars["String"]>;
   updatedAt?: Maybe<Scalars["DateTime"]>;
 };
 
 export type ArticleContentInput = {
   article?: InputMaybe<ArticleInput>;
-  content: Scalars["String"];
-  image: ImageInput;
-  index: Scalars["Int"];
+  content?: InputMaybe<Scalars["String"]>;
+  image?: InputMaybe<ImageInput>;
+  index?: InputMaybe<Scalars["Int"]>;
   place?: InputMaybe<ArticlePlaceInput>;
   source?: InputMaybe<Scalars["String"]>;
-  subtitle: Scalars["String"];
+  subtitle?: InputMaybe<Scalars["String"]>;
 };
 
 export type ArticleInput = {
   area: AreaInput;
   articleContents?: InputMaybe<Array<ArticleContentInput>>;
   category: ArticleCategoryInput;
-  contents: Scalars["String"];
+  contents?: InputMaybe<Scalars["String"]>;
   editor: Scalars["String"];
   images?: InputMaybe<Array<ImageInput>>;
   places?: InputMaybe<Array<ArticlePlaceInput>>;
@@ -296,19 +298,32 @@ export type CommentReportInput = {
 };
 
 export type Content = {
-  content: Scalars["String"];
-  image: UploadImageInput;
+  content?: InputMaybe<Scalars["String"]>;
+  image?: InputMaybe<UploadImageInput>;
   placeCategory?: InputMaybe<Scalars["String"]>;
   placeName?: InputMaybe<Scalars["String"]>;
   placeUrl?: InputMaybe<Scalars["String"]>;
   source?: InputMaybe<Scalars["String"]>;
-  subtitle: Scalars["String"];
+  subtitle?: InputMaybe<Scalars["String"]>;
+};
+
+export type CountResult = {
+  __typename?: "CountResult";
+  areaId: Scalars["Int"];
+  comments: Scalars["Int"];
+  posts: Scalars["Int"];
+};
+
+export type CountResultInput = {
+  areaId: Scalars["Int"];
+  comments: Scalars["Int"];
+  posts: Scalars["Int"];
 };
 
 export type CreateArticleInput = {
   areaId: Scalars["Int"];
   categoryId: Scalars["Int"];
-  contents: Array<Content>;
+  contents?: InputMaybe<Array<Content>>;
   state: ArticleState;
   thumbnailIndex?: InputMaybe<Scalars["Int"]>;
   title: Scalars["String"];
@@ -317,7 +332,7 @@ export type CreateArticleInput = {
 export type EditArticleInput = {
   areaId: Scalars["Int"];
   categoryId: Scalars["Int"];
-  contents: Array<Content>;
+  contents?: InputMaybe<Array<Content>>;
   id: Scalars["Int"];
   state: ArticleState;
   thumbnailIndex?: InputMaybe<Scalars["Int"]>;
@@ -365,16 +380,16 @@ export type LikeInput = {
 
 export type Mutation = {
   __typename?: "Mutation";
-  addAndroidVersion: Scalars["Boolean"];
+  addAndroidVersion: Scalars["String"];
   addArticleCategory: Scalars["Boolean"];
-  addIosVersion: Scalars["Boolean"];
+  addIosVersion: Scalars["String"];
   changeArticleState: Article;
   createAdmin: Scalars["Boolean"];
   createArticle: Article;
   deleteArticle: Scalars["Boolean"];
   editArticle: Article;
   editArticleCategory: Scalars["Boolean"];
-  regenerateToken: AdminTokens;
+  regenerateToken: AdminLoginResult;
   removeArticleCategory: Scalars["Boolean"];
 };
 
@@ -599,19 +614,28 @@ export type ProfileInput = {
 
 export type Query = {
   __typename?: "Query";
-  adminLogin: AdminTokens;
+  adminLogin: AdminLoginResult;
+  countArticle: Array<Scalars["Int"]>;
+  countPostAndCommentByArea: Array<CountResult>;
   countPosting: Array<Scalars["Int"]>;
   countProfile: Array<Scalars["Int"]>;
+  getArea: Area;
+  getAreas: Array<Area>;
   getArticle: Article;
   getArticleCategories: Array<ArticleCategory>;
   getArticleForEdit: Article;
   getArticles: Array<Article>;
+  loginExtension: AdminLoginResult;
   searchArticles: Array<Article>;
 };
 
 export type QueryAdminLoginArgs = {
   id: Scalars["String"];
   password: Scalars["String"];
+};
+
+export type QueryGetAreaArgs = {
+  id: Scalars["Int"];
 };
 
 export type QueryGetArticleArgs = {
@@ -624,6 +648,10 @@ export type QueryGetArticleForEditArgs = {
 
 export type QueryGetArticlesArgs = {
   areaId?: InputMaybe<Scalars["Int"]>;
+};
+
+export type QueryLoginExtensionArgs = {
+  id: Scalars["String"];
 };
 
 export type QuerySearchArticlesArgs = {
@@ -741,6 +769,13 @@ export type UserInput = {
   role: Role;
 };
 
+export type LoginResultFragment = {
+  __typename?: "AdminLoginResult";
+  accessToken: string;
+  refreshToken?: string | null;
+  owner?: string | null;
+};
+
 export type ArticleUnitFragment = {
   __typename?: "Article";
   id: number;
@@ -754,7 +789,7 @@ export type ArticleUnitFragment = {
     domestic: boolean;
   };
   category: { __typename?: "ArticleCategory"; category: string };
-  thumbnail: { __typename?: "Image"; id: number; path: string };
+  thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
 };
 
 export type ArticleDetailFragment = {
@@ -762,13 +797,18 @@ export type ArticleDetailFragment = {
   id: number;
   updatedAt?: any | null;
   title: string;
-  contents: string;
+  contents?: string | null;
   views: number;
   state: ArticleState;
   editor: string;
   category: { __typename?: "ArticleCategory"; id: number; category: string };
-  area: { __typename?: "Area"; id: number; region2depth: string };
-  thumbnail: { __typename?: "Image"; id: number; path: string };
+  area: {
+    __typename?: "Area";
+    id: number;
+    region2depth: string;
+    domestic: boolean;
+  };
+  thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
   places?: Array<{
     __typename?: "ArticlePlace";
     id: number;
@@ -779,10 +819,14 @@ export type ArticleDetailFragment = {
   articleContents?: Array<{
     __typename?: "ArticleContent";
     id: number;
-    index: number;
-    subtitle: string;
-    content: string;
-    image: { __typename?: "Image"; id: number; path: string };
+    index?: number | null;
+    subtitle?: string | null;
+    content?: string | null;
+    image?: {
+      __typename?: "Image";
+      path: string;
+      mimetype?: string | null;
+    } | null;
     place?: {
       __typename?: "ArticlePlace";
       id: number;
@@ -794,7 +838,7 @@ export type ArticleDetailFragment = {
   images?: Array<{ __typename?: "Image"; id: number; path: string }> | null;
 };
 
-export type ArticleCategoryFragment = {
+export type CategoryUnitFragment = {
   __typename?: "ArticleCategory";
   id: number;
   category: string;
@@ -803,10 +847,14 @@ export type ArticleCategoryFragment = {
 export type ArticleContentFragment = {
   __typename?: "ArticleContent";
   id: number;
-  index: number;
-  subtitle: string;
-  content: string;
-  image: { __typename?: "Image"; id: number; path: string };
+  index?: number | null;
+  subtitle?: string | null;
+  content?: string | null;
+  image?: {
+    __typename?: "Image";
+    path: string;
+    mimetype?: string | null;
+  } | null;
   place?: {
     __typename?: "ArticlePlace";
     id: number;
@@ -830,6 +878,22 @@ export type ArticleImageFragment = {
   path: string;
   mimetype?: string | null;
   encoding?: string | null;
+};
+
+export type CountResultFragment = {
+  __typename?: "CountResult";
+  areaId: number;
+  posts: number;
+  comments: number;
+};
+
+export type AreaUnitFragment = {
+  __typename?: "Area";
+  id: number;
+  region2depth: string;
+  symbol: string;
+  domestic: boolean;
+  activate: boolean;
 };
 
 export type AddArticleCategoryMutationVariables = Exact<{
@@ -871,13 +935,18 @@ export type CreateArticleMutation = {
     id: number;
     updatedAt?: any | null;
     title: string;
-    contents: string;
+    contents?: string | null;
     views: number;
     state: ArticleState;
     editor: string;
     category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: { __typename?: "Area"; id: number; region2depth: string };
-    thumbnail: { __typename?: "Image"; id: number; path: string };
+    area: {
+      __typename?: "Area";
+      id: number;
+      region2depth: string;
+      domestic: boolean;
+    };
+    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -888,10 +957,14 @@ export type CreateArticleMutation = {
     articleContents?: Array<{
       __typename?: "ArticleContent";
       id: number;
-      index: number;
-      subtitle: string;
-      content: string;
-      image: { __typename?: "Image"; id: number; path: string };
+      index?: number | null;
+      subtitle?: string | null;
+      content?: string | null;
+      image?: {
+        __typename?: "Image";
+        path: string;
+        mimetype?: string | null;
+      } | null;
       place?: {
         __typename?: "ArticlePlace";
         id: number;
@@ -915,13 +988,18 @@ export type EditArticleMutation = {
     id: number;
     updatedAt?: any | null;
     title: string;
-    contents: string;
+    contents?: string | null;
     views: number;
     state: ArticleState;
     editor: string;
     category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: { __typename?: "Area"; id: number; region2depth: string };
-    thumbnail: { __typename?: "Image"; id: number; path: string };
+    area: {
+      __typename?: "Area";
+      id: number;
+      region2depth: string;
+      domestic: boolean;
+    };
+    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -932,10 +1010,14 @@ export type EditArticleMutation = {
     articleContents?: Array<{
       __typename?: "ArticleContent";
       id: number;
-      index: number;
-      subtitle: string;
-      content: string;
-      image: { __typename?: "Image"; id: number; path: string };
+      index?: number | null;
+      subtitle?: string | null;
+      content?: string | null;
+      image?: {
+        __typename?: "Image";
+        path: string;
+        mimetype?: string | null;
+      } | null;
       place?: {
         __typename?: "ArticlePlace";
         id: number;
@@ -969,13 +1051,18 @@ export type ChangeArticleStateMutation = {
     id: number;
     updatedAt?: any | null;
     title: string;
-    contents: string;
+    contents?: string | null;
     views: number;
     state: ArticleState;
     editor: string;
     category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: { __typename?: "Area"; id: number; region2depth: string };
-    thumbnail: { __typename?: "Image"; id: number; path: string };
+    area: {
+      __typename?: "Area";
+      id: number;
+      region2depth: string;
+      domestic: boolean;
+    };
+    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -986,10 +1073,14 @@ export type ChangeArticleStateMutation = {
     articleContents?: Array<{
       __typename?: "ArticleContent";
       id: number;
-      index: number;
-      subtitle: string;
-      content: string;
-      image: { __typename?: "Image"; id: number; path: string };
+      index?: number | null;
+      subtitle?: string | null;
+      content?: string | null;
+      image?: {
+        __typename?: "Image";
+        path: string;
+        mimetype?: string | null;
+      } | null;
       place?: {
         __typename?: "ArticlePlace";
         id: number;
@@ -1013,6 +1104,68 @@ export type CreateAdminMutation = {
   createAdmin: boolean;
 };
 
+export type RegenerateTokenMutationVariables = Exact<{
+  id: Scalars["String"];
+  refreshToken: Scalars["String"];
+}>;
+
+export type RegenerateTokenMutation = {
+  __typename?: "Mutation";
+  regenerateToken: {
+    __typename?: "AdminLoginResult";
+    accessToken: string;
+    refreshToken?: string | null;
+    owner?: string | null;
+  };
+};
+
+export type AddAndroidVersionMutationVariables = Exact<{
+  version: Scalars["String"];
+}>;
+
+export type AddAndroidVersionMutation = {
+  __typename?: "Mutation";
+  addAndroidVersion: string;
+};
+
+export type AddIosVersionMutationVariables = Exact<{
+  version: Scalars["String"];
+}>;
+
+export type AddIosVersionMutation = {
+  __typename?: "Mutation";
+  addAndroidVersion: string;
+};
+
+export type AdminLoginQueryVariables = Exact<{
+  id: Scalars["String"];
+  password: Scalars["String"];
+}>;
+
+export type AdminLoginQuery = {
+  __typename?: "Query";
+  adminLogin: {
+    __typename?: "AdminLoginResult";
+    accessToken: string;
+    refreshToken?: string | null;
+    owner?: string | null;
+  };
+};
+
+export type LoginExtensionQueryVariables = Exact<{
+  id: Scalars["String"];
+}>;
+
+export type LoginExtensionQuery = {
+  __typename?: "Query";
+  loginExtension: {
+    __typename?: "AdminLoginResult";
+    accessToken: string;
+    refreshToken?: string | null;
+    owner?: string | null;
+  };
+};
+
 export type CountPostingQueryVariables = Exact<{ [key: string]: never }>;
 
 export type CountPostingQuery = {
@@ -1027,6 +1180,20 @@ export type CountProfileQuery = {
   countProfile: Array<number>;
 };
 
+export type GetAreasQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GetAreasQuery = {
+  __typename?: "Query";
+  getAreas: Array<{
+    __typename?: "Area";
+    id: number;
+    region2depth: string;
+    symbol: string;
+    domestic: boolean;
+    activate: boolean;
+  }>;
+};
+
 export type GetArticleQueryVariables = Exact<{
   id: Scalars["Int"];
 }>;
@@ -1038,13 +1205,18 @@ export type GetArticleQuery = {
     id: number;
     updatedAt?: any | null;
     title: string;
-    contents: string;
+    contents?: string | null;
     views: number;
     state: ArticleState;
     editor: string;
     category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: { __typename?: "Area"; id: number; region2depth: string };
-    thumbnail: { __typename?: "Image"; id: number; path: string };
+    area: {
+      __typename?: "Area";
+      id: number;
+      region2depth: string;
+      domestic: boolean;
+    };
+    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -1055,10 +1227,14 @@ export type GetArticleQuery = {
     articleContents?: Array<{
       __typename?: "ArticleContent";
       id: number;
-      index: number;
-      subtitle: string;
-      content: string;
-      image: { __typename?: "Image"; id: number; path: string };
+      index?: number | null;
+      subtitle?: string | null;
+      content?: string | null;
+      image?: {
+        __typename?: "Image";
+        path: string;
+        mimetype?: string | null;
+      } | null;
       place?: {
         __typename?: "ArticlePlace";
         id: number;
@@ -1090,7 +1266,7 @@ export type GetArticlesQuery = {
       domestic: boolean;
     };
     category: { __typename?: "ArticleCategory"; category: string };
-    thumbnail: { __typename?: "Image"; id: number; path: string };
+    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
   }>;
 };
 
@@ -1127,7 +1303,7 @@ export type SearchArticlesQuery = {
       domestic: boolean;
     };
     category: { __typename?: "ArticleCategory"; category: string };
-    thumbnail: { __typename?: "Image"; id: number; path: string };
+    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
   }>;
 };
 
@@ -1142,13 +1318,18 @@ export type GetArticleForEditQuery = {
     id: number;
     updatedAt?: any | null;
     title: string;
-    contents: string;
+    contents?: string | null;
     views: number;
     state: ArticleState;
     editor: string;
     category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: { __typename?: "Area"; id: number; region2depth: string };
-    thumbnail: { __typename?: "Image"; id: number; path: string };
+    area: {
+      __typename?: "Area";
+      id: number;
+      region2depth: string;
+      domestic: boolean;
+    };
+    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -1159,10 +1340,14 @@ export type GetArticleForEditQuery = {
     articleContents?: Array<{
       __typename?: "ArticleContent";
       id: number;
-      index: number;
-      subtitle: string;
-      content: string;
-      image: { __typename?: "Image"; id: number; path: string };
+      index?: number | null;
+      subtitle?: string | null;
+      content?: string | null;
+      image?: {
+        __typename?: "Image";
+        path: string;
+        mimetype?: string | null;
+      } | null;
       place?: {
         __typename?: "ArticlePlace";
         id: number;
@@ -1175,6 +1360,27 @@ export type GetArticleForEditQuery = {
   };
 };
 
+export type CountPostAndCommentByAreaQueryVariables = Exact<{
+  [key: string]: never;
+}>;
+
+export type CountPostAndCommentByAreaQuery = {
+  __typename?: "Query";
+  countPostAndCommentByArea: Array<{
+    __typename?: "CountResult";
+    areaId: number;
+    posts: number;
+    comments: number;
+  }>;
+};
+
+export const LoginResultFragmentDoc = gql`
+  fragment LoginResult on AdminLoginResult {
+    accessToken
+    refreshToken
+    owner
+  }
+`;
 export const ArticleUnitFragmentDoc = gql`
   fragment ArticleUnit on Article {
     id
@@ -1195,8 +1401,8 @@ export const ArticleUnitFragmentDoc = gql`
     state
   }
 `;
-export const ArticleCategoryFragmentDoc = gql`
-  fragment ArticleCategory on ArticleCategory {
+export const CategoryUnitFragmentDoc = gql`
+  fragment CategoryUnit on ArticleCategory {
     id
     category
   }
@@ -1214,8 +1420,8 @@ export const ArticleContentFragmentDoc = gql`
     id
     index
     image {
-      id
       path
+      mimetype
     }
     place {
       ...ArticlePlace
@@ -1234,11 +1440,12 @@ export const ArticleDetailFragmentDoc = gql`
     views
     state
     category {
-      ...ArticleCategory
+      ...CategoryUnit
     }
     area {
       id
       region2depth
+      domestic
     }
     thumbnail {
       id
@@ -1256,7 +1463,7 @@ export const ArticleDetailFragmentDoc = gql`
       path
     }
   }
-  ${ArticleCategoryFragmentDoc}
+  ${CategoryUnitFragmentDoc}
   ${ArticlePlaceFragmentDoc}
   ${ArticleContentFragmentDoc}
 `;
@@ -1266,6 +1473,22 @@ export const ArticleImageFragmentDoc = gql`
     path
     mimetype
     encoding
+  }
+`;
+export const CountResultFragmentDoc = gql`
+  fragment CountResult on CountResult {
+    areaId
+    posts
+    comments
+  }
+`;
+export const AreaUnitFragmentDoc = gql`
+  fragment AreaUnit on Area {
+    id
+    region2depth
+    symbol
+    domestic
+    activate
   }
 `;
 export const AddArticleCategoryDocument = gql`
@@ -1665,6 +1888,279 @@ export type CreateAdminMutationOptions = Apollo.BaseMutationOptions<
   CreateAdminMutation,
   CreateAdminMutationVariables
 >;
+export const RegenerateTokenDocument = gql`
+  mutation regenerateToken($id: String!, $refreshToken: String!) {
+    regenerateToken(id: $id, refreshToken: $refreshToken) {
+      ...LoginResult
+    }
+  }
+  ${LoginResultFragmentDoc}
+`;
+export type RegenerateTokenMutationFn = Apollo.MutationFunction<
+  RegenerateTokenMutation,
+  RegenerateTokenMutationVariables
+>;
+
+/**
+ * __useRegenerateTokenMutation__
+ *
+ * To run a mutation, you first call `useRegenerateTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRegenerateTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [regenerateTokenMutation, { data, loading, error }] = useRegenerateTokenMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      refreshToken: // value for 'refreshToken'
+ *   },
+ * });
+ */
+export function useRegenerateTokenMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    RegenerateTokenMutation,
+    RegenerateTokenMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    RegenerateTokenMutation,
+    RegenerateTokenMutationVariables
+  >(RegenerateTokenDocument, options);
+}
+export type RegenerateTokenMutationHookResult = ReturnType<
+  typeof useRegenerateTokenMutation
+>;
+export type RegenerateTokenMutationResult =
+  Apollo.MutationResult<RegenerateTokenMutation>;
+export type RegenerateTokenMutationOptions = Apollo.BaseMutationOptions<
+  RegenerateTokenMutation,
+  RegenerateTokenMutationVariables
+>;
+export const AddAndroidVersionDocument = gql`
+  mutation addAndroidVersion($version: String!) {
+    addAndroidVersion(version: $version)
+  }
+`;
+export type AddAndroidVersionMutationFn = Apollo.MutationFunction<
+  AddAndroidVersionMutation,
+  AddAndroidVersionMutationVariables
+>;
+
+/**
+ * __useAddAndroidVersionMutation__
+ *
+ * To run a mutation, you first call `useAddAndroidVersionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddAndroidVersionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addAndroidVersionMutation, { data, loading, error }] = useAddAndroidVersionMutation({
+ *   variables: {
+ *      version: // value for 'version'
+ *   },
+ * });
+ */
+export function useAddAndroidVersionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddAndroidVersionMutation,
+    AddAndroidVersionMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    AddAndroidVersionMutation,
+    AddAndroidVersionMutationVariables
+  >(AddAndroidVersionDocument, options);
+}
+export type AddAndroidVersionMutationHookResult = ReturnType<
+  typeof useAddAndroidVersionMutation
+>;
+export type AddAndroidVersionMutationResult =
+  Apollo.MutationResult<AddAndroidVersionMutation>;
+export type AddAndroidVersionMutationOptions = Apollo.BaseMutationOptions<
+  AddAndroidVersionMutation,
+  AddAndroidVersionMutationVariables
+>;
+export const AddIosVersionDocument = gql`
+  mutation addIosVersion($version: String!) {
+    addAndroidVersion(version: $version)
+  }
+`;
+export type AddIosVersionMutationFn = Apollo.MutationFunction<
+  AddIosVersionMutation,
+  AddIosVersionMutationVariables
+>;
+
+/**
+ * __useAddIosVersionMutation__
+ *
+ * To run a mutation, you first call `useAddIosVersionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddIosVersionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addIosVersionMutation, { data, loading, error }] = useAddIosVersionMutation({
+ *   variables: {
+ *      version: // value for 'version'
+ *   },
+ * });
+ */
+export function useAddIosVersionMutation(
+  baseOptions?: Apollo.MutationHookOptions<
+    AddIosVersionMutation,
+    AddIosVersionMutationVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useMutation<
+    AddIosVersionMutation,
+    AddIosVersionMutationVariables
+  >(AddIosVersionDocument, options);
+}
+export type AddIosVersionMutationHookResult = ReturnType<
+  typeof useAddIosVersionMutation
+>;
+export type AddIosVersionMutationResult =
+  Apollo.MutationResult<AddIosVersionMutation>;
+export type AddIosVersionMutationOptions = Apollo.BaseMutationOptions<
+  AddIosVersionMutation,
+  AddIosVersionMutationVariables
+>;
+export const AdminLoginDocument = gql`
+  query adminLogin($id: String!, $password: String!) {
+    adminLogin(id: $id, password: $password) {
+      ...LoginResult
+    }
+  }
+  ${LoginResultFragmentDoc}
+`;
+
+/**
+ * __useAdminLoginQuery__
+ *
+ * To run a query within a React component, call `useAdminLoginQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAdminLoginQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAdminLoginQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useAdminLoginQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    AdminLoginQuery,
+    AdminLoginQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<AdminLoginQuery, AdminLoginQueryVariables>(
+    AdminLoginDocument,
+    options
+  );
+}
+export function useAdminLoginLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    AdminLoginQuery,
+    AdminLoginQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<AdminLoginQuery, AdminLoginQueryVariables>(
+    AdminLoginDocument,
+    options
+  );
+}
+export type AdminLoginQueryHookResult = ReturnType<typeof useAdminLoginQuery>;
+export type AdminLoginLazyQueryHookResult = ReturnType<
+  typeof useAdminLoginLazyQuery
+>;
+export type AdminLoginQueryResult = Apollo.QueryResult<
+  AdminLoginQuery,
+  AdminLoginQueryVariables
+>;
+export function refetchAdminLoginQuery(variables: AdminLoginQueryVariables) {
+  return { query: AdminLoginDocument, variables: variables };
+}
+export const LoginExtensionDocument = gql`
+  query loginExtension($id: String!) {
+    loginExtension(id: $id) {
+      ...LoginResult
+    }
+  }
+  ${LoginResultFragmentDoc}
+`;
+
+/**
+ * __useLoginExtensionQuery__
+ *
+ * To run a query within a React component, call `useLoginExtensionQuery` and pass it any options that fit your needs.
+ * When your component renders, `useLoginExtensionQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useLoginExtensionQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useLoginExtensionQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    LoginExtensionQuery,
+    LoginExtensionQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<LoginExtensionQuery, LoginExtensionQueryVariables>(
+    LoginExtensionDocument,
+    options
+  );
+}
+export function useLoginExtensionLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    LoginExtensionQuery,
+    LoginExtensionQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<LoginExtensionQuery, LoginExtensionQueryVariables>(
+    LoginExtensionDocument,
+    options
+  );
+}
+export type LoginExtensionQueryHookResult = ReturnType<
+  typeof useLoginExtensionQuery
+>;
+export type LoginExtensionLazyQueryHookResult = ReturnType<
+  typeof useLoginExtensionLazyQuery
+>;
+export type LoginExtensionQueryResult = Apollo.QueryResult<
+  LoginExtensionQuery,
+  LoginExtensionQueryVariables
+>;
+export function refetchLoginExtensionQuery(
+  variables: LoginExtensionQueryVariables
+) {
+  return { query: LoginExtensionDocument, variables: variables };
+}
 export const CountPostingDocument = gql`
   query countPosting {
     countPosting
@@ -1784,6 +2280,62 @@ export function refetchCountProfileQuery(
   variables?: CountProfileQueryVariables
 ) {
   return { query: CountProfileDocument, variables: variables };
+}
+export const GetAreasDocument = gql`
+  query getAreas {
+    getAreas {
+      ...AreaUnit
+    }
+  }
+  ${AreaUnitFragmentDoc}
+`;
+
+/**
+ * __useGetAreasQuery__
+ *
+ * To run a query within a React component, call `useGetAreasQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetAreasQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetAreasQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetAreasQuery(
+  baseOptions?: Apollo.QueryHookOptions<GetAreasQuery, GetAreasQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GetAreasQuery, GetAreasQueryVariables>(
+    GetAreasDocument,
+    options
+  );
+}
+export function useGetAreasLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    GetAreasQuery,
+    GetAreasQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GetAreasQuery, GetAreasQueryVariables>(
+    GetAreasDocument,
+    options
+  );
+}
+export type GetAreasQueryHookResult = ReturnType<typeof useGetAreasQuery>;
+export type GetAreasLazyQueryHookResult = ReturnType<
+  typeof useGetAreasLazyQuery
+>;
+export type GetAreasQueryResult = Apollo.QueryResult<
+  GetAreasQuery,
+  GetAreasQueryVariables
+>;
+export function refetchGetAreasQuery(variables?: GetAreasQueryVariables) {
+  return { query: GetAreasDocument, variables: variables };
 }
 export const GetArticleDocument = gql`
   query getArticle($id: Int!) {
@@ -2096,4 +2648,67 @@ export function refetchGetArticleForEditQuery(
   variables: GetArticleForEditQueryVariables
 ) {
   return { query: GetArticleForEditDocument, variables: variables };
+}
+export const CountPostAndCommentByAreaDocument = gql`
+  query countPostAndCommentByArea {
+    countPostAndCommentByArea {
+      ...CountResult
+    }
+  }
+  ${CountResultFragmentDoc}
+`;
+
+/**
+ * __useCountPostAndCommentByAreaQuery__
+ *
+ * To run a query within a React component, call `useCountPostAndCommentByAreaQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCountPostAndCommentByAreaQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCountPostAndCommentByAreaQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCountPostAndCommentByAreaQuery(
+  baseOptions?: Apollo.QueryHookOptions<
+    CountPostAndCommentByAreaQuery,
+    CountPostAndCommentByAreaQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<
+    CountPostAndCommentByAreaQuery,
+    CountPostAndCommentByAreaQueryVariables
+  >(CountPostAndCommentByAreaDocument, options);
+}
+export function useCountPostAndCommentByAreaLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    CountPostAndCommentByAreaQuery,
+    CountPostAndCommentByAreaQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<
+    CountPostAndCommentByAreaQuery,
+    CountPostAndCommentByAreaQueryVariables
+  >(CountPostAndCommentByAreaDocument, options);
+}
+export type CountPostAndCommentByAreaQueryHookResult = ReturnType<
+  typeof useCountPostAndCommentByAreaQuery
+>;
+export type CountPostAndCommentByAreaLazyQueryHookResult = ReturnType<
+  typeof useCountPostAndCommentByAreaLazyQuery
+>;
+export type CountPostAndCommentByAreaQueryResult = Apollo.QueryResult<
+  CountPostAndCommentByAreaQuery,
+  CountPostAndCommentByAreaQueryVariables
+>;
+export function refetchCountPostAndCommentByAreaQuery(
+  variables?: CountPostAndCommentByAreaQueryVariables
+) {
+  return { query: CountPostAndCommentByAreaDocument, variables: variables };
 }

@@ -4,14 +4,18 @@ import {client} from './services/apollo';
 import { ApolloProvider } from '@apollo/client';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { BrowserRouter } from 'react-router-dom';
 
 function App() {
+
   return (
-  <ApolloProvider client={client} >
-    <DndProvider backend={HTML5Backend}>
-      <Routing />
-    </DndProvider>
-  </ApolloProvider>);
+  <BrowserRouter>
+    <ApolloProvider client={client} >
+      <DndProvider backend={HTML5Backend}>
+          <Routing />
+      </DndProvider>
+    </ApolloProvider>
+  </BrowserRouter>);
 }
 
 export default App;
