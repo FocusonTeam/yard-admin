@@ -5,13 +5,14 @@ import Label from '../../components/atoms/Label'
 import { COLORS } from '../../styles'
 import { Button } from '../../components/atoms/Button';
 import ContentsList from 'components/ContentsList';
-import useContentsFunc from 'hooks/useContentsFunc'
-import { ArticleState, Content, CreateArticleInput, UploadImageInput, useCreateArticleMutation } from 'generated/graphql'
+import { ArticleState, Content, CreateArticleInput, UploadImageInput, useCreateArticleMutation } from 'generated/graphql';
+import useContentsFunc from 'hooks/useContentFunc';
+
 
 
 export default function WriteArticle() {
 
-  const { contentCards } = useContentsFunc();
+  const { contentCards, clearContentsCards, addEmptyContentCard } = useContentsFunc();
 
   const [categoryId, setCategoryId] = useState(0);
   const [area, setArea] = useState(0);
@@ -25,34 +26,60 @@ export default function WriteArticle() {
     setTitle(value);
   };
 
-  const onSaveContent = useCallback(async () => {
-    if(categoryId !== 0 || area !== 0 || title !== ""){
-      console.log(categoryId, area, title);
+  //아티클 작성시 스토리지 클리어
+  useEffect(() => {
+    console.log("contents", contents);
+    clearContentsCards();
+    console.log(contentCards);
+    if(contents.length === 0){
+      addEmptyContentCard();
+    }
+  }, []);
 
-      contentCards.map((contents) => {
-        const imageinput : UploadImageInput = { 
-          path: contents.image[0],
-          mimetype: contents.image[1],
-          encoding: null,
+  const onSaveContent = useCallback(async () => {
+
+    console.log(categoryId, area, title, contents); 
+
+    if(categoryId !== 0 && area !== 0 && title !== ""){
+
+      contentCards.map((contents : any) => {
+        // 이미지가 있거나 없는 경우 나눠서 input에 넣기
+        if(contents.image !== null){
+          const imageinput : UploadImageInput = { 
+            path: contents.image?.path!,
+            mimetype: contents.image?.mimetype,
+          }
+
+          const contentinput : Content = {
+            image: imageinput,
+            source : null,
+            subtitle : contents.subtitle,
+            content : contents.content,
+            placeName: null,
+            placeUrl: null,
+            placeCategory: null,
+          }
+          setContents(contents => [...contents, contentinput]);
+        }else{
+          const contentinput : Content = {
+            image: null,
+            source : null,
+            subtitle : contents.subtitle,
+            content : contents.content,
+            placeName: null,
+            placeUrl: null,
+            placeCategory: null,
+          }
+
+          setContents(contents => [...contents, contentinput]);
         }
-        const contentinput : Content = {
-          image: imageinput,
-          source : null,
-          subtitle : contents.subtitle,
-          content : contents.content,
-          placeName: null,
-          placeUrl: null,
-          placeCategory: null,
-        }
-        setContents(contents => [...contents, contentinput]);
+        
       })
-      console.log("contents : ", contents);
 
       const input : CreateArticleInput = {
         title: title,
         areaId: area,
         state: ArticleState.Inprogress,
-        thumbnailIndex: 0,
         categoryId: categoryId,
         contents: contents
       }
@@ -65,13 +92,16 @@ export default function WriteArticle() {
         })
 
         if(results.errors){
-          alert("저장할 수 없습니다");
+          alert("아티클을 작성할 수 없습니다. 잠시 후 다시 시도해주세요'");
           console.log(results.errors);
         }
         if(results.data){
           console.log("results.data", results.data);
+          clearContentsCards();
+          console.log("이후에 로컬 스토리지 확인 : ", contentCards);
         }
       }catch(err){
+        alert("아티클을 작성할 수 없습니다. 잠시 후 다시 시도해주세요'");
         console.log(err);
       }
 
@@ -107,10 +137,10 @@ export default function WriteArticle() {
           type="text" 
           defaultValue={title}
         />
-        <div className='flex gap-10 z-10 items-center'>
-          <Label text="카테고리"/>
+        <div className='flex gap-10 z-10 items-center mb-10'>
+          <Label text="* 카테고리"/>
           <SelectBox theme="categories" handleChange={setCategoryId}/>
-          <Label text="지역"/>
+          <Label text="* 지역"/>
           <SelectBox theme="areas" handleChange={setArea}/>
         </div>
         {/* <Label text="썸네일 이미지" />
@@ -151,7 +181,7 @@ const ButtonContainer = styled.div`
 const TitleInput = styled.input`
   padding: 1em;
   color: ${COLORS.charcol};
-  font-size: large;
+  font-size: 24px;
   background: white;
   border: 0.5px solid;
   border-color: ${COLORS.lightGray};

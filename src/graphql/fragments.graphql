@@ -1,7 +1,8 @@
-# fragment Tokens on AdminTokens {
-#   accessToken
-#   refreshToken
-# }
+fragment LoginResult on AdminLoginResult {
+  accessToken
+  refreshToken
+  owner
+}
 
 
 fragment ArticleUnit on Article {
@@ -31,7 +32,7 @@ fragment ArticleDetail on Article {
   views
   state
   category {
-    ...ArticleCategory
+    ...CategoryUnit
   }
   area {
     id
@@ -55,7 +56,7 @@ fragment ArticleDetail on Article {
   }
 }
 
-fragment ArticleCategory on ArticleCategory {
+fragment CategoryUnit on ArticleCategory {
   id
   category
 }
@@ -64,8 +65,8 @@ fragment ArticleContent on ArticleContent {
   id
   index
   image {
-    id
     path
+    mimetype
   }
   place {
     ...ArticlePlace
@@ -86,4 +87,18 @@ fragment ArticleImage on Image {
   path
   mimetype
   encoding
+}
+
+fragment CountResult on CountResult {
+  areaId
+  posts
+  comments
+}
+
+fragment AreaUnit on Area {
+  id
+  region2depth
+  symbol
+  domestic
+  activate
 }

@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import {COLORS} from '../styles/colors';
 import { useNavigate } from 'react-router-dom';
 import { ArticleUnitFragment } from '../generated/graphql';
+import { SampleImg } from 'assets/images';
+import { useEncodeUri } from 'hooks';
+import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 
 interface ArticleProps {
   articleUnit : ArticleUnitFragment;
@@ -17,30 +20,36 @@ const ArticleCard = ({articleUnit, ...props} : ArticleProps) => {
     <Container onClick = {(e) => {
       navigate(`/yard-admin/articles/${articleUnit.id}`, 
       {
-        state : {
-          id : articleUnit.id
-      }});
-    }}>
+          state : {
+            id : articleUnit.id
+        }});
+      }}>
       <ArticleContainer>
-        {articleUnit.thumbnail && <Thumbnail src={articleUnit.thumbnail.path}/> }
-        <ArticleInfo>
-          <TitleInfo>
-            <Title>{articleUnit.title.length < 14
-                ? articleUnit.title
-                : articleUnit.title.slice(0, 14) + '...'}
-            </Title>
-            <Area domestic={articleUnit.area.domestic}>{articleUnit.area.region2depth}</Area>
-          </TitleInfo>
-          <SubTitle>{articleUnit.category.category}</SubTitle>
-        </ArticleInfo>
-        <Writer>작성자 : {articleUnit.editor}</Writer>
+      {articleUnit.thumbnail === null || articleUnit.thumbnail === undefined ? (
+        <Thumbnail src={SampleImg} />
+      ) : (
+        <Thumbnail src={CLOUD_STORAGE_BASE_URL + articleUnit.thumbnail.path}/>
+      )}
+      <ArticleInfo>
+        <TitleInfo>
+          <Title>{articleUnit.title.length < 14
+              ? articleUnit.title
+              : articleUnit.title.slice(0, 14) + '...'}
+          </Title>
+          <Area domestic={articleUnit.area.domestic}>{articleUnit.area.region2depth}</Area>
+        </TitleInfo>
+        <SubTitle>{articleUnit.category.category}</SubTitle>
+      </ArticleInfo>
+      <Writer>작성자 : {articleUnit.editor}</Writer>
       </ArticleContainer>
       { articleUnit.state === "INPROGRESS" ? (<></>) : 
         (articleUnit.state === "DONE"? (
-          <CoverContainer>검토 중</CoverContainer>) : 
+        <CoverContainer>검토 중</CoverContainer>) : 
         (
           <CoverContainer>배포완료</CoverContainer>
-        ))}
+        ))
+      }
+      
     </Container>
   )
 }
@@ -70,7 +79,7 @@ const CoverContainer = styled.div`
   height: 100%;
   position: absolute;
   border-radius: 15px;
-  background-color:rgba(0, 0, 0, 0.8);
+  background-color:rgba(0, 0, 0, 0.7);
   color:${COLORS.white};
   font-size: 24px;
 

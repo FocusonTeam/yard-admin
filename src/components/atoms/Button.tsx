@@ -6,6 +6,7 @@ interface ButtonProps {
   primary?: boolean;
   backgroundColor?: string;
   label: string;
+  size?: string;
   labelColor? : string;
   tailStyle? : string;
   onClick?: () => void;
@@ -27,9 +28,9 @@ export const Button = ({
 
   if(primary){
     backgroundColor = `${COLORS.accentColor}`
-    tailstyle = `p-3 text-neutral-50 rounded-md font-semibold bg-blue-600`
+    tailstyle = `p-3 text-neutral-50 rounded-md font-semibold bg-blue-600 text-lg`
   }else{
-    tailstyle = `${tailStyle}`;
+    tailstyle = `${tailStyle} text-lg`;
   }
 
   return (

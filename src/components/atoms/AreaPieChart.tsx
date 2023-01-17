@@ -1,5 +1,6 @@
 import React from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts'
+import { useCountPostAndCommentByAreaQuery } from '../../generated/graphql';
 
 const data = [
 	{ name: 'Jeju', value: 540 },
@@ -8,7 +9,7 @@ const data = [
 ]
 
 const RADIAN = Math.PI / 180
-const COLORS = ['#00C49F', '#FFBB28', '#FF8042']
+const COLORS = ['#00C49F', '#FFBB28', '#FF8042', '#e42541']
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent } : any) => {
 	const radius = innerRadius + (outerRadius - innerRadius) * 0.5
@@ -23,6 +24,12 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 }
 
 export default function AreaPieChart() {
+
+	const activateByArea = useCountPostAndCommentByAreaQuery({fetchPolicy: 'no-cache'});
+	console.log(activateByArea.data?.countPostAndCommentByArea);
+
+	const data = activateByArea.data?.countPostAndCommentByArea;
+	
 	return (
 		<div className="w-[20rem] h-[22rem] bg-white p-4 drop-shadow-md rounded-md flex flex-col">
 			<strong className="text-gray-700 font-medium">지역별 활성화</strong>
@@ -37,10 +44,10 @@ export default function AreaPieChart() {
 							label={renderCustomizedLabel}
 							outerRadius={105}
 							fill="#8884d8"
-							dataKey="value"
+							dataKey="posts"
 						>
-							{data.map((_, index) => (
-								<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+							{data?.map((item, index) => (
+								<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} name={item.areaId === 1 ? '제주' : '영국'}/>
 							))}
 						</Pie>
 						<Legend />

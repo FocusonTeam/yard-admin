@@ -2,9 +2,10 @@ import { ContentModel, DragItem } from 'models/models';
 import React, { useRef } from 'react';
 import { useDrag, useDrop, XYCoord } from 'react-dnd';
 import { ItemType } from 'utils/enums';
+import { ArticleContentFragment } from '../generated/graphql';
 
 export default function useDragDrop<T extends HTMLElement>(
-    {contentsCard, index} : {contentsCard : ContentModel, index: number},
+    {contentsCard, index} : {contentsCard : ArticleContentFragment, index: number},
     handleDropHover: (i: number, j: number) => void,
   ) {
   
@@ -15,7 +16,7 @@ export default function useDragDrop<T extends HTMLElement>(
     void,
     { isDragging: boolean }
   >({
-    item: { id: contentsCard.id, index },
+    item: { id: contentsCard['id'], index },
     type: ItemType.CONTENTCARD,
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),

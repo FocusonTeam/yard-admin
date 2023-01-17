@@ -12,9 +12,6 @@ const Home = () => {
 
 	const dashboardVar = useReactiveVar(DashboardVar);
 
-	const Users = useCountProfileQuery({fetchPolicy: 'no-cache'});
-	const Posts = useCountPostingQuery({fetchPolicy: 'no-cache'});
-
   return (
     <div className="flex flex-col gap-4 p-3 bg-slate-100">
 			<DashboardStatsGrid />

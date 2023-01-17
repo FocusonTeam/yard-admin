@@ -19,7 +19,7 @@ export const FontButton = ({
   ...props
 }: FontButtonProps) => {
 
-  const textsize = size === 'small' ? 'text-sm' : 'medium' ? 'text-base' : 'text-lg'
+  const textsize = size === 'small' ? 'text-sm' : 'medium' ? 'text-base' : 'text-xl'
 
   return (
     <button

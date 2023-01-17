@@ -1,17 +1,18 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { COLORS } from '../../styles'
-import {SampleImg, Imgjeju1, Imgjeju2, Imgjeju3, Imguk1, Imguk2 } from '../../assets/images/index';
 import ArticleElement from '../../components/atoms/ArticleElement'
 import ModalBase from '../../common/ModalBase'
 import CardModal from '../../components/atoms/CardModal'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { useGetArticleQuery, useGetArticleForEditQuery } from '../../generated/graphql';
+import { useGetArticleQuery, useGetArticleForEditQuery, useDeleteArticleMutation } from '../../generated/graphql';
 import Title from 'components/atoms/Title';
 import { FontButton } from 'components/atoms/FontButton';
 import PulseLoader from 'react-spinners/PulseLoader';
 import useWindowSize from 'hooks/useWindowSize';
 import PreviewArticle from 'components/PreviewArticle';
+import SubTitle from 'components/atoms/SubTitle'
+import { CLOUD_STORAGE_BASE_URL } from 'utils/constants'
 
 
 
@@ -26,6 +27,8 @@ export default function ArticleDetail() {
     variables: {id : state.id}
   });
 
+  const [deleteArticle] = useDeleteArticleMutation();
+
   const [isActive, setIsActive] = useState(false);
 
   const onClickModalOn = () => {
@@ -36,9 +39,22 @@ export default function ArticleDetail() {
     setIsActive(false);
   };
 
-  const onClickCardRemove = () => {
-    alert('이벤트 실행');
-  };
+  const onClickCardRemove = useCallback(async () => {
+    const result = await deleteArticle({
+      variables : {id : state.id}
+    });
+
+    if(result.data){
+      alert("아티클이 삭제되었습니다");
+      navigate("/yard-admin/articles");
+    }else{
+      alert("아티클을 삭제할 수 없습니다");
+    }
+    if(result.errors){
+      alert("아티클을 삭제할 수 없습니다");
+    }
+    
+  }, []);
 
   const onClickEdit = () => {
     navigate(`/yard-admin/article-edit/${state.id}`, {state : state.id});
@@ -66,12 +82,10 @@ export default function ArticleDetail() {
     )
   }
 
-
-
   return (
     <>
     <Container>
-      {windowsize.innerWidth > 1200 ? (<>
+      {windowsize.innerWidth > 1400 ? (<>
         <PreviewArticle htmltext={data?.getArticleForEdit.contents}/>
         </>) : (<></>)}
 
@@ -79,32 +93,36 @@ export default function ArticleDetail() {
         <HeadWrapper>
           <Area domestic={true}>{data?.getArticleForEdit.area.region2depth}</Area>
           <Title title={data?.getArticleForEdit.title}/>
-          {/* {data?.getArticle.category ? <><SubTitle subtitle={data?.getArticle.category}/></> : <></>} */}
+          {data?.getArticleForEdit.category === null || data?.getArticleForEdit.category === undefined ? <></> : <>
+            <SubTitle subtitle={data?.getArticleForEdit.category.category}/>
+          </>}
           <div className='flex justify-between mt-10 mb-10'>
             <div className='flex gap-2 items-center'>
-              <div className='font-semibold'>{data?.getArticleForEdit.editor}</div>
-              <div>{data?.getArticleForEdit.updatedAt}</div>
+              <div className='font-semibold text-lg'>{data?.getArticleForEdit.editor}</div>
+              <div className='text-lg'>{data?.getArticleForEdit.updatedAt}</div>
             </div>
             <div className='flex gap-2'>
-              <FontButton onClick={onClickEdit} label='수정' textColor='text-gray-800'/>
-              <FontButton onClick={onClickModalOn} label='삭제' textColor='text-gray-800'/>
+              <FontButton onClick={onClickEdit} label='수정' textColor='text-gray-800' size='large'/>
+              <FontButton onClick={onClickModalOn} label='삭제' textColor='text-gray-800' size='large'/>
             </div>
           </div>
         </HeadWrapper>
-        <ThumbnailCotainer>
-          <Thumbnail />
-          <ThumbnailMark>썸네일</ThumbnailMark>
-        </ThumbnailCotainer>
+        {data.getArticleForEdit.thumbnail === null || data.getArticleForEdit.thumbnail === undefined ? (<></>) : (
+          <ThumbnailCotainer>
+            <Thumbnail src={CLOUD_STORAGE_BASE_URL + data.getArticleForEdit.thumbnail.path}/>
+            <ThumbnailMark>썸네일</ThumbnailMark>
+          </ThumbnailCotainer>
+        )}
         {data.getArticleForEdit.articleContents?.map(element => (
             <ArticleElement
               key={element.id}
               acId={element.id}
-              image={element.image.path}
+              image={element.image}
               subhead={element.subtitle}
               contents={element.content}/>
           ))}
         {data?.getArticleForEdit.state === "INPROGRESS" ? (
-          <DeployButton deployNum={0}>배포 전 검토</DeployButton>
+          <DeployButton deployNum={0}>배포 전 검토하기</DeployButton>
         ) : (
           data?.getArticleForEdit.state === "DONE"? (
             <DeployButton deployNum={1}>배포하기</DeployButton>
@@ -139,6 +157,7 @@ const Container = styled.div`
 const DetailContainer = styled.div`
   display: flex;
   flex-direction: column;
+  min-width: 1000px;
   margin: 3rem;
   padding: 3rem;
   background-color: white;
@@ -170,6 +189,7 @@ const ThumbnailCotainer = styled.div`
 
 const Thumbnail = styled.img`
   object-fit: scale-down;
+  max-height: 720px;
 `;
 
 const ThumbnailMark = styled.div`

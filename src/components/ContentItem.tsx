@@ -2,19 +2,22 @@ import { memo, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import _ from 'lodash';
 import {RiDeleteBack2Line} from 'react-icons/ri';
+import { IconButton, Textarea } from '@chakra-ui/react';
+import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
 import useDragDrop from 'hooks/useDragDrop';
-import { ContentModel } from 'models/models';
 import { COLORS } from 'styles/colors';
-import { IconButton } from '@chakra-ui/react';
 import { ImageInputButton } from 'components/atoms/ImageInputButton';
-import { UploadImageInput } from '../generated/graphql';
+import { UploadImageInput, ArticleContentFragment, ArticleImageFragment } from '../generated/graphql';
+import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
+import { Button } from './atoms/Button';
+import { uuidv4 } from '@firebase/util';
 
 type ContentItemProps = {
   index: number;
-  contentsCard: ContentModel;
-  onUpdate: (id: ContentModel['id'], updatedContent: ContentModel) => void;
-  onDelete: (id: ContentModel['id']) => void;
+  contentsCard: ArticleContentFragment;
+  onUpdate: (id: ArticleContentFragment['id'], updatedContent: ArticleContentFragment) => void;
+  onDelete: (id: ArticleContentFragment['id']) => void;
   onDropHover: (i: number, j: number) => void;
 };
 
@@ -26,14 +29,17 @@ function ContentItem({
   onDelete: handleDelete,
 }: ContentItemProps) {
 
+  console.log("content Item :: ", contentsCard);
+
   const [image, setImage] = useState([]);
+  const [originImage, setOriginImage] = useState<Boolean>(false);
 
   const { ref, isDragging } = useDragDrop<HTMLDivElement>(
     { contentsCard, index: index },
     handleDropHover,
   );
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e : any) => {
     const {name, value} = e.target;
     console.log(name, value);
     handleUpdate(contentsCard.id, { ...contentsCard, [name]: value });
@@ -43,15 +49,33 @@ function ContentItem({
     handleDelete(contentsCard.id);
   };
 
-  console.log("image:::", image);
   useEffect(() => {
-    if(image !== null){
-      handleUpdate(contentsCard.id, {...contentsCard, image:image});
+    console.log("image 점검:", contentsCard);
+    if(contentsCard.image?.path !== null){
+      setOriginImage(true);
+    }
+    if(contentsCard.image?.path === "" || contentsCard.image?.path === undefined){
+      setOriginImage(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if(originImage === false && image !== null){
+      console.log("image", image);
+
+      const imageInput = {
+        path: image[0],
+        mimetype: image[1],
+      }
+      handleUpdate(contentsCard.id, {...contentsCard, image: imageInput})
     }
   })
 
-  return (
+  const onChangeImage = () => {
+    setOriginImage(false);
+  }
 
+  return (
     <Container
       ref={ref}
       >
@@ -66,25 +90,33 @@ function ContentItem({
             onClick={handleDeleteClick}
           />
       </LabelContainer>
-      <ImageInputButton handleImage={setImage}/>
+      <ImageContainer>
+        {originImage ? (<>
+          <Image src={CLOUD_STORAGE_BASE_URL + contentsCard.image?.path}/>
+          <Button label='이미지 변경 / 삭제' onClick={onChangeImage} tailStyle='p-2 text-[#19A2F7] mx-2 font-semibold border mt-2'/>
+        </>) : (<>
+          <ImageInputButton handleImage={setImage}/>
+        </>)}
+      </ImageContainer>
       <SubTitleInput
         name="subtitle"
         placeholder="* 소제목을 입력하세요" 
         required
         type="text" 
-        defaultValue={contentsCard.subtitle}
+        defaultValue={contentsCard.subtitle || ""}
         onChange={(e) => handleChange(e)}
         maxLength={30}/>
       <ContentInput
         name='content'
         placeholder="* 야드의 이야기를 적어보세요..."
-        type="text" 
-        defaultValue={contentsCard.content}
-        onChange={(e) => handleChange(e)}
+        defaultValue={contentsCard.content || ""}
+        onChange={(e : any) => handleChange(e)}
         maxLength={300}/>
     </Container>
   );
 }
+
+
 export default memo(ContentItem, (prev, next) => {
   if (
     _.isEqual(prev.contentsCard, next.contentsCard) &&
@@ -137,16 +169,43 @@ const SubTitleInput = styled.input`
   border-radius: 0.375rem;
 `;
 
-const ContentInput = styled.input`
+const ImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`
+
+const Image = styled.img`
+  width:100%;
+  height: 400px;
+  object-fit: cover;
+`;
+
+const ContentInput = styled(Textarea)`
   padding: 0.5em;
   color: ${COLORS.charcol};
   font-size: large;
   height: 200px;
   margin-top: 10px;
+  margin-bottom: 30px;
   width: 100%;
   background: white;
   border: 0.2px solid;
   border-color: ${COLORS.lightGray};
   border-radius: 0.375rem;
   text-align: start;
+  overflow: auto;
 `;
+
+// const ContentInput = defineStyle({
+//   borderColor: `${COLORS.charcol}`,
+//   background: `${COLORS.white}`,
+//   fontSize: "lg",
+//   _focus: {
+//     borderColor: "purple.500"
+//   },
+//   _dark: {
+//     background: "purple.900",
+//   }
+// });
+

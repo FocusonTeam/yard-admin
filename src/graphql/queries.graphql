@@ -1,8 +1,14 @@
-# query adminLogin($id: String!, $password : String!){
-#   adminLogin(id : $id, password: $password){
-#     ...Token  
-#   }
-# }
+query adminLogin($id: String!, $password : String!){
+  adminLogin(id : $id, password: $password){
+    ...LoginResult
+  }
+}
+
+query loginExtension($id: String!){
+  loginExtension(id: $id){
+    ...LoginResult
+  }
+}
 
 query countPosting {
   countPosting
@@ -10,6 +16,12 @@ query countPosting {
 
 query countProfile {
   countProfile
+}
+
+query getAreas {
+  getAreas {
+    ...AreaUnit
+  }
 }
 
 query getArticle($id : Int!){
@@ -40,5 +52,11 @@ query searchArticles($keyword : String, $areaId : Int){
 query getArticleForEdit($id : Int!){
   getArticleForEdit(id: $id) {
     ...ArticleDetail
+  }
+}
+
+query countPostAndCommentByArea {
+  countPostAndCommentByArea {
+    ...CountResult
   }
 }

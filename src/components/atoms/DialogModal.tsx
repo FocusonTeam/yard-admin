@@ -1,7 +1,7 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
-export default function DialogModal() {
+export default function DialogModal({props} : any) {
 
   // TODO :: open, close export 함수 연결하기 공통 컴포넌트로 사용할 수 있게
 
@@ -47,11 +47,11 @@ export default function DialogModal() {
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
-                    삭제하시겠습니까?
+                    {props.title}
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      삭제하기를 누를 경우, 복구되지않습니다
+                      {props.subtitle}
                     </p>
                   </div>
                 </Dialog.Panel>

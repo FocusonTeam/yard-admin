@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import SelectBox from './atoms/SelectBox';
 import RadioButton from './atoms/RadioButton';
 import { phoneSize } from '../utils/provider';
-import { AppleIphone11, AppleIphone14Pro, SamsungGalaxyS21, SamsungGalaxyZFlip3 } from 'assets/images';
 
 let SCREEN_WIDTH = 0;
 
@@ -48,6 +47,7 @@ const PreviewArticle = (props: any) => {
   const [theme, setTheme] = useState({ dark: false, light: false });
   const [width, setWidth] = useState(0);
   const [height, setHeight] = useState(0);
+  const [deviceContainer, setDeviceContainer] = useState("");
   const [deviceImage, setDeviceImage] = useState("");
 
   const [text, setText] = useState(props.htmltext);
@@ -69,11 +69,12 @@ const PreviewArticle = (props: any) => {
     let phone = phoneSize.find(function(data){return data.name === device})
     setWidth(phone?.size.width || 0);
     setHeight(phone?.size.height || 0);
-    setDeviceImage(phone?.className || "");
+    setDeviceContainer(phone?.className || "");
+    setDeviceImage(phone?.safeArea || "");
 
-    console.log(width, height, deviceImage);
+    console.log(width, height, deviceContainer);
     SCREEN_WIDTH = width;
-  }, [width, height, device])
+  }, [width, height, device, deviceImage]);
 
   // TODO :: html css 추가
   
@@ -98,7 +99,7 @@ const PreviewArticle = (props: any) => {
           />
           <SelectBox theme="device" handleChange={setDevice}/>
       </div>
-      <div className={`z-0 border-gray-300 border ${deviceImage} mt-5 `}>
+      <div className={`z-0 border-gray-300 border ${deviceContainer} mt-5 `}>
         {device !== "" && <DeviceContent dangerouslySetInnerHTML={{ __html: text }}/>}
       </div>
     </Container>

@@ -2,21 +2,25 @@ import React from 'react'
 import styled from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 
-import useContentsFunc from 'hooks/useContentsFunc';
-import ContentItem from './ContentItem';
 import { COLORS } from 'styles/colors';
+import ContentItem from './ContentItem';
+import useContentFunc from '../hooks/useContentFunc';
 
 
 function ContentsList() {
 
   const {
     contentCards,
+    settingAllContentCard,
     addEmptyContentCard,
     updateContentCard,
     deleteContentCard,
     swapContentCards,
-  } = useContentsFunc();
+    clearContentsCards
+  } = useContentFunc();
 
+
+  console.log("contentCards In List ::", contentCards);
 
   const ColumnTasks = contentCards.map((card, index) => (
     <ContentItem
@@ -28,8 +32,8 @@ function ContentsList() {
       onDelete={deleteContentCard}
     />
   ));
-
-  console.log(contentCards);
+  
+  console.log("contentCards In List ::", contentCards);
 
   return (
     <Container>
@@ -72,7 +76,7 @@ const CircleButton = styled.button`
   position: absolute;
   left: 50%;
   bottom: 0px;
-  transform: translate(-50%, 50%);
+  transform: translate(-50%, -50%);
   color: white;
   border-radius: 50%;
   border: none;

@@ -36,8 +36,16 @@ mutation createAdmin($id: String!, $password: String!, $owner: String!){
   createAdmin(id: $id, password: $password, owner: $owner)
 }
 
-# mutation regenerateToken($id: String!, $refreshToken: String!){
-#   regenerateToken(id: $id, refreshToken: $refreshToken){
-#     ...AdminTokens
-#   }
-# }
+mutation regenerateToken($id: String!, $refreshToken: String!){
+  regenerateToken(id: $id, refreshToken: $refreshToken){
+    ...LoginResult
+  }
+}
+
+mutation addAndroidVersion($version : String!){
+  addAndroidVersion(version : $version)
+}
+
+mutation addIosVersion($version : String!){
+  addAndroidVersion(version : $version)
+}
