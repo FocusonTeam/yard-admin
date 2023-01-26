@@ -91,6 +91,7 @@ fragment ArticleImage on Image {
 
 fragment CountResult on CountResult {
   areaId
+  region2depth
   posts
   comments
 }

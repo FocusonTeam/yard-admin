@@ -26,17 +26,6 @@ export function HeaderLayout() {
   
   //TODO :: regenerate token 하기 전, accesstoken이 만료되는 경우, 유저가 재로그인 혹은 연장 선택
 
-  // const [isActive, setIsActive] = useState(false);
-  // const onClickModalOn = () => {
-  //   setIsActive(true);
-  // };
-  // const onClickModalOff = () => {
-  //   setIsActive(false);
-  // };
-  // const onClickCardRemove = () => {
-  //   alert('이벤트 실행');
-  // };
-
 
   return (
     <div className='flex flex-col'>

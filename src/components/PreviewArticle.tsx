@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import SelectBox from './atoms/SelectBox';
 import RadioButton from './atoms/RadioButton';
 import { phoneSize } from '../utils/provider';
+import { within } from '@storybook/testing-library';
 
 let SCREEN_WIDTH = 0;
 
@@ -13,7 +14,7 @@ const tagsStyles = {
 	body: {
 			color: '#1c1d20',
 			fontSize: 16,
-			lineHeight: FONTS.title.fontSize + 2,
+			lineHeight: FONTS.title.fontSize,
 			paddingLeft: SPACING.wide,
 			paddingRight: SPACING.wide,
 			paddingTop: 10,
@@ -40,6 +41,40 @@ const tagsStyles = {
 	},
 };
 
+const tagstyle = `
+  <style>
+    div > h2 {
+      background-color: white;
+      color: #19A2F7;
+      font-weight: normal;
+      font-size: 16px;
+      padding: 0 20px 0 20px;
+    }
+    div > h1 {
+      font-weight: bold;
+      background-color: white;
+      font-size: 22px;
+      padding-top: 10px;
+      padding: 0 20px 0 20px;
+    }
+    div > p {
+      color:#1c1d20;
+      padding: 10px 20px 50px 20px;
+      background-color: white;
+      font-size: 16px;
+    }
+    img {
+      max-width: 100%;
+    }
+    div > h3 {
+      font-size: 18px;
+      background-color: white;
+      padding: 0 20px 0 20px;
+    }
+
+  </style>
+`
+
 const PreviewArticle = (props: any) => {
 
   const [device, setDevice] = useState("");
@@ -52,8 +87,6 @@ const PreviewArticle = (props: any) => {
 
   const [text, setText] = useState(props.htmltext);
 
-  console.log(text);
-
   const onChangeTheme = (e : any) => {
     const { name } = e.target
     if (name === 'light') {
@@ -63,16 +96,15 @@ const PreviewArticle = (props: any) => {
       setTheme({ dark: true, light: false })
     }
   }
-
-  console.log("device :: ", device);
   useEffect(() => {
-    let phone = phoneSize.find(function(data){return data.name === device})
+    let phone = phoneSize.find(function(data){return data.name === device});
+    console.log(phone);
     setWidth(phone?.size.width || 0);
     setHeight(phone?.size.height || 0);
     setDeviceContainer(phone?.className || "");
     setDeviceImage(phone?.safeArea || "");
 
-    console.log(width, height, deviceContainer);
+    console.log("w, h", width, height, deviceContainer);
     SCREEN_WIDTH = width;
   }, [width, height, device, deviceImage]);
 
@@ -100,7 +132,7 @@ const PreviewArticle = (props: any) => {
           <SelectBox theme="device" handleChange={setDevice}/>
       </div>
       <div className={`z-0 border-gray-300 border ${deviceContainer} mt-5 `}>
-        {device !== "" && <DeviceContent dangerouslySetInnerHTML={{ __html: text }}/>}
+        {device !== "" && <DeviceContent dangerouslySetInnerHTML={{ __html: tagstyle + text }}/>}
       </div>
     </Container>
   )
@@ -127,21 +159,21 @@ const SelectContainer = styled.div`
   border-radius: 0.375rem;
 `
 
-// const HtmlContainer = styled.div<{width : number, height: number}>`
-//   width: ${props => props.width}px;
-//   height: ${props => props.height}px;
-//   margin-top: 20px;
-//   border-radius: 3rem;
-//   padding-top: 20px;
-//   background-color: white;
-//   overflow-y: scroll;
-//   ::-webkit-scrollbar {
-//     display: none;
-//   }
-// `;
+const HtmlContainer = styled.div<{width : number, height: number}>`
+  width: ${props => props.width}px;
+  height: ${props => props.height}px;
+  margin-top: 20px;
+  border-radius: 3rem;
+  padding-top: 20px;
+  background-color: white;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 
 const DeviceContent=styled.div`
-
+  height: 100%;
 `
 
 export default PreviewArticle;

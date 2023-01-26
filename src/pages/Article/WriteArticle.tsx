@@ -1,13 +1,14 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components'
+
 import SelectBox from '../../components/atoms/SelectBox'
 import Label from '../../components/atoms/Label'
 import { COLORS } from '../../styles'
 import { Button } from '../../components/atoms/Button';
 import ContentsList from 'components/ContentsList';
-import { ArticleState, Content, CreateArticleInput, UploadImageInput, useCreateArticleMutation } from 'generated/graphql';
+import { ArticleState, Content, CreateArticleInput, useCreateArticleMutation } from 'generated/graphql';
 import useContentsFunc from 'hooks/useContentFunc';
-
+import { alerts } from '../../utils';
 
 
 export default function WriteArticle() {
@@ -26,62 +27,34 @@ export default function WriteArticle() {
     setTitle(value);
   };
 
-  //아티클 작성시 스토리지 클리어
+  //아티클 첫 작성시 스토리지 클리어, 아티클 작성 중 새로고침시 스토리지 유지
   useEffect(() => {
-    console.log("contents", contents);
-    clearContentsCards();
-    console.log(contentCards);
-    if(contents.length === 0){
+    console.log("contentCards in writer", contentCards);
+    if(contentCards.length === 0){
       addEmptyContentCard();
     }
-  }, []);
+  }, [contentCards]);
 
   const onSaveContent = useCallback(async () => {
 
-    console.log(categoryId, area, title, contents); 
+    console.log(categoryId, area, title, "content::", contentCards); 
 
     if(categoryId !== 0 && area !== 0 && title !== ""){
 
-      contentCards.map((contents : any) => {
-        // 이미지가 있거나 없는 경우 나눠서 input에 넣기
-        if(contents.image !== null){
-          const imageinput : UploadImageInput = { 
-            path: contents.image?.path!,
-            mimetype: contents.image?.mimetype,
-          }
-
-          const contentinput : Content = {
-            image: imageinput,
-            source : null,
-            subtitle : contents.subtitle,
-            content : contents.content,
-            placeName: null,
-            placeUrl: null,
-            placeCategory: null,
-          }
-          setContents(contents => [...contents, contentinput]);
-        }else{
-          const contentinput : Content = {
-            image: null,
-            source : null,
-            subtitle : contents.subtitle,
-            content : contents.content,
-            placeName: null,
-            placeUrl: null,
-            placeCategory: null,
-          }
-
-          setContents(contents => [...contents, contentinput]);
-        }
-        
-      })
+      const contentsInput : Content[] = contentCards.map((card : any) => ({
+        subtitle: card.subtitle,
+        content: card.content,
+        image: Object.keys(card.image).length === 0 ? null :  {path: card.image.path}
+      }))
+  
+      console.log(categoryId, area, title, "content::", contentsInput); 
 
       const input : CreateArticleInput = {
         title: title,
         areaId: area,
         state: ArticleState.Inprogress,
         categoryId: categoryId,
-        contents: contents
+        contents: contentsInput
       }
 
       console.log("input", input);
@@ -92,33 +65,35 @@ export default function WriteArticle() {
         })
 
         if(results.errors){
-          alert("아티클을 작성할 수 없습니다. 잠시 후 다시 시도해주세요'");
+          alerts({status : "error", title : "아티클을 작성할 수 없습니다. 잠시 후 다시 시도해주세요"});
           console.log(results.errors);
         }
         if(results.data){
+          alerts({status : "info", title : "저장이 완료되었습니다"});
           console.log("results.data", results.data);
           clearContentsCards();
           console.log("이후에 로컬 스토리지 확인 : ", contentCards);
         }
       }catch(err){
-        alert("아티클을 작성할 수 없습니다. 잠시 후 다시 시도해주세요'");
+        alerts({status : "error", title : "아티클을 작성할 수 없습니다. 잠시 후 다시 시도해주세요"});
         console.log(err);
       }
 
     }else{
-      alert('타이틀, 카테고리, 지역을 작성해주세요');
+      alerts({status : "warning", title : "타이틀, 카테고리, 지역을 작성해주세요"});
     }
-  }, [categoryId, area, title]);
+  }, [contentCards, title, area, categoryId]);
 
   const onReviewContent = useCallback(() => {
     if(categoryId !== 0 || area !== 0 || title !== "" || contentCards === null){
 
     }else{
-      alert('아티클을 모두 작성해주세요');
+      alerts({status : "warning", title : "아티클을 모두 작성해주세요"});
     }
-  }, [])
+  }, [contentCards])
 
   return (
+    <>
     <Container>
       <WriterContainer>
         <ButtonContainer>
@@ -148,7 +123,7 @@ export default function WriteArticle() {
         <ContentsList /> 
       </WriterContainer>
     </Container>
-    
+    </>
   )
 }
 

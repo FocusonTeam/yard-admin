@@ -2,14 +2,9 @@ import React from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend } from 'recharts'
 import { useCountPostAndCommentByAreaQuery } from '../../generated/graphql';
 
-const data = [
-	{ name: 'Jeju', value: 540 },
-	{ name: 'Seoul', value: 620 },
-	{ name: 'UK', value: 210 }
-]
 
 const RADIAN = Math.PI / 180
-const COLORS = ['#00C49F', '#FFBB28', '#FF8042', '#e42541']
+const COLORS = ['#00C49F', '#FFBB28', '#42b0ff', '#FF8042', '#e42541', '#e42591']
 
 const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent } : any) => {
 	const radius = innerRadius + (outerRadius - innerRadius) * 0.5
@@ -47,7 +42,7 @@ export default function AreaPieChart() {
 							dataKey="posts"
 						>
 							{data?.map((item, index) => (
-								<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} name={item.areaId === 1 ? '제주' : '영국'}/>
+								<Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} name={item.region2depth}/>
 							))}
 						</Pie>
 						<Legend />

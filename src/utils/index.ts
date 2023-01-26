@@ -4,3 +4,4 @@ export * from './spacing';
 export * from './helpers';
 export * from './enums';
 export * from './handleError';
+export * from './alerts';

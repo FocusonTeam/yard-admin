@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect } from 'react'
-import { isLoggedVar } from '../models/fragmentVar';
+import { isLoggedVar, userNameVar } from '../models/fragmentVar';
 import { useRegenerateTokenMutation } from 'generated/graphql';
 import { getLoginToken, setLoginToken, getStorage, removeLoginToken, removeStorage } from '../utils/storageUtils';
 import { useLoginExtensionLazyQuery } from '../generated/graphql';
 import { Navigate, useNavigate } from 'react-router-dom';
 import useLogout from './useLogout';
+import { alerts } from 'utils/alerts';
 
 
 function useLoginRefresh(){
@@ -38,7 +39,7 @@ function useLoginRefresh(){
       isLoggedVar(true);
     }
     if(result.errors){
-      alert("세션이 만료되었습니다");
+      alerts({status : "info", title : "세션이 만료되었습니다", desc:"다시 로그인해주세요"});
       removeLoginToken('accessToken');
       removeLoginToken('refreshToken');
       removeStorage('adminID');
@@ -60,17 +61,18 @@ function useLoginRefresh(){
       removeLoginToken('refreshToken');
       setLoginToken('accessToken', result.data.loginExtension.accessToken);
       setLoginToken('refreshToken', result.data.loginExtension.refreshToken);
+      userNameVar(result.data.loginExtension.owner || "user");
       isLoggedVar(true);
     }
     if(result.error){
-      alert("세션이 만료되었습니다");
+      alerts({status : "info", title : "세션이 만료되었습니다", desc:"다시 로그인해주세요"});
       removeLoginToken('accessToken');
       removeLoginToken('refreshToken');
       removeStorage('adminID');
       navigate('/yard-admin/login');
     }
 
-  }, [isLoggedVar])
+  }, [isLoggedVar, userNameVar])
 
   return {
     loginWithRefreshToken,

@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/client';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { BrowserRouter } from 'react-router-dom';
+import { ReactNotifications } from 'react-notifications-component';
 
 function App() {
 
@@ -12,7 +13,8 @@ function App() {
   <BrowserRouter>
     <ApolloProvider client={client} >
       <DndProvider backend={HTML5Backend}>
-          <Routing />
+        <ReactNotifications />
+        <Routing />
       </DndProvider>
     </ApolloProvider>
   </BrowserRouter>);

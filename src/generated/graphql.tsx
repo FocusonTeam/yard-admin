@@ -312,12 +312,14 @@ export type CountResult = {
   areaId: Scalars["Int"];
   comments: Scalars["Int"];
   posts: Scalars["Int"];
+  region2depth: Scalars["String"];
 };
 
 export type CountResultInput = {
   areaId: Scalars["Int"];
   comments: Scalars["Int"];
   posts: Scalars["Int"];
+  region2depth: Scalars["String"];
 };
 
 export type CreateArticleInput = {
@@ -883,6 +885,7 @@ export type ArticleImageFragment = {
 export type CountResultFragment = {
   __typename?: "CountResult";
   areaId: number;
+  region2depth: string;
   posts: number;
   comments: number;
 };
@@ -1369,6 +1372,7 @@ export type CountPostAndCommentByAreaQuery = {
   countPostAndCommentByArea: Array<{
     __typename?: "CountResult";
     areaId: number;
+    region2depth: string;
     posts: number;
     comments: number;
   }>;
@@ -1478,6 +1482,7 @@ export const ArticleImageFragmentDoc = gql`
 export const CountResultFragmentDoc = gql`
   fragment CountResult on CountResult {
     areaId
+    region2depth
     posts
     comments
   }

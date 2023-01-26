@@ -1,5 +1,6 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { COLORS } from 'styles/colors';
 import { Button } from './Button';
 
 export type CardModalProps = {
@@ -18,8 +19,12 @@ const CardModal = ({ closeEvent, title, children, actionMsg, actionEvent }: Card
         <h3>{title}</h3>
         <div className="msg">{children}</div>
         <div className="action_box">
-          <Button onClick={closeEvent} label="닫기" />
-          <Button onClick={actionEvent} label={actionMsg} />
+          <Button onClick={closeEvent} label="닫기" tailStyle='text-black text-center mx-2 px-3 py-1 font-semibold border-2 rounded-md hover:bg-slate-100'/>
+          {actionMsg === "삭제" ? (
+            <Button onClick={actionEvent} label={actionMsg} tailStyle='text-red-700 text-center px-3 py-1 border-red-700 mx-2 font-semibold border-2 rounded-md hover:bg-red-200' />
+          ) : (
+            <Button onClick={actionEvent} label={actionMsg} tailStyle='text-blue-700 text-center px-3 py-1 border-blue-700 mx-2 font-semibold border-2 rounded-md hover:bg-blue-200' />
+          )}
         </div>
       </CardModalContainer>
     </>
@@ -49,10 +54,18 @@ const CardModalContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    button {
-      margin-left: 0.5rem;
-    }
   }
 `;
+
+const ModalButton = styled.button`
+  margin-left: 1rem;
+`
+
+const ButtonText = styled.div<{type: number}>`
+  border-radius: 0.5rem;
+  border-color: ${props => props.type === 0 ? COLORS.charcol : props.type === 1 ? COLORS.accentColor : COLORS.red };
+  color: ${props => props.type === 0 ? COLORS.charcol : props.type === 1 ? COLORS.accentColor : COLORS.red };
+`
+
 
 export default CardModal;

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, createBrowserRouter, BrowserRouter, useNavigate }from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate }from 'react-router-dom';
 import styled, { ThemeProvider } from "styled-components";
 import { useThemeContext } from '../hooks/themeContext';
 import { lightTheme, darkTheme } from "../styles/theme";
@@ -8,20 +8,18 @@ import ArticleDetail from '../pages/Article/ArticleDetail';
 import Articles from "../pages/Article/Articles";
 import Login from "../pages/Login";
 import WriteArticle from '../pages/Article/WriteArticle';
-import SnsManage from '../pages/SnsManage';
+import SnsManage from '../pages/Manage/SnsManage';
 import Layout, { HeaderLayout } from '../pages/Layout';
 import Setting from '../pages/Setting';
-import UserManage from '../pages/UserManage';
-import ArticleEdit from '../pages/Article/ArticleEdit';
 import ArticleEditor from 'pages/Article/ArticleEditor';
 import { useReactiveVar } from '@apollo/client';
 import { errorMessageVar, accessTokenVar, isLoggedVar } from '../models/fragmentVar';
 import {useEffect, useState} from 'react';
-import { ERROR_MESSAGE } from '../utils/handleError';
 import useLoginRefresh from '../hooks/useLoginRefresh';
 import { getLoginToken } from '../utils/storageUtils';
 import useLogout from 'hooks/useLogout';
 import YardManage from 'pages/Manage/YardManage';
+import UserManage from 'pages/Manage/UserManage';
 
 
 const Routing = () => {
@@ -71,7 +69,7 @@ const Routing = () => {
                     <Route path='article-edit/:articleId' element={<ArticleEditor />}/>
                     <Route path='manage-yard' element={<YardManage />}/>
                     <Route path="manage-sns" element={<SnsManage/>}/>
-                    <Route path="manage-users" element={<ArticleEditor/>}/>
+                    <Route path="manage-users" element={<UserManage/>}/>
                     <Route path="setting" element={<Setting />} />
                 </Route>
                 <Route path="/yard-admin/" element={<HeaderLayout/>}>

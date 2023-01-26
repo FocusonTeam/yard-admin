@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import styled from 'styled-components';
 import { MdAdd } from 'react-icons/md';
 
@@ -11,16 +11,12 @@ function ContentsList() {
 
   const {
     contentCards,
-    settingAllContentCard,
     addEmptyContentCard,
     updateContentCard,
     deleteContentCard,
     swapContentCards,
     clearContentsCards
   } = useContentFunc();
-
-
-  console.log("contentCards In List ::", contentCards);
 
   const ColumnTasks = contentCards.map((card, index) => (
     <ContentItem
@@ -32,8 +28,6 @@ function ContentsList() {
       onDelete={deleteContentCard}
     />
   ));
-  
-  console.log("contentCards In List ::", contentCards);
 
   return (
     <Container>

@@ -75,7 +75,7 @@ const ModalBaseContainer = styled.div<{ active: boolean }>`
   .modal_content {
     position: relative;
     z-index: 10;
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     background-color: #fff;
     padding: 2rem;

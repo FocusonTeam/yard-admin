@@ -6,18 +6,17 @@ import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 
 export default function ArticleElement(props: any) {
 
-  //TODO :: element interface 이미지 없는 경우 
   return (
     <>
       <Contents>
         <div>
-          {props.image === null || props.image === undefined ? (
+          {props.image === null || props.image === undefined || props.image.path === null ? (
             <>
-              <img className='object-fit: scale-down' src={SampleImg}/>
+              <Image src={SampleImg}/>
             </>
           ) : (
             <>
-              <img className='object-fit: scale-down' src={CLOUD_STORAGE_BASE_URL + props.image.path}/>
+              <Image src={CLOUD_STORAGE_BASE_URL + props.image.path}/>
             </>
           )}
         </div>
@@ -37,4 +36,10 @@ const Contents = styled.div`
   margin-top: 30px;
   margin-bottom: 30px;
   gap:8px;
+`;
+
+const Image = styled.img`
+  width:100%;
+  height: 600px;
+  object-fit:contain;
 `;

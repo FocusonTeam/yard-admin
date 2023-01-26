@@ -3,15 +3,13 @@ import styled from 'styled-components';
 import _ from 'lodash';
 import {RiDeleteBack2Line} from 'react-icons/ri';
 import { IconButton, Textarea } from '@chakra-ui/react';
-import { defineStyle, defineStyleConfig } from "@chakra-ui/react";
 
 import useDragDrop from 'hooks/useDragDrop';
 import { COLORS } from 'styles/colors';
 import { ImageInputButton } from 'components/atoms/ImageInputButton';
-import { UploadImageInput, ArticleContentFragment, ArticleImageFragment } from '../generated/graphql';
+import { UploadImageInput, ArticleContentFragment } from '../generated/graphql';
 import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 import { Button } from './atoms/Button';
-import { uuidv4 } from '@firebase/util';
 
 type ContentItemProps = {
   index: number;
@@ -29,8 +27,6 @@ function ContentItem({
   onDelete: handleDelete,
 }: ContentItemProps) {
 
-  console.log("content Item :: ", contentsCard);
-
   const [image, setImage] = useState([]);
   const [originImage, setOriginImage] = useState<Boolean>(false);
 
@@ -39,27 +35,21 @@ function ContentItem({
     handleDropHover,
   );
 
-  const handleChange = (e : any) => {
-    const {name, value} = e.target;
-    console.log(name, value);
-    handleUpdate(contentsCard.id, { ...contentsCard, [name]: value });
-  };
-
-  const handleDeleteClick = () => {
-    handleDelete(contentsCard.id);
-  };
-
   useEffect(() => {
+    
     console.log("image 점검:", contentsCard);
+    //컨텐츠에 이미지 있는 경우 - 이미지 경로
     if(contentsCard.image?.path !== null){
       setOriginImage(true);
     }
-    if(contentsCard.image?.path === "" || contentsCard.image?.path === undefined){
+    //컨텐츠에 이미지 없는 경우
+    if(contentsCard.image === null || contentsCard.image === undefined || contentsCard.image.path === undefined){
       setOriginImage(false);
     }
-  }, []);
+  }, [contentsCard]);
 
   useEffect(() => {
+    //새로운 이미지로 삽입
     if(originImage === false && image !== null){
       console.log("image", image);
 
@@ -69,16 +59,25 @@ function ContentItem({
       }
       handleUpdate(contentsCard.id, {...contentsCard, image: imageInput})
     }
-  })
+  }, [image]);
 
+  const handleChange = (e : any) => {
+    const {name, value} = e.target;
+    handleUpdate(contentsCard.id, { ...contentsCard, [name]: value });
+  };
+
+  const handleDeleteClick = () => {
+    handleDelete(contentsCard.id);
+  };
+
+  // 기존 이미지 변경
   const onChangeImage = () => {
     setOriginImage(false);
   }
 
   return (
     <Container
-      ref={ref}
-      >
+      ref={ref}>
       <LabelContainer>
         <Label>컨텐츠 작성</Label>
         <IconButton
@@ -178,7 +177,7 @@ const ImageContainer = styled.div`
 const Image = styled.img`
   width:100%;
   height: 400px;
-  object-fit: cover;
+  object-fit:contain;
 `;
 
 const ContentInput = styled(Textarea)`

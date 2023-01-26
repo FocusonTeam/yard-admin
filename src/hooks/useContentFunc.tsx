@@ -2,28 +2,32 @@ import React, { useCallback } from 'react'
 import { uuidv4 } from '@firebase/util';
 
 import { ArticleContentFragment } from 'generated/graphql';
-import useContentCollectionTemp from './useContentCollection';
 import { swap } from 'utils/helpers';
 import { useReactiveVar } from '@apollo/client';
 import { contentsVar } from 'models/fragmentVar';
+import useContentCollection from './useContentCollection';
 
 
 const MAX_CARD_PER_COLUMN = 10;
 
 function useContentFunc() {
 
-  const [contentCards, setContentCards] = useContentCollectionTemp();
+  const [contentCards, setContentCards] = useContentCollection();
   const columnCards = contentCards.Contents;
-
   const contentListVar = useReactiveVar(contentsVar);
+
   
   const settingAllContentCard = useCallback(() => {
-
+    console.log(contentCards);
     setContentCards(() => {
-      console.log("contentListVar :: ", contentListVar);
-
-      return {
-        Contents: contentListVar
+      if(contentListVar === null){
+        return {
+          Contents: columnCards
+        }
+      }else{
+        return {
+          Contents: contentListVar
+        }
       }
     })
   }, [setContentCards]);
@@ -43,12 +47,12 @@ function useContentFunc() {
         index: null,
         subtitle: "",
         content: "",
-        image: {path: "", mimetype: null}
+        image: null
       }
 
       return {
         ...allCards,
-        Contents: [newColumnCard, ...columnCards]
+        Contents: [...columnCards, newColumnCard]
       }
     })
   }, [setContentCards]);
@@ -97,15 +101,21 @@ function useContentFunc() {
     const clearContentsCards = useCallback(() => {
       setContentCards((allCards) => {
         const columnCards = allCards.Contents;
+        
         return {
-          Contents: [],
+          Contents: columnCards.splice(0, columnCards.length)
         };
       });
+      console.log("clear contents", contentCards);
+
+      localStorage.removeItem('contentstorage');
+
     }, [setContentCards]);
 
 
   return {
-    contentCards: columnCards, 
+    contentCards: columnCards,
+    setContentCards,
     settingAllContentCard,
     addEmptyContentCard,
     updateContentCard,

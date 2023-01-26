@@ -11,9 +11,9 @@ import { FontButton } from 'components/atoms/FontButton';
 import PulseLoader from 'react-spinners/PulseLoader';
 import useWindowSize from 'hooks/useWindowSize';
 import PreviewArticle from 'components/PreviewArticle';
-import SubTitle from 'components/atoms/SubTitle'
-import { CLOUD_STORAGE_BASE_URL } from 'utils/constants'
-
+import SubTitle from 'components/atoms/SubTitle';
+import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
+import { SampleImg } from 'assets/images';
 
 
 export default function ArticleDetail() {
@@ -40,15 +40,15 @@ export default function ArticleDetail() {
   };
 
   const onClickCardRemove = useCallback(async () => {
+
+    console.log(data?.getArticleForEdit);
+
     const result = await deleteArticle({
       variables : {id : state.id}
     });
 
     if(result.data){
-      alert("아티클이 삭제되었습니다");
       navigate("/yard-admin/articles");
-    }else{
-      alert("아티클을 삭제할 수 없습니다");
     }
     if(result.errors){
       alert("아티클을 삭제할 수 없습니다");
@@ -59,6 +59,7 @@ export default function ArticleDetail() {
   const onClickEdit = () => {
     navigate(`/yard-admin/article-edit/${state.id}`, {state : state.id});
   }
+
 
   if(data?.getArticleForEdit.contents === undefined || error){
     return (
@@ -107,12 +108,16 @@ export default function ArticleDetail() {
             </div>
           </div>
         </HeadWrapper>
-        {data.getArticleForEdit.thumbnail === null || data.getArticleForEdit.thumbnail === undefined ? (<></>) : (
-          <ThumbnailCotainer>
-            <Thumbnail src={CLOUD_STORAGE_BASE_URL + data.getArticleForEdit.thumbnail.path}/>
-            <ThumbnailMark>썸네일</ThumbnailMark>
-          </ThumbnailCotainer>
-        )}
+        <ThumbnailCotainer>
+          {data.getArticleForEdit.thumbnail === null || data.getArticleForEdit.thumbnail === undefined || data.getArticleForEdit.thumbnail.path === null ? (
+              <>
+                <Thumbnail src={SampleImg} />
+              </>
+            ) : (
+                <Thumbnail src={CLOUD_STORAGE_BASE_URL + data.getArticleForEdit.thumbnail.path}/>
+            ) }
+          <ThumbnailMark>썸네일</ThumbnailMark>
+        </ThumbnailCotainer>
         {data.getArticleForEdit.articleContents?.map(element => (
             <ArticleElement
               key={element.id}
@@ -131,11 +136,7 @@ export default function ArticleDetail() {
         ))}
 
       </DetailContainer>
-
-      
-      
     </Container>
-
       <ModalBase active={isActive} closeEvent={onClickModalOff}>
         <CardModal closeEvent={onClickModalOff} title="아티클 삭제" actionMsg="삭제" actionEvent={onClickCardRemove}>
             아티클을 삭제 하시겠습니까?

@@ -10,10 +10,10 @@ import { ArticleUnitFragment, useGetArticlesQuery } from '../../generated/graphq
 import { COLORS } from '../../styles';
 import ArticleCard from 'components/ArticleCard';
 import useLogout from 'hooks/useLogout';
-import ArticleList from 'components/ArticleList';
 import Label from 'components/atoms/Label';
 import { useReactiveVar } from '@apollo/client';
 import { articleUnitsVar } from '../../models/fragmentVar';
+import useContentFunc from 'hooks/useContentFunc';
 
 export default function Articles(props : any) {
 
@@ -39,6 +39,17 @@ export default function Articles(props : any) {
     fetchPolicy: 'cache-and-network',
     variables: {areaId : null}
   });
+
+  const {
+    contentCards,
+    setContentCards,
+    clearContentsCards
+  } = useContentFunc();
+
+  useEffect(() => {
+    clearContentsCards();
+    console.log("contentsCards in articles", contentCards);
+  }, [])
 
   useEffect(() => {
     console.log(data?.getArticles);
@@ -128,3 +139,4 @@ export default function Articles(props : any) {
     </div>
   )
 }
+
