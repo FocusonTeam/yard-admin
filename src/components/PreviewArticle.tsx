@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import SelectBox from './atoms/SelectBox';
 import RadioButton from './atoms/RadioButton';
 import { phoneSize } from '../utils/provider';
-import { within } from '@storybook/testing-library';
 
 let SCREEN_WIDTH = 0;
 
@@ -77,7 +76,7 @@ const tagstyle = `
 
 const PreviewArticle = (props: any) => {
 
-  const [device, setDevice] = useState("");
+  const [device, setDevice] = useState(0);
 
   const [theme, setTheme] = useState({ dark: false, light: false });
   const [width, setWidth] = useState(0);
@@ -97,8 +96,8 @@ const PreviewArticle = (props: any) => {
     }
   }
   useEffect(() => {
-    let phone = phoneSize.find(function(data){return data.name === device});
-    console.log(phone);
+    let phone = phoneSize[device];
+    console.log(phoneSize, device);
     setWidth(phone?.size.width || 0);
     setHeight(phone?.size.height || 0);
     setDeviceContainer(phone?.className || "");
@@ -107,12 +106,10 @@ const PreviewArticle = (props: any) => {
     console.log("w, h", width, height, deviceContainer);
     SCREEN_WIDTH = width;
   }, [width, height, device, deviceImage]);
-
-  // TODO :: html css 추가
   
   return (
     <Container>
-      <div className='flex p-2.5 gap-4 bg-white items-center justify-center rounded-xl drop-shadow-md'>
+      <div className='flex p-2 gap-4 bg-white items-center justify-center rounded-xl drop-shadow-md'>
         <RadioButton
             name="dark"
             id="dark"
@@ -132,7 +129,7 @@ const PreviewArticle = (props: any) => {
           <SelectBox theme="device" handleChange={setDevice}/>
       </div>
       <div className={`z-0 border-gray-300 border ${deviceContainer} mt-5 `}>
-        {device !== "" && <DeviceContent dangerouslySetInnerHTML={{ __html: tagstyle + text }}/>}
+        {device !== 0 && <DeviceContent dangerouslySetInnerHTML={{ __html: tagstyle + text }}/>}
       </div>
     </Container>
   )
@@ -144,7 +141,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 700px;
+  max-width: 800px;
 `
 
 const SelectContainer = styled.div`

@@ -6,6 +6,12 @@ export const enum State {
 
 export const phoneSize = [
 	{
+		name:"",
+		size: {},
+		className: "",
+		safeArea: ""
+	},
+	{
 		name: "iPhone 11",
 		size : {
 			width : 375,
@@ -48,6 +54,15 @@ export const phoneSize = [
 			height:880
 		},
 		className: "w-[360px] h-[880px] rounded-2xl pt-[18px] bg-white overflow-y-scroll",
+		safeArea: "",
+	},
+	{
+		name:"Galaxy Z Fold",
+		size : {
+			width:768,
+			height:1076
+		},
+		className: "w-[768px] h-[1076px] rounded-2xl pt-[18px] bg-white overflow-y-scroll",
 		safeArea: "",
 	}
 ]

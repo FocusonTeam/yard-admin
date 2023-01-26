@@ -4,36 +4,14 @@ import {AiOutlineCheck, AiFillCaretDown} from 'react-icons/ai';
 import { useGetAreasLazyQuery, useGetArticleCategoriesLazyQuery } from '../../generated/graphql';
 import { SelectModel } from 'models/models';
 
-// const areas = [
-//   { id: 0, name: '모든 지역'},
-//   { id: 1, name: '제주도'},
-//   { id: 3, name: '부산' },
-//   { id: 4, name: '강릉' },
-//   { id: 5, name: '군산' },
-//   { id: 6, name: '경주' },
-//   { id: 7, name: '전주' },
-//   { id: 9, name: '서울' },
-//   { id: 10, name: '여수' },
-//   { id: 11, name: '영국' },
-//   { id: 13, name: '일본' },
-//   { id: 12, name: '베트남'},
-// ]
-
-// const categories = [
-//   { id: 1, name : '카테고리 선택'},
-//   { id: 2, name : '야드의 이야기'},
-//   { id: 3,name : '제주의 이야기를 살피다'},
-//   { id: 4,name : '☕️ 제주의 이야기를 마시다'},
-//   { id: 5,name : '☕️ 부산의 이야기를 마시다'},
-//   { id: 6,name : '☕️ 강릉의 이야기를 마시다'},
-// ];
-
 const devices = [
   {id: 0, name: '디바이스 선택'},
   {id :1, name : 'iPhone 11'},
-  {id :2, name : 'iPhone 14 Pro Max'},
-  {id :3, name : 'Galaxy S21'},
-  {id :4, name : 'Galaxy Z Flip 3'}
+  {id :2, name : 'iPhone 12'},
+  {id :3, name : 'iPhone 14 Pro Max'},
+  {id :4, name : 'Galaxy S21'},
+  {id :5, name : 'Galaxy Z Flip 3'},
+  {id: 6, name : 'Galaxy Z Fold'}
 ]
 
 export default function SelectBox({theme, picked, handleChange, ...props} : any) {

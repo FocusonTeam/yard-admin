@@ -14,6 +14,7 @@ import PreviewArticle from 'components/PreviewArticle';
 import SubTitle from 'components/atoms/SubTitle';
 import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 import { SampleImg } from 'assets/images';
+import { alerts } from 'utils/alerts'
 
 
 export default function ArticleDetail() {
@@ -51,7 +52,8 @@ export default function ArticleDetail() {
       navigate("/yard-admin/articles");
     }
     if(result.errors){
-      alert("아티클을 삭제할 수 없습니다");
+      //TODO :: 삭제된 아티클인 경우와 다른 error 분기 나누기
+      alerts({status : "error", title : "아티클을 삭제할 수 없습니다"});
     }
     
   }, []);
@@ -86,7 +88,7 @@ export default function ArticleDetail() {
   return (
     <>
     <Container>
-      {windowsize.innerWidth > 1400 ? (<>
+      {windowsize.innerWidth > 1600 ? (<>
         <PreviewArticle htmltext={data?.getArticleForEdit.contents}/>
         </>) : (<></>)}
 
