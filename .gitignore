@@ -25,6 +25,4 @@ yarn-error.log*
 .env
 .env.development
 
-apollo.ts
-firebase.ts
 codegen.yml
