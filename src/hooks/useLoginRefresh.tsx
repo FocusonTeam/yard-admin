@@ -4,7 +4,6 @@ import { useRegenerateTokenMutation } from 'generated/graphql';
 import { getLoginToken, setLoginToken, getStorage, removeLoginToken, removeStorage } from '../utils/storageUtils';
 import { useLoginExtensionLazyQuery } from '../generated/graphql';
 import { Navigate, useNavigate } from 'react-router-dom';
-import useLogout from './useLogout';
 import { alerts } from 'utils/alerts';
 
 
@@ -44,7 +43,7 @@ function useLoginRefresh(){
       removeLoginToken('refreshToken');
       removeStorage('adminID');
       isLoggedVar(false);
-      navigate('/yard-admin/login');
+      navigate('/login');
     }
   }, [isLoggedVar]);
 
@@ -69,7 +68,7 @@ function useLoginRefresh(){
       removeLoginToken('accessToken');
       removeLoginToken('refreshToken');
       removeStorage('adminID');
-      navigate('/yard-admin/login');
+      navigate('/login');
     }
 
   }, [isLoggedVar, userNameVar])
