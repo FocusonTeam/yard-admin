@@ -15,6 +15,7 @@ import SubTitle from 'components/atoms/SubTitle';
 import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 import { SampleImg } from 'assets/images';
 import { alerts } from 'utils/alerts'
+import useContentFunc from 'hooks/useContentFunc'
 
 
 export default function ArticleDetail() {
@@ -28,6 +29,21 @@ export default function ArticleDetail() {
     variables: {id : state.id}
   });
 
+  const {
+    setContentCards,
+  } = useContentFunc();
+
+  useEffect(() => {
+    if(data?.getArticleForEdit){
+      console.log("data.getArticleForEdit", data.getArticleForEdit);
+      if(data?.getArticleForEdit.articleContents !== null){
+        setContentCards({Contents : data.getArticleForEdit.articleContents!});
+      }
+    }
+  }, [data]);
+
+
+  // 삭제 모달 활성화 및 삭제 쿼리
   const [deleteArticle] = useDeleteArticleMutation();
 
   const [isActive, setIsActive] = useState(false);
@@ -66,7 +82,7 @@ export default function ArticleDetail() {
   if(data?.getArticleForEdit.contents === undefined || error){
     return (
       <>
-      <div>아티클을 불러오지 못했습니다</div>
+        <div>아티클을 불러오지 못했습니다</div>
       </>
     )
   }

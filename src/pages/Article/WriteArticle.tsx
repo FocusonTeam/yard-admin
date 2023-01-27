@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import styled from 'styled-components'
+import styled from 'styled-components';
+import _ from 'lodash';
 
 import SelectBox from '../../components/atoms/SelectBox'
 import Label from '../../components/atoms/Label'
@@ -9,6 +10,7 @@ import ContentsList from 'components/ContentsList';
 import { ArticleState, Content, CreateArticleInput, useCreateArticleMutation } from 'generated/graphql';
 import useContentsFunc from 'hooks/useContentFunc';
 import { alerts } from '../../utils';
+
 
 
 export default function WriteArticle() {
@@ -44,7 +46,7 @@ export default function WriteArticle() {
       const contentsInput : Content[] = contentCards.map((card : any) => ({
         subtitle: card.subtitle,
         content: card.content,
-        image: Object.keys(card.image).length === 0 ? null :  {path: card.image.path}
+        image: _.isEmpty(card.image) ? null : {path : card.image.path, mimetype: card.image.mimetype}
       }))
   
       console.log(categoryId, area, title, "content::", contentsInput); 

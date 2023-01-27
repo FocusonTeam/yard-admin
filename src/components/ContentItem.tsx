@@ -38,12 +38,15 @@ function ContentItem({
   useEffect(() => {
     
     console.log("image 점검:", contentsCard);
+
     //컨텐츠에 이미지 있는 경우 - 이미지 경로
     if(contentsCard.image?.path !== null){
       setOriginImage(true);
     }
+
     //컨텐츠에 이미지 없는 경우
-    if(contentsCard.image === null || contentsCard.image === undefined || contentsCard.image.path === undefined){
+    if(contentsCard.image === null || contentsCard.image === undefined || _.isEmpty(contentsCard.image)){
+      console.log("빈 객체");
       setOriginImage(false);
     }
   }, [contentsCard]);

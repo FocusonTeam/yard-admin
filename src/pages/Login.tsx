@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
 import styled from 'styled-components'
 import {COLORS, FONTS} from '../styles/index';
 import { useAdminLoginLazyQuery, useLoginExtensionLazyQuery, useLoginExtensionQuery } from '../generated/graphql';
 import { YardLogo } from 'assets/images';
-import { getLoginToken, getStorage, setCookie, setLoginToken, getCookie, removeLoginToken, setStorage } from '../utils/storageUtils';
+import { setLoginToken, setStorage } from '../utils/storageUtils';
 import { isLoggedVar, userIdVar, userNameVar } from '../models/fragmentVar';
 
 const Login = () => {

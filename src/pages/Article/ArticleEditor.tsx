@@ -1,27 +1,24 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
-import { createBrowserHistory } from "history";
+import _ from 'lodash';
 
-import { ArticleContentFragment, ArticleContentInput, ArticleInput, ArticleState, Content, CreateArticleInput, UploadImageInput, useEditArticleMutation, useGetArticleForEditQuery } from 'generated/graphql';
+import { ArticleState, Content, useEditArticleMutation, useGetArticleForEditQuery } from 'generated/graphql';
 import Label from 'components/atoms/Label';
 import SelectBox from 'components/atoms/SelectBox';
 import { Button } from 'components/atoms/Button';
 import styled from 'styled-components';
 import { COLORS } from 'styles/colors';
 import useContentFunc from 'hooks/useContentFunc';
-import { ImageInputButton } from 'components/atoms/ImageInputButton';
 import { SpinnerMessage } from 'components/atoms/SpinnerMessage';
 import ContentItem from 'components/ContentItem';
 import { MdAdd } from 'react-icons/md';
 import { EditArticleInput } from '../../generated/graphql';
-import useContentCollection from 'hooks/useContentCollection';
 import { alerts } from 'utils/alerts';
 
 
 export default function ArticleEditor () {
   
   const {state} = useLocation();
-  let history = createBrowserHistory();
 
   const [timeloading, setTimeLoading] = useState(true);
 
@@ -91,14 +88,10 @@ export default function ArticleEditor () {
     const contentsInput : Content[] = contentCards.map((card : any) => ({
       subtitle: card.subtitle,
       content: card.content,
-      image: Object.keys(card.image).length === 0 ? null : {path : card.image.path}
+      image: _.isEmpty(card.image) ? null : {path : card.image.path, mimetype: card.image.mimetype}
     }))
 
     console.log(categoryId, areaId, title, "content::", contentsInput); 
-
-    // contentCards.map((card: any) => {
-    //   console.log("card.image", card.image);
-    // })
 
     const input : EditArticleInput = {
       id: state,
