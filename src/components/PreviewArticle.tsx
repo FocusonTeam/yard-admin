@@ -9,37 +9,6 @@ import { phoneSize } from '../utils/provider';
 
 let SCREEN_WIDTH = 0;
 
-const tagsStyles = {
-	body: {
-			color: '#1c1d20',
-			fontSize: 16,
-			lineHeight: FONTS.title.fontSize,
-			paddingLeft: SPACING.wide,
-			paddingRight: SPACING.wide,
-			paddingTop: 10,
-			paddingBottom: 50,
-			backgroundColor: '#ffffff',
-	},
-	h1: {
-			marginTop: 5,
-			fontSize: 22,
-			fontWeight: 'bold',
-	},
-	h2: {
-			color: '#19A2F7' ,
-			fontSize: 16,
-			fontWeight: 'normal',
-	},
-	h3: {
-			fontSize: 18,
-			fontWeight: 'bold',
-	},
-	img: {
-			width: SCREEN_WIDTH,
-			height: SCREEN_WIDTH,
-	},
-};
-
 const tagstyle = `
   <style>
     div > h2 {
@@ -144,30 +113,6 @@ const Container = styled.div`
   max-width: 800px;
 `
 
-const SelectContainer = styled.div`
-  display: flex;
-  background-color: white;
-  gap:1rem;
-  z-index: 2;
-  align-items: center;
-  justify-content: center;
-  width : 500px;
-  padding: 10px;
-  border-radius: 0.375rem;
-`
-
-const HtmlContainer = styled.div<{width : number, height: number}>`
-  width: ${props => props.width}px;
-  height: ${props => props.height}px;
-  margin-top: 20px;
-  border-radius: 3rem;
-  padding-top: 20px;
-  background-color: white;
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
-`;
 
 const DeviceContent=styled.div`
   height: 100%;

@@ -38,6 +38,7 @@ const SideBar = () => {
   return (
     <div className="bg-white w-24 flex flex-col text-black border" >
         <div className="flex items-center gap-2 px-2.5 py-3 mb-2 mt-2">
+          {/* <Logo src={YardLogo} alt="yard" /> */}
           <img src={require("../assets/images/yardlogo.png")} />
         </div>
         <div className="flex-1 px-2 py-2">

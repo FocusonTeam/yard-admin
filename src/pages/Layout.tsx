@@ -2,11 +2,6 @@ import React, { useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import SideBar from '../components/Sidebar';
-import { isLoggedVar } from '../models/fragmentVar';
-import { useReactiveVar } from '@apollo/client';
-import { getLoginToken } from '../utils/storageUtils';
-import ModalBase from 'common/ModalBase';
-import CardModal from 'components/atoms/CardModal';
 
 
 export default function Layout() {
@@ -25,7 +20,6 @@ export default function Layout() {
 export function HeaderLayout() {
   
   //TODO :: regenerate token 하기 전, accesstoken이 만료되는 경우, 유저가 재로그인 혹은 연장 선택
-
 
   return (
     <div className='flex flex-col'>
