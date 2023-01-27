@@ -10,12 +10,12 @@ const SideBar = () => {
   const windowsize = useWindowSize().windowSize;
 
   const menus = [
-    {iconSm : <RiHome6Fill size="20" />, icon : <RiHome6Fill size="28" />, text : "대시보드", path:"/yard-admin/"},
-    {iconSm : <MdArticle size="22" />, icon : <MdArticle size="28" />, text: "아티클", path:"/yard-admin/articles"},
-    {iconSm : <MdAppSettingsAlt size="22"/>, icon : <MdAppSettingsAlt size="28" />, text: "야드 운영 관리", path:"/yard-admin/manage-yard"},
-    {iconSm : <RiInstagramFill size="22" />, icon : <RiInstagramFill size="28" />, text: "SNS 관리", path:"/yard-admin/manager-sns"},
-    {iconSm : <RiUserSettingsFill size="22" />, icon : <RiUserSettingsFill size="28" />, text: "사용자 관리", path:"/yard-admin/manager-users"},
-    {iconSm : <RiSettings4Fill size="22" />, icon : <RiSettings4Fill size="30" />, text: "환경설정", path:"/yard-admin/settings"},
+    {iconSm : <RiHome6Fill size="20" />, icon : <RiHome6Fill size="28" />, text : "대시보드", path:"/"},
+    {iconSm : <MdArticle size="22" />, icon : <MdArticle size="28" />, text: "아티클", path:"/articles"},
+    {iconSm : <MdAppSettingsAlt size="22"/>, icon : <MdAppSettingsAlt size="28" />, text: "야드 운영 관리", path:"/manage-yard"},
+    {iconSm : <RiInstagramFill size="22" />, icon : <RiInstagramFill size="28" />, text: "SNS 관리", path:"/manager-sns"},
+    {iconSm : <RiUserSettingsFill size="22" />, icon : <RiUserSettingsFill size="28" />, text: "사용자 관리", path:"/manager-users"},
+    {iconSm : <RiSettings4Fill size="22" />, icon : <RiSettings4Fill size="30" />, text: "환경설정", path:"/settings"},
   ];
 
   // return (

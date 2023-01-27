@@ -10,7 +10,7 @@ import { ReactNotifications } from 'react-notifications-component';
 function App() {
 
   return (
-  <BrowserRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <ApolloProvider client={client} >
       <DndProvider backend={HTML5Backend}>
         <ReactNotifications />

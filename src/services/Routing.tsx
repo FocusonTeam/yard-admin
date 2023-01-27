@@ -39,11 +39,11 @@ const Routing = () => {
         }
         if(errMessageVar === "Authentication Failed"){
             logout();
-            navigate('/yard-admin/login');
+            navigate('/login');
         }
         if(errMessageVar === "Need Re Login"){
             logout();
-            navigate('/yard-admin/login');
+            navigate('/login');
         }
     }, [errMessageVar, logout]);
 
@@ -59,10 +59,10 @@ const Routing = () => {
         <ThemeProvider theme={theme === "light" ? lightTheme : darkTheme}>
             <GlobalStyles />
             <Routes>
-                <Route path="/yard-admin/login" element={<Login />}/>
+                <Route path="/login" element={<Login />}/>
             </Routes>
             <Routes>
-                <Route path="/yard-admin/" element={<Layout />}>
+                <Route path="/" element={<Layout />}>
                     <Route index element={<Home />} />
                     <Route path="articles" element={<Articles/>}/>
                     <Route path="articles/:articleId" element={<ArticleDetail/>}/>
@@ -72,7 +72,7 @@ const Routing = () => {
                     <Route path="manage-users" element={<UserManage/>}/>
                     <Route path="setting" element={<Setting />} />
                 </Route>
-                <Route path="/yard-admin/" element={<HeaderLayout/>}>
+                <Route path="/" element={<HeaderLayout/>}>
                     <Route path="write" element={<WriteArticle />}/>
                 </Route>
             </Routes>  

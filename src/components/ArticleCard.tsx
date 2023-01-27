@@ -18,7 +18,7 @@ const ArticleCard = ({articleUnit, ...props} : ArticleProps) => {
 
   return (
     <Container onClick = {(e) => {
-      navigate(`/yard-admin/articles/${articleUnit.id}`, 
+      navigate(`/articles/${articleUnit.id}`, 
       {
           state : {
             id : articleUnit.id

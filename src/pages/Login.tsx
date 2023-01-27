@@ -55,7 +55,7 @@ const Login = () => {
       userNameVar(result.data.adminLogin.owner || "user");
       isLoggedVar(true);
 
-      navigate("/yard-admin/");
+      navigate("/");
     }
     if(result.error){
       console.log(result.error);

@@ -112,7 +112,7 @@ export default function Articles(props : any) {
         <SearchBar handleChange={setKeyword} />
         <div className='flex gap-2 z-10'>
           <SelectBox theme="areas" handleChange={setAreaId} />
-          <Button onClick={() => navigate("/yard-admin/write")} primary={true} label={"아티클 쓰기"}/>
+          <Button onClick={() => navigate("/write")} primary={true} label={"아티클 쓰기"}/>
         </div>
       </div>
       <div className="h-16 px-4 flex justify-between items-center">

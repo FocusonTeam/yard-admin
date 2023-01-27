@@ -124,7 +124,7 @@ export default function ArticleEditor () {
         alerts({status : "info", title : "저장이 완료되었습니다"});
         console.log("results.data", results.data);
         clearContentsCards();
-        navigate("/yard-admin/articles");
+        navigate("/articles");
       }
     }catch(err){
       alerts({status : "error", title : "아티클을 작성할 수 없습니다. 다시 시도해주세요"});

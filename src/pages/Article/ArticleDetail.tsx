@@ -49,7 +49,7 @@ export default function ArticleDetail() {
     });
 
     if(result.data){
-      navigate("/yard-admin/articles");
+      navigate("/articles");
     }
     if(result.errors){
       //TODO :: 삭제된 아티클인 경우와 다른 error 분기 나누기
@@ -59,7 +59,7 @@ export default function ArticleDetail() {
   }, []);
 
   const onClickEdit = () => {
-    navigate(`/yard-admin/article-edit/${state.id}`, {state : state.id});
+    navigate(`/article-edit/${state.id}`, {state : state.id});
   }
 
 
