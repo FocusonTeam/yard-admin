@@ -10,14 +10,14 @@ import { ReactNotifications } from 'react-notifications-component';
 function App() {
 
   return (
-  <HashRouter>
+  <BrowserRouter basename={process.env.PUBLIC_URL}>
     <ApolloProvider client={client} >
       <DndProvider backend={HTML5Backend}>
         <ReactNotifications />
         <Routing />
       </DndProvider>
     </ApolloProvider>
-  </HashRouter>);
+  </BrowserRouter>);
 }
 
 export default App;
