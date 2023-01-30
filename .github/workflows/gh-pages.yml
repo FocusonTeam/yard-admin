@@ -5,13 +5,12 @@ on:
     branches:
       - main
 
-
 jobs:
   deploy:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout source code.
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
       - name: Install dependencies
         run: yarn install --prod --pure-lockfile
