@@ -349,7 +349,7 @@ export type Image = {
   encoding?: Maybe<Scalars["String"]>;
   id: Scalars["Int"];
   mimetype?: Maybe<Scalars["String"]>;
-  path: Scalars["String"];
+  path?: Maybe<Scalars["String"]>;
   place?: Maybe<Scalars["String"]>;
   postImages?: Maybe<Array<PostsImages>>;
   profile?: Maybe<Profile>;
@@ -361,7 +361,7 @@ export type ImageInput = {
   article?: InputMaybe<ArticleInput>;
   encoding?: InputMaybe<Scalars["String"]>;
   mimetype?: InputMaybe<Scalars["String"]>;
-  path: Scalars["String"];
+  path?: InputMaybe<Scalars["String"]>;
   place?: InputMaybe<Scalars["String"]>;
   postImages?: InputMaybe<Array<PostsImagesInput>>;
   profile?: InputMaybe<ProfileInput>;
@@ -386,11 +386,17 @@ export type Mutation = {
   addArticleCategory: Scalars["Boolean"];
   addIosVersion: Scalars["String"];
   changeArticleState: Article;
+  closeComment: Scalars["Boolean"];
+  closePost: Scalars["Boolean"];
   createAdmin: Scalars["Boolean"];
   createArticle: Article;
   deleteArticle: Scalars["Boolean"];
+  deleteComment: Scalars["Boolean"];
+  deletePost: Scalars["Boolean"];
   editArticle: Article;
   editArticleCategory: Scalars["Boolean"];
+  openComment: Scalars["Boolean"];
+  openPost: Scalars["Boolean"];
   regenerateToken: AdminLoginResult;
   removeArticleCategory: Scalars["Boolean"];
 };
@@ -412,6 +418,14 @@ export type MutationChangeArticleStateArgs = {
   state: Scalars["String"];
 };
 
+export type MutationCloseCommentArgs = {
+  commentId: Scalars["Int"];
+};
+
+export type MutationClosePostArgs = {
+  postId: Scalars["Int"];
+};
+
 export type MutationCreateAdminArgs = {
   id: Scalars["String"];
   owner: Scalars["String"];
@@ -426,6 +440,14 @@ export type MutationDeleteArticleArgs = {
   id: Scalars["Float"];
 };
 
+export type MutationDeleteCommentArgs = {
+  commentId: Scalars["Int"];
+};
+
+export type MutationDeletePostArgs = {
+  postId: Scalars["Int"];
+};
+
 export type MutationEditArticleArgs = {
   input: EditArticleInput;
 };
@@ -433,6 +455,14 @@ export type MutationEditArticleArgs = {
 export type MutationEditArticleCategoryArgs = {
   category: Scalars["String"];
   id: Scalars["Int"];
+};
+
+export type MutationOpenCommentArgs = {
+  commentId: Scalars["Int"];
+};
+
+export type MutationOpenPostArgs = {
+  postId: Scalars["Int"];
 };
 
 export type MutationRegenerateTokenArgs = {
@@ -627,6 +657,10 @@ export type Query = {
   getArticleCategories: Array<ArticleCategory>;
   getArticleForEdit: Article;
   getArticles: Array<Article>;
+  getComments: Array<Comment>;
+  getCommentsByArea: Array<Comment>;
+  getPosts: Array<Post>;
+  getPostsByArea: Array<Post>;
   loginExtension: AdminLoginResult;
   searchArticles: Array<Article>;
 };
@@ -650,6 +684,28 @@ export type QueryGetArticleForEditArgs = {
 
 export type QueryGetArticlesArgs = {
   areaId?: InputMaybe<Scalars["Int"]>;
+};
+
+export type QueryGetCommentsArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
+};
+
+export type QueryGetCommentsByAreaArgs = {
+  areaId: Scalars["Int"];
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
+};
+
+export type QueryGetPostsArgs = {
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
+};
+
+export type QueryGetPostsByAreaArgs = {
+  areaId: Scalars["Int"];
+  limit?: InputMaybe<Scalars["Int"]>;
+  offset?: InputMaybe<Scalars["Int"]>;
 };
 
 export type QueryLoginExtensionArgs = {
@@ -721,7 +777,7 @@ export type UploadImageInput = {
   encoding?: InputMaybe<Scalars["String"]>;
   index?: InputMaybe<Scalars["Int"]>;
   mimetype?: InputMaybe<Scalars["String"]>;
-  path: Scalars["String"];
+  path?: InputMaybe<Scalars["String"]>;
 };
 
 export type User = {
@@ -791,7 +847,7 @@ export type ArticleUnitFragment = {
     domestic: boolean;
   };
   category: { __typename?: "ArticleCategory"; category: string };
-  thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+  thumbnail?: { __typename?: "Image"; id: number; path?: string | null } | null;
 };
 
 export type ArticleDetailFragment = {
@@ -810,7 +866,7 @@ export type ArticleDetailFragment = {
     region2depth: string;
     domestic: boolean;
   };
-  thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+  thumbnail?: { __typename?: "Image"; id: number; path?: string | null } | null;
   places?: Array<{
     __typename?: "ArticlePlace";
     id: number;
@@ -826,7 +882,7 @@ export type ArticleDetailFragment = {
     content?: string | null;
     image?: {
       __typename?: "Image";
-      path: string;
+      path?: string | null;
       mimetype?: string | null;
     } | null;
     place?: {
@@ -837,7 +893,11 @@ export type ArticleDetailFragment = {
       category?: string | null;
     } | null;
   }> | null;
-  images?: Array<{ __typename?: "Image"; id: number; path: string }> | null;
+  images?: Array<{
+    __typename?: "Image";
+    id: number;
+    path?: string | null;
+  }> | null;
 };
 
 export type CategoryUnitFragment = {
@@ -854,7 +914,7 @@ export type ArticleContentFragment = {
   content?: string | null;
   image?: {
     __typename?: "Image";
-    path: string;
+    path?: string | null;
     mimetype?: string | null;
   } | null;
   place?: {
@@ -877,7 +937,7 @@ export type ArticlePlaceFragment = {
 export type ArticleImageFragment = {
   __typename?: "Image";
   id: number;
-  path: string;
+  path?: string | null;
   mimetype?: string | null;
   encoding?: string | null;
 };
@@ -949,7 +1009,11 @@ export type CreateArticleMutation = {
       region2depth: string;
       domestic: boolean;
     };
-    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+    thumbnail?: {
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -965,7 +1029,7 @@ export type CreateArticleMutation = {
       content?: string | null;
       image?: {
         __typename?: "Image";
-        path: string;
+        path?: string | null;
         mimetype?: string | null;
       } | null;
       place?: {
@@ -976,7 +1040,11 @@ export type CreateArticleMutation = {
         category?: string | null;
       } | null;
     }> | null;
-    images?: Array<{ __typename?: "Image"; id: number; path: string }> | null;
+    images?: Array<{
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    }> | null;
   };
 };
 
@@ -1002,7 +1070,11 @@ export type EditArticleMutation = {
       region2depth: string;
       domestic: boolean;
     };
-    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+    thumbnail?: {
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -1018,7 +1090,7 @@ export type EditArticleMutation = {
       content?: string | null;
       image?: {
         __typename?: "Image";
-        path: string;
+        path?: string | null;
         mimetype?: string | null;
       } | null;
       place?: {
@@ -1029,7 +1101,11 @@ export type EditArticleMutation = {
         category?: string | null;
       } | null;
     }> | null;
-    images?: Array<{ __typename?: "Image"; id: number; path: string }> | null;
+    images?: Array<{
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    }> | null;
   };
 };
 
@@ -1065,7 +1141,11 @@ export type ChangeArticleStateMutation = {
       region2depth: string;
       domestic: boolean;
     };
-    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+    thumbnail?: {
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -1081,7 +1161,7 @@ export type ChangeArticleStateMutation = {
       content?: string | null;
       image?: {
         __typename?: "Image";
-        path: string;
+        path?: string | null;
         mimetype?: string | null;
       } | null;
       place?: {
@@ -1092,7 +1172,11 @@ export type ChangeArticleStateMutation = {
         category?: string | null;
       } | null;
     }> | null;
-    images?: Array<{ __typename?: "Image"; id: number; path: string }> | null;
+    images?: Array<{
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    }> | null;
   };
 };
 
@@ -1219,7 +1303,11 @@ export type GetArticleQuery = {
       region2depth: string;
       domestic: boolean;
     };
-    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+    thumbnail?: {
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -1235,7 +1323,7 @@ export type GetArticleQuery = {
       content?: string | null;
       image?: {
         __typename?: "Image";
-        path: string;
+        path?: string | null;
         mimetype?: string | null;
       } | null;
       place?: {
@@ -1246,7 +1334,11 @@ export type GetArticleQuery = {
         category?: string | null;
       } | null;
     }> | null;
-    images?: Array<{ __typename?: "Image"; id: number; path: string }> | null;
+    images?: Array<{
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    }> | null;
   };
 };
 
@@ -1269,7 +1361,11 @@ export type GetArticlesQuery = {
       domestic: boolean;
     };
     category: { __typename?: "ArticleCategory"; category: string };
-    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+    thumbnail?: {
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    } | null;
   }>;
 };
 
@@ -1306,7 +1402,11 @@ export type SearchArticlesQuery = {
       domestic: boolean;
     };
     category: { __typename?: "ArticleCategory"; category: string };
-    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+    thumbnail?: {
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    } | null;
   }>;
 };
 
@@ -1332,7 +1432,11 @@ export type GetArticleForEditQuery = {
       region2depth: string;
       domestic: boolean;
     };
-    thumbnail?: { __typename?: "Image"; id: number; path: string } | null;
+    thumbnail?: {
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    } | null;
     places?: Array<{
       __typename?: "ArticlePlace";
       id: number;
@@ -1348,7 +1452,7 @@ export type GetArticleForEditQuery = {
       content?: string | null;
       image?: {
         __typename?: "Image";
-        path: string;
+        path?: string | null;
         mimetype?: string | null;
       } | null;
       place?: {
@@ -1359,7 +1463,11 @@ export type GetArticleForEditQuery = {
         category?: string | null;
       } | null;
     }> | null;
-    images?: Array<{ __typename?: "Image"; id: number; path: string }> | null;
+    images?: Array<{
+      __typename?: "Image";
+      id: number;
+      path?: string | null;
+    }> | null;
   };
 };
 

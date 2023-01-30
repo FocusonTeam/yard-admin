@@ -1,21 +1,23 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import styled from 'styled-components';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import PulseLoader from 'react-spinners/PulseLoader';
+
 import { COLORS } from '../../styles'
 import ArticleElement from '../../components/atoms/ArticleElement'
 import ModalBase from '../../common/ModalBase'
 import CardModal from '../../components/atoms/CardModal'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
-import { useGetArticleQuery, useGetArticleForEditQuery, useDeleteArticleMutation } from '../../generated/graphql';
+import { useGetArticleForEditQuery, useDeleteArticleMutation, useChangeArticleStateMutation } from '../../generated/graphql';
 import Title from 'components/atoms/Title';
 import { FontButton } from 'components/atoms/FontButton';
-import PulseLoader from 'react-spinners/PulseLoader';
 import useWindowSize from 'hooks/useWindowSize';
 import PreviewArticle from 'components/PreviewArticle';
 import SubTitle from 'components/atoms/SubTitle';
 import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 import { SampleImg } from 'assets/images';
-import { alerts } from 'utils/alerts'
 import useContentFunc from 'hooks/useContentFunc'
+import Label from 'components/atoms/Label'
+import { State, alerts } from 'utils/index'
 
 
 export default function ArticleDetail() {
@@ -23,11 +25,14 @@ export default function ArticleDetail() {
   const navigate = useNavigate();
   const {state} = useLocation();
   const windowsize = useWindowSize().windowSize;
+  const [actionInfo, setActionInfo] = useState<string>("");
 
   const {data, refetch, loading, error} = useGetArticleForEditQuery({
     fetchPolicy: 'no-cache',
     variables: {id : state.id}
   });
+
+  const [changeArticleState] = useChangeArticleStateMutation({fetchPolicy:"network-only"});
 
   const {
     setContentCards,
@@ -48,12 +53,9 @@ export default function ArticleDetail() {
 
   const [isActive, setIsActive] = useState(false);
 
-  const onClickModalOn = () => {
-    setIsActive(true);
-  };
-
   const onClickModalOff = () => {
     setIsActive(false);
+    setActionInfo("");
   };
 
   const onClickCardRemove = useCallback(async () => {
@@ -71,12 +73,75 @@ export default function ArticleDetail() {
       //TODO :: 삭제된 아티클인 경우와 다른 error 분기 나누기
       alerts({status : "error", title : "아티클을 삭제할 수 없습니다"});
     }
+    setActionInfo("");
     
   }, []);
 
   const onClickEdit = () => {
     navigate(`/article-edit/${state.id}`, {state : state.id});
-  }
+  };
+
+  // 아티클 상태 변경
+
+  useEffect(() => {
+    if(actionInfo === ""){
+      setIsActive(false);
+    }else{
+      setIsActive(true);
+    }
+  }, [actionInfo]);
+
+  const onClickChangeState = useCallback(async () => {
+    console.log(actionInfo);
+    switch(actionInfo){
+      case "GO_REVIEW":
+        const results_inprogress = await changeArticleState({
+          variables: {
+            id: state,
+            state : State.DONE
+          }
+        })
+        if(results_inprogress.data){
+          onClickModalOff();
+          window.location.reload();
+        }
+        if(results_inprogress.errors){
+          alerts({status : "error", title : "아티클 검토로 변경 할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
+        }
+        break;
+      case "GO_DEPLOY":
+        const results_done = await changeArticleState({
+          variables: {
+            id: state,
+            state : State.UPLOADED
+          }
+        })
+        if(results_done.data){
+          onClickModalOff();
+          window.location.reload();
+        }
+        if(results_done.errors){
+          alerts({status : "error", title : "아티클을 배포할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
+        }
+        break;
+      case "TAKE DOWN":
+        const results_down = await changeArticleState({
+          variables: {
+            id: state,
+            state : State.DONE
+          }
+        })
+        if(results_down.data){
+          onClickModalOff();
+          window.location.reload();
+        }
+        if(results_down.errors){
+          alerts({status : "error", title : "아티클을 내릴 수 없습니다. 잠시 후 다시 시도해주세요😂"});
+        }
+        break;
+    }
+    setActionInfo("");
+  }, [])
 
 
   if(data?.getArticleForEdit.contents === undefined || error){
@@ -122,7 +187,7 @@ export default function ArticleDetail() {
             </div>
             <div className='flex gap-2'>
               <FontButton onClick={onClickEdit} label='수정' textColor='text-gray-800' size='large'/>
-              <FontButton onClick={onClickModalOn} label='삭제' textColor='text-gray-800' size='large'/>
+              <FontButton onClick={() => setActionInfo("REMOVE")} label='삭제' textColor='text-gray-800' size='large'/>
             </div>
           </div>
         </HeadWrapper>
@@ -145,22 +210,42 @@ export default function ArticleDetail() {
               contents={element.content}/>
           ))}
         {data?.getArticleForEdit.state === "INPROGRESS" ? (
-          <DeployButton deployNum={0}>배포 전 검토하기</DeployButton>
+          <DeployButton deployNum={0} onClick={() => setActionInfo("GO_REVIEW")}>배포 전 검토하기</DeployButton>
         ) : (
           data?.getArticleForEdit.state === "DONE"? (
-            <DeployButton deployNum={1}>배포하기</DeployButton>
+            <DeployButton deployNum={1} onClick={() => setActionInfo("GO_DEPLOY")}>배포하기</DeployButton>
           ) : (
-            <DeployButton deployNum={2}>배포 완료됨</DeployButton>
+            <DeployButton deployNum={2} onClick={() => setActionInfo("TAKEDOWN")}>배포 완료됨</DeployButton>
         ))}
 
       </DetailContainer>
     </Container>
       <ModalBase active={isActive} closeEvent={onClickModalOff}>
-        <CardModal closeEvent={onClickModalOff} title="아티클 삭제" actionMsg="삭제" actionEvent={onClickCardRemove}>
-            아티클을 삭제 하시겠습니까?
+        {actionInfo === "GO_REVIEW"? (<>
+          <CardModal closeEvent={onClickModalOff} title="" actionMsg="확인" actionEvent={onClickChangeState}>
+            <Label text="아티클을 검토하시겠습니까?" size="XL"/>
+            <Label text="아티클 검토 이후 배포를 요청해주세요" size="MD"/>
+          </CardModal>
+        
+        </>) : actionInfo === "GO_DEPLOY" ? (<>
+          <CardModal closeEvent={onClickModalOff} title="" actionMsg="수정" actionEvent={onClickChangeState}>
+            <Label text="아티클을 배포하시겠습니까?" size="XL"/>
+            <Label text="배포 즉시 앱에 반영됩니다" size="MD"/>
+          </CardModal>
+        
+        </>) : actionInfo === "TAKEDOWN" ? (
+          <CardModal closeEvent={onClickModalOff} title="" actionMsg="수정" actionEvent={onClickChangeState}>
+            <Label text="아티클을 검토 단계로 변경하시겠습니까?" size="XL"/>
+            <Label text="즉시 앱에 반영되어 아티클이 내려갑니다" size="MD"/>
+          </CardModal>
+        ) : (
+          <CardModal closeEvent={onClickModalOff} title="" actionMsg="삭제" actionEvent={onClickCardRemove}>
+            <Label text=" 아티클을 삭제 하시겠습니까?" size="XL"/>
             <br />
             삭제한 아티클은 복구 할 수 없습니다.
-        </CardModal>
+          </CardModal>
+        )
+      }
       </ModalBase>
     </>
 
