@@ -121,7 +121,7 @@
     "babel-plugin-named-exports-order": "^0.0.2",
     "clean-webpack-plugin": "^4.0.0",
     "cross-env": "^7.0.3",
-    "gh-pages": "^4.0.0",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.0",
     "postcss": "^8.4.21",
     "postcss-loader": "^7.0.2",
