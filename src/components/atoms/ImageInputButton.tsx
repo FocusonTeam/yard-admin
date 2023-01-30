@@ -2,13 +2,11 @@ import React, { useState } from "react";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { getStorage } from "firebase/storage";
 import { Progress } from '@chakra-ui/react';
+import AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
 
-import firebaseApp from "../../services/firebase";
-import { ARTICLES_IMAGES_REF } from "utils/constants";
-import AWS from 'aws-sdk';
-import { alerts } from "utils/alerts";
+import { alerts, ARTICLES_IMAGES_REF } from "utils/index";
 
 const REGION = process.env.REACT_APP_AWS_REGION;
 const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUCKET_NAME;
@@ -29,7 +27,6 @@ export function ImageInputButton({handleImage} : any) {
   const [imageFile, setImageFile] = useState<File>();
 
   const fileName = uuidv4();
-  const storage = getStorage(firebaseApp);
 
   const onChange = (
     imageList: ImageListType,

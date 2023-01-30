@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react'
-import { uuidv4 } from '@firebase/util';
+import React, { useCallback } from 'react';
 
 import { ArticleContentFragment } from 'generated/graphql';
 import { swap } from 'utils/helpers';
