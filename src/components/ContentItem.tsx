@@ -94,7 +94,7 @@ function ContentItem({
       </LabelContainer>
       <ImageContainer>
         {originImage ? (<>
-          <Image src={CLOUD_STORAGE_BASE_URL + contentsCard.image?.path}/>
+          <Image src={CLOUD_STORAGE_BASE_URL! + contentsCard.image?.path}/>
           <Button label='이미지 변경 / 삭제' onClick={onChangeImage} tailStyle='p-2 text-[#19A2F7] mx-2 font-semibold border mt-2'/>
         </>) : (<>
           <ImageInputButton handleImage={setImage}/>

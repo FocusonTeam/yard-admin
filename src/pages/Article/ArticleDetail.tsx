@@ -13,12 +13,13 @@ import { FontButton } from 'components/atoms/FontButton';
 import useWindowSize from 'hooks/useWindowSize';
 import PreviewArticle from 'components/PreviewArticle';
 import SubTitle from 'components/atoms/SubTitle';
-import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 import { SampleImg } from 'assets/images';
 import useContentFunc from 'hooks/useContentFunc'
 import Label from 'components/atoms/Label'
 import { State, alerts } from 'utils/index'
+import _ from 'lodash';
 
+const CLOUD_STORAGE_BASE_URL = process.env.REACT_APP_AWS_S3_URL;
 
 export default function ArticleDetail() {
 
@@ -192,12 +193,12 @@ export default function ArticleDetail() {
           </div>
         </HeadWrapper>
         <ThumbnailCotainer>
-          {data.getArticleForEdit.thumbnail === null || data.getArticleForEdit.thumbnail === undefined || data.getArticleForEdit.thumbnail.path === null ? (
+          {_.isEmpty(data.getArticleForEdit.thumbnail) ?  (
               <>
                 <Thumbnail src={SampleImg} />
               </>
             ) : (
-                <Thumbnail src={CLOUD_STORAGE_BASE_URL + data.getArticleForEdit.thumbnail.path}/>
+                <Thumbnail src={CLOUD_STORAGE_BASE_URL! + data.getArticleForEdit.thumbnail.path}/>
             ) }
           <ThumbnailMark>썸네일</ThumbnailMark>
         </ThumbnailCotainer>

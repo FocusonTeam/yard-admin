@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ImageUploading, { ImageListType } from "react-images-uploading";
-import { getStorage } from "firebase/storage";
 import { Progress } from '@chakra-ui/react';
 import AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
@@ -12,7 +11,6 @@ const REGION = process.env.REACT_APP_AWS_REGION;
 const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUCKET_NAME;
 const ACCESS_KEY =process.env.REACT_APP_AWS_ACCESS_KEY_ID;
 const SECRET_ACCESS_KEY=process.env.REACT_APP_AWS_SECRET_ACCESS_KEY;
-
 
 AWS.config.update({
   accessKeyId: ACCESS_KEY,

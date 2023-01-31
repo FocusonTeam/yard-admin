@@ -28,7 +28,7 @@ const ArticleCard = ({articleUnit, ...props} : ArticleProps) => {
       {articleUnit.thumbnail === null || articleUnit.thumbnail === undefined ? (
         <Thumbnail src={SampleImg} />
       ) : (
-        <Thumbnail src={CLOUD_STORAGE_BASE_URL + articleUnit.thumbnail.path}/>
+        <Thumbnail src={CLOUD_STORAGE_BASE_URL! + articleUnit.thumbnail.path}/>
       )}
       <ArticleInfo>
         <TitleInfo>
