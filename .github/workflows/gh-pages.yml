@@ -26,10 +26,13 @@ jobs:
           echo "REACT_APP_AWS_ACCESS_KEY_ID=${{ secrets.REACT_APP_AWS_ACCESS_KEY_ID }}" >> .env
           echo "REACT_APP_AWS_SECRET_ACCESS_KEY=${{ secrets.REACT_APP_AWS_SECRET_ACCESS_KEY }}" >> .env
           echo "REACT_APP_AWS_S3_URL=${{ secrets.REACT_APP_AWS_S3_URL }}" >> .env
-          cat .env
-
-      - name: Graphql Codegen
-        run: yarn run codegen --watch
+        env:
+          REACT_APP_GRAPHQL_ENDPOINT: ${{ secrets.REACT_APP_GRAPHQL_ENDPOINT }}
+          REACT_APP_CLOUD_STORAGE_BASE: ${{ secrets.REACT_APP_CLOUD_STORAGE_BASE }}
+          REACT_APP_AWS_S3_BUCKET_NAME: ${{ secrets.REACT_APP_AWS_S3_BUCKET_NAME }}
+          REACT_APP_AWS_ACCESS_KEY_ID: ${{ secrets.REACT_APP_AWS_ACCESS_KEY_ID }}
+          REACT_APP_AWS_SECRET_ACCESS_KEY: ${{ secrets.REACT_APP_AWS_SECRET_ACCESS_KEY }}
+          REACT_APP_AWS_S3_URL: ${{ secrets.REACT_APP_AWS_S3_URL }}
 
       - name: Build
         run: yarn run build
