@@ -1,0 +1,13 @@
+// netlify.toml
+[build]
+  command = "npm run build"
+  publish = "build"
+
+[context.production.environment]
+  TOML_ENV_VAR = "From netlify.toml"
+  REACT_APP_GRAPHQL_ENDPOINT = "From netlify.toml (REACT_APP_GRAPHQL_ENDPOINT)"
+  REACT_APP_AWS_S3_BUCKET_NAME = "From netlify.toml (REACT_APP_AWS_S3_BUCKET_NAME)"
+  REACT_APP_AWS_ACCESS_KEY_ID = "From netlify.toml (REACT_APP_AWS_ACCESS_KEY_ID)"
+  REACT_APP_AWS_SECRET_ACCESS_KEY = "From netlify.toml (REACT_APP_AWS_SECRET_ACCESS_KEY)"
+  REACT_APP_AWS_REGION = "From netlify.toml (REACT_APP_AWS_REGION)"
+  REACT_APP_AWS_S3_URL = "From netlify.toml (REACT_APP_AWS_S3_URL)"
