@@ -28,6 +28,9 @@ jobs:
           echo "REACT_APP_AWS_S3_URL=${{ secrets.REACT_APP_AWS_S3_URL }}" >> .env
           cat .env
 
+      - name: Graphql Codegen
+        run: yarn run codegen --watch
+
       - name: Build
         run: yarn run build
         env:
