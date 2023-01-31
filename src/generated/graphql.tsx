@@ -1,14 +1,13 @@
-import { gql } from "@apollo/client";
-import * as Apollo from "@apollo/client";
+import { gql } from '@apollo/client';
+import * as Apollo from '@apollo/client';
+import * as React from 'react';
+import * as ApolloReactComponents from '@apollo/client/react/components';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]?: Maybe<T[SubKey]> };
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> &
-  { [SubKey in K]: Maybe<T[SubKey]> };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 const defaultOptions = {} as const;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
@@ -21,262 +20,262 @@ export type Scalars = {
 };
 
 export type Accept = {
-  __typename?: "Accept";
-  copylight: Scalars["Boolean"];
-  location: Scalars["Boolean"];
-  marketing: Scalars["Boolean"];
-  privacy: Scalars["Boolean"];
-  terms: Scalars["Boolean"];
+  __typename?: 'Accept';
+  copylight: Scalars['Boolean'];
+  location: Scalars['Boolean'];
+  marketing: Scalars['Boolean'];
+  privacy: Scalars['Boolean'];
+  terms: Scalars['Boolean'];
 };
 
 export type AcceptInput = {
-  copylight?: InputMaybe<Scalars["Boolean"]>;
-  location?: InputMaybe<Scalars["Boolean"]>;
-  marketing?: InputMaybe<Scalars["Boolean"]>;
-  privacy?: InputMaybe<Scalars["Boolean"]>;
-  terms?: InputMaybe<Scalars["Boolean"]>;
+  copylight?: InputMaybe<Scalars['Boolean']>;
+  location?: InputMaybe<Scalars['Boolean']>;
+  marketing?: InputMaybe<Scalars['Boolean']>;
+  privacy?: InputMaybe<Scalars['Boolean']>;
+  terms?: InputMaybe<Scalars['Boolean']>;
 };
 
 export type AdminLoginResult = {
-  __typename?: "AdminLoginResult";
-  accessToken: Scalars["String"];
-  owner?: Maybe<Scalars["String"]>;
-  refreshToken?: Maybe<Scalars["String"]>;
+  __typename?: 'AdminLoginResult';
+  accessToken: Scalars['String'];
+  owner?: Maybe<Scalars['String']>;
+  refreshToken?: Maybe<Scalars['String']>;
 };
 
 export type AdminLoginResultInput = {
-  accessToken: Scalars["String"];
-  owner?: InputMaybe<Scalars["String"]>;
-  refreshToken?: InputMaybe<Scalars["String"]>;
+  accessToken: Scalars['String'];
+  owner?: InputMaybe<Scalars['String']>;
+  refreshToken?: InputMaybe<Scalars['String']>;
 };
 
 export type Area = {
-  __typename?: "Area";
-  activate: Scalars["Boolean"];
+  __typename?: 'Area';
+  activate: Scalars['Boolean'];
   areaTrend?: Maybe<AreaTrend>;
   areaTrends?: Maybe<Array<AreaTrend>>;
   articles?: Maybe<Array<Article>>;
   /** 법정구역 코드 */
-  code: Scalars["String"];
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  description?: Maybe<Scalars["String"]>;
-  domestic: Scalars["Boolean"];
-  id: Scalars["Int"];
+  code: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  description?: Maybe<Scalars['String']>;
+  domestic: Scalars['Boolean'];
+  id: Scalars['Int'];
   images?: Maybe<Array<AreaImages>>;
   /** y 좌표 */
-  latitude?: Maybe<Scalars["String"]>;
+  latitude?: Maybe<Scalars['String']>;
   /** x 좌표 */
-  longitude?: Maybe<Scalars["String"]>;
+  longitude?: Maybe<Scalars['String']>;
   /** 군 단위 영어 이름 */
-  name?: Maybe<Scalars["String"]>;
+  name?: Maybe<Scalars['String']>;
   posts?: Maybe<Array<Post>>;
   /** 무작위 지역 이미지 */
   randomImage?: Maybe<AreaImages>;
   /** 시도 단위 */
-  region1depth?: Maybe<Scalars["String"]>;
+  region1depth?: Maybe<Scalars['String']>;
   /** 군 단위 */
-  region2depth: Scalars["String"];
+  region2depth: Scalars['String'];
   /** 이모지 심볼 */
-  symbol: Scalars["String"];
+  symbol: Scalars['String'];
   /** 고정된 첫번째 이미지 */
   thumbnail?: Maybe<Image>;
-  updatedAt?: Maybe<Scalars["DateTime"]>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type AreaImages = {
-  __typename?: "AreaImages";
+  __typename?: 'AreaImages';
   area?: Maybe<Area>;
-  createdAt?: Maybe<Scalars["DateTime"]>;
+  createdAt?: Maybe<Scalars['DateTime']>;
   image?: Maybe<Image>;
-  title?: Maybe<Scalars["String"]>;
+  title?: Maybe<Scalars['String']>;
 };
 
 export type AreaImagesInput = {
   area?: InputMaybe<AreaInput>;
-  createdAt?: InputMaybe<Scalars["DateTime"]>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
   image?: InputMaybe<ImageInput>;
-  title?: InputMaybe<Scalars["String"]>;
+  title?: InputMaybe<Scalars['String']>;
 };
 
 export type AreaInput = {
-  activate: Scalars["Boolean"];
+  activate: Scalars['Boolean'];
   areaTrend?: InputMaybe<AreaTrendInput>;
   areaTrends?: InputMaybe<Array<AreaTrendInput>>;
   articles?: InputMaybe<Array<ArticleInput>>;
   /** 법정구역 코드 */
-  code: Scalars["String"];
-  description?: InputMaybe<Scalars["String"]>;
-  domestic: Scalars["Boolean"];
+  code: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  domestic: Scalars['Boolean'];
   images?: InputMaybe<Array<AreaImagesInput>>;
   /** y 좌표 */
-  latitude?: InputMaybe<Scalars["String"]>;
+  latitude?: InputMaybe<Scalars['String']>;
   /** x 좌표 */
-  longitude?: InputMaybe<Scalars["String"]>;
+  longitude?: InputMaybe<Scalars['String']>;
   /** 군 단위 영어 이름 */
-  name?: InputMaybe<Scalars["String"]>;
+  name?: InputMaybe<Scalars['String']>;
   posts?: InputMaybe<Array<PostInput>>;
   /** 무작위 지역 이미지 */
   randomImage?: InputMaybe<AreaImagesInput>;
   /** 시도 단위 */
-  region1depth?: InputMaybe<Scalars["String"]>;
+  region1depth?: InputMaybe<Scalars['String']>;
   /** 군 단위 */
-  region2depth: Scalars["String"];
+  region2depth: Scalars['String'];
   /** 이모지 심볼 */
-  symbol: Scalars["String"];
+  symbol: Scalars['String'];
   /** 고정된 첫번째 이미지 */
   thumbnail?: InputMaybe<ImageInput>;
 };
 
 export type AreaTrend = {
-  __typename?: "AreaTrend";
+  __typename?: 'AreaTrend';
   area: Area;
-  baseDate?: Maybe<Scalars["DateTime"]>;
+  baseDate?: Maybe<Scalars['DateTime']>;
   /** 방문수 */
-  count?: Maybe<Scalars["Float"]>;
-  id: Scalars["Int"];
+  count?: Maybe<Scalars['Float']>;
+  id: Scalars['Int'];
   /** 방문자 수 추세 */
   trend?: Maybe<Trend>;
 };
 
 export type AreaTrendInput = {
   area: AreaInput;
-  baseDate?: InputMaybe<Scalars["DateTime"]>;
+  baseDate?: InputMaybe<Scalars['DateTime']>;
   /** 방문수 */
-  count?: InputMaybe<Scalars["Float"]>;
-  id: Scalars["Int"];
+  count?: InputMaybe<Scalars['Float']>;
+  id: Scalars['Int'];
   /** 방문자 수 추세 */
   trend?: InputMaybe<Trend>;
 };
 
 export type Article = {
-  __typename?: "Article";
+  __typename?: 'Article';
   area: Area;
   articleContents?: Maybe<Array<ArticleContent>>;
   category: ArticleCategory;
-  contents?: Maybe<Scalars["String"]>;
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  editor: Scalars["String"];
-  id: Scalars["Int"];
+  contents?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  editor: Scalars['String'];
+  id: Scalars['Int'];
   images?: Maybe<Array<Image>>;
   places?: Maybe<Array<ArticlePlace>>;
   state: ArticleState;
   thumbnail?: Maybe<Image>;
-  title: Scalars["String"];
-  updatedAt?: Maybe<Scalars["DateTime"]>;
-  views: Scalars["Int"];
+  title: Scalars['String'];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  views: Scalars['Int'];
 };
 
 export type ArticleCategory = {
-  __typename?: "ArticleCategory";
+  __typename?: 'ArticleCategory';
   articles?: Maybe<Array<Article>>;
-  category: Scalars["String"];
-  id: Scalars["Int"];
+  category: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 export type ArticleCategoryInput = {
   articles?: InputMaybe<Array<ArticleInput>>;
-  category: Scalars["String"];
-  id: Scalars["Int"];
+  category: Scalars['String'];
+  id: Scalars['Int'];
 };
 
 export type ArticleContent = {
-  __typename?: "ArticleContent";
+  __typename?: 'ArticleContent';
   article?: Maybe<Article>;
-  content?: Maybe<Scalars["String"]>;
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  id: Scalars["Int"];
+  content?: Maybe<Scalars['String']>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['Int'];
   image?: Maybe<Image>;
-  index?: Maybe<Scalars["Int"]>;
+  index?: Maybe<Scalars['Int']>;
   place?: Maybe<ArticlePlace>;
-  source?: Maybe<Scalars["String"]>;
-  subtitle?: Maybe<Scalars["String"]>;
-  updatedAt?: Maybe<Scalars["DateTime"]>;
+  source?: Maybe<Scalars['String']>;
+  subtitle?: Maybe<Scalars['String']>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ArticleContentInput = {
   article?: InputMaybe<ArticleInput>;
-  content?: InputMaybe<Scalars["String"]>;
+  content?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<ImageInput>;
-  index?: InputMaybe<Scalars["Int"]>;
+  index?: InputMaybe<Scalars['Int']>;
   place?: InputMaybe<ArticlePlaceInput>;
-  source?: InputMaybe<Scalars["String"]>;
-  subtitle?: InputMaybe<Scalars["String"]>;
+  source?: InputMaybe<Scalars['String']>;
+  subtitle?: InputMaybe<Scalars['String']>;
 };
 
 export type ArticleInput = {
   area: AreaInput;
   articleContents?: InputMaybe<Array<ArticleContentInput>>;
   category: ArticleCategoryInput;
-  contents?: InputMaybe<Scalars["String"]>;
-  editor: Scalars["String"];
+  contents?: InputMaybe<Scalars['String']>;
+  editor: Scalars['String'];
   images?: InputMaybe<Array<ImageInput>>;
   places?: InputMaybe<Array<ArticlePlaceInput>>;
   state: ArticleState;
   thumbnail?: InputMaybe<ImageInput>;
-  title: Scalars["String"];
-  views: Scalars["Int"];
+  title: Scalars['String'];
+  views: Scalars['Int'];
 };
 
 export type ArticlePlace = {
-  __typename?: "ArticlePlace";
+  __typename?: 'ArticlePlace';
   article?: Maybe<Article>;
-  category?: Maybe<Scalars["String"]>;
-  id: Scalars["Int"];
+  category?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
   /** 장소가 여러 개일 경우 순서 */
-  index?: Maybe<Scalars["Int"]>;
-  placeName?: Maybe<Scalars["String"]>;
-  placeURL?: Maybe<Scalars["String"]>;
+  index?: Maybe<Scalars['Int']>;
+  placeName?: Maybe<Scalars['String']>;
+  placeURL?: Maybe<Scalars['String']>;
 };
 
 export type ArticlePlaceInput = {
   article?: InputMaybe<ArticleInput>;
-  category?: InputMaybe<Scalars["String"]>;
-  id: Scalars["Int"];
+  category?: InputMaybe<Scalars['String']>;
+  id: Scalars['Int'];
   /** 장소가 여러 개일 경우 순서 */
-  index?: InputMaybe<Scalars["Int"]>;
-  placeName?: InputMaybe<Scalars["String"]>;
-  placeURL?: InputMaybe<Scalars["String"]>;
+  index?: InputMaybe<Scalars['Int']>;
+  placeName?: InputMaybe<Scalars['String']>;
+  placeURL?: InputMaybe<Scalars['String']>;
 };
 
 export enum ArticleState {
-  Done = "DONE",
-  Inprogress = "INPROGRESS",
-  Uploaded = "UPLOADED",
+  Done = 'DONE',
+  Inprogress = 'INPROGRESS',
+  Uploaded = 'UPLOADED'
 }
 
 export type Comment = {
-  __typename?: "Comment";
-  content: Scalars["String"];
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  id: Scalars["Int"];
-  isMine?: Maybe<Scalars["Boolean"]>;
+  __typename?: 'Comment';
+  content: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['Int'];
+  isMine?: Maybe<Scalars['Boolean']>;
   /** 공개 여부 */
-  open?: Maybe<Scalars["Boolean"]>;
+  open?: Maybe<Scalars['Boolean']>;
   post: Post;
   profile: Profile;
   reports?: Maybe<Array<CommentReport>>;
-  updatedAt?: Maybe<Scalars["DateTime"]>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type CommentInput = {
-  content: Scalars["String"];
-  isMine?: InputMaybe<Scalars["Boolean"]>;
+  content: Scalars['String'];
+  isMine?: InputMaybe<Scalars['Boolean']>;
   /** 공개 여부 */
-  open?: InputMaybe<Scalars["Boolean"]>;
+  open?: InputMaybe<Scalars['Boolean']>;
   post: PostInput;
   profile: ProfileInput;
   reports?: InputMaybe<Array<CommentReportInput>>;
 };
 
 export type CommentReport = {
-  __typename?: "CommentReport";
+  __typename?: 'CommentReport';
   comment?: Maybe<Comment>;
-  id: Scalars["Int"];
+  id: Scalars['Int'];
   /** 기타 신고 사유 */
-  other?: Maybe<Scalars["String"]>;
+  other?: Maybe<Scalars['String']>;
   /** 신고 사유 */
-  reasonId?: Maybe<Scalars["Int"]>;
-  reportedAt?: Maybe<Scalars["DateTime"]>;
+  reasonId?: Maybe<Scalars['Int']>;
+  reportedAt?: Maybe<Scalars['DateTime']>;
   /** 신고자 */
   reporter: Profile;
   /** 피신고자 */
@@ -285,12 +284,12 @@ export type CommentReport = {
 
 export type CommentReportInput = {
   comment?: InputMaybe<CommentInput>;
-  id: Scalars["Int"];
+  id: Scalars['Int'];
   /** 기타 신고 사유 */
-  other?: InputMaybe<Scalars["String"]>;
+  other?: InputMaybe<Scalars['String']>;
   /** 신고 사유 */
-  reasonId?: InputMaybe<Scalars["Int"]>;
-  reportedAt?: InputMaybe<Scalars["DateTime"]>;
+  reasonId?: InputMaybe<Scalars['Int']>;
+  reportedAt?: InputMaybe<Scalars['DateTime']>;
   /** 신고자 */
   reporter: ProfileInput;
   /** 피신고자 */
@@ -298,281 +297,298 @@ export type CommentReportInput = {
 };
 
 export type Content = {
-  content?: InputMaybe<Scalars["String"]>;
+  content?: InputMaybe<Scalars['String']>;
   image?: InputMaybe<UploadImageInput>;
-  placeCategory?: InputMaybe<Scalars["String"]>;
-  placeName?: InputMaybe<Scalars["String"]>;
-  placeUrl?: InputMaybe<Scalars["String"]>;
-  source?: InputMaybe<Scalars["String"]>;
-  subtitle?: InputMaybe<Scalars["String"]>;
+  placeCategory?: InputMaybe<Scalars['String']>;
+  placeName?: InputMaybe<Scalars['String']>;
+  placeUrl?: InputMaybe<Scalars['String']>;
+  source?: InputMaybe<Scalars['String']>;
+  subtitle?: InputMaybe<Scalars['String']>;
 };
 
 export type CountResult = {
-  __typename?: "CountResult";
-  areaId: Scalars["Int"];
-  comments: Scalars["Int"];
-  posts: Scalars["Int"];
-  region2depth: Scalars["String"];
+  __typename?: 'CountResult';
+  areaId: Scalars['Int'];
+  comments: Scalars['Int'];
+  posts: Scalars['Int'];
+  region2depth: Scalars['String'];
 };
 
 export type CountResultInput = {
-  areaId: Scalars["Int"];
-  comments: Scalars["Int"];
-  posts: Scalars["Int"];
-  region2depth: Scalars["String"];
+  areaId: Scalars['Int'];
+  comments: Scalars['Int'];
+  posts: Scalars['Int'];
+  region2depth: Scalars['String'];
 };
 
 export type CreateArticleInput = {
-  areaId: Scalars["Int"];
-  categoryId: Scalars["Int"];
+  areaId: Scalars['Int'];
+  categoryId: Scalars['Int'];
   contents?: InputMaybe<Array<Content>>;
   state: ArticleState;
-  thumbnailIndex?: InputMaybe<Scalars["Int"]>;
-  title: Scalars["String"];
+  thumbnailIndex?: InputMaybe<Scalars['Int']>;
+  title: Scalars['String'];
 };
 
 export type EditArticleInput = {
-  areaId: Scalars["Int"];
-  categoryId: Scalars["Int"];
+  areaId: Scalars['Int'];
+  categoryId: Scalars['Int'];
   contents?: InputMaybe<Array<Content>>;
-  id: Scalars["Int"];
+  id: Scalars['Int'];
   state: ArticleState;
-  thumbnailIndex?: InputMaybe<Scalars["Int"]>;
-  title: Scalars["String"];
+  thumbnailIndex?: InputMaybe<Scalars['Int']>;
+  title: Scalars['String'];
 };
 
 export type Image = {
-  __typename?: "Image";
+  __typename?: 'Image';
   areaImages?: Maybe<Array<AreaImages>>;
   article?: Maybe<Article>;
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  encoding?: Maybe<Scalars["String"]>;
-  id: Scalars["Int"];
-  mimetype?: Maybe<Scalars["String"]>;
-  path?: Maybe<Scalars["String"]>;
-  place?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  encoding?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  mimetype?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['String']>;
+  place?: Maybe<Scalars['String']>;
   postImages?: Maybe<Array<PostsImages>>;
   profile?: Maybe<Profile>;
-  updatedAt?: Maybe<Scalars["DateTime"]>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type ImageInput = {
   areaImages?: InputMaybe<Array<AreaImagesInput>>;
   article?: InputMaybe<ArticleInput>;
-  encoding?: InputMaybe<Scalars["String"]>;
-  mimetype?: InputMaybe<Scalars["String"]>;
-  path?: InputMaybe<Scalars["String"]>;
-  place?: InputMaybe<Scalars["String"]>;
+  encoding?: InputMaybe<Scalars['String']>;
+  mimetype?: InputMaybe<Scalars['String']>;
+  path?: InputMaybe<Scalars['String']>;
+  place?: InputMaybe<Scalars['String']>;
   postImages?: InputMaybe<Array<PostsImagesInput>>;
   profile?: InputMaybe<ProfileInput>;
 };
 
 export type Like = {
-  __typename?: "Like";
-  createdAt?: Maybe<Scalars["DateTime"]>;
+  __typename?: 'Like';
+  createdAt?: Maybe<Scalars['DateTime']>;
   post?: Maybe<Post>;
   profile?: Maybe<Profile>;
 };
 
 export type LikeInput = {
-  createdAt?: InputMaybe<Scalars["DateTime"]>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
   post?: InputMaybe<PostInput>;
   profile?: InputMaybe<ProfileInput>;
 };
 
 export type Mutation = {
-  __typename?: "Mutation";
-  addAndroidVersion: Scalars["String"];
-  addArticleCategory: Scalars["Boolean"];
-  addIosVersion: Scalars["String"];
+  __typename?: 'Mutation';
+  addAndroidVersion: Scalars['String'];
+  addArticleCategory: Scalars['Boolean'];
+  addIosVersion: Scalars['String'];
   changeArticleState: Article;
-  closeComment: Scalars["Boolean"];
-  closePost: Scalars["Boolean"];
-  createAdmin: Scalars["Boolean"];
+  closeComment: Scalars['Boolean'];
+  closePost: Scalars['Boolean'];
+  createAdmin: Scalars['Boolean'];
   createArticle: Article;
-  deleteArticle: Scalars["Boolean"];
-  deleteComment: Scalars["Boolean"];
-  deletePost: Scalars["Boolean"];
+  deleteArticle: Scalars['Boolean'];
+  deleteComment: Scalars['Boolean'];
+  deletePost: Scalars['Boolean'];
   editArticle: Article;
-  editArticleCategory: Scalars["Boolean"];
-  openComment: Scalars["Boolean"];
-  openPost: Scalars["Boolean"];
+  editArticleCategory: Scalars['Boolean'];
+  openComment: Scalars['Boolean'];
+  openPost: Scalars['Boolean'];
   regenerateToken: AdminLoginResult;
-  removeArticleCategory: Scalars["Boolean"];
+  removeArticleCategory: Scalars['Boolean'];
 };
+
 
 export type MutationAddAndroidVersionArgs = {
-  version: Scalars["String"];
+  version: Scalars['String'];
 };
+
 
 export type MutationAddArticleCategoryArgs = {
-  category: Scalars["String"];
+  category: Scalars['String'];
 };
+
 
 export type MutationAddIosVersionArgs = {
-  version: Scalars["String"];
+  version: Scalars['String'];
 };
+
 
 export type MutationChangeArticleStateArgs = {
-  id: Scalars["Float"];
-  state: Scalars["String"];
+  id: Scalars['Float'];
+  state: Scalars['String'];
 };
+
 
 export type MutationCloseCommentArgs = {
-  commentId: Scalars["Int"];
+  commentId: Scalars['Int'];
 };
+
 
 export type MutationClosePostArgs = {
-  postId: Scalars["Int"];
+  postId: Scalars['Int'];
 };
 
+
 export type MutationCreateAdminArgs = {
-  id: Scalars["String"];
-  owner: Scalars["String"];
-  password: Scalars["String"];
+  id: Scalars['String'];
+  owner: Scalars['String'];
+  password: Scalars['String'];
 };
+
 
 export type MutationCreateArticleArgs = {
   input: CreateArticleInput;
 };
 
+
 export type MutationDeleteArticleArgs = {
-  id: Scalars["Float"];
+  id: Scalars['Float'];
 };
+
 
 export type MutationDeleteCommentArgs = {
-  commentId: Scalars["Int"];
+  commentId: Scalars['Int'];
 };
 
+
 export type MutationDeletePostArgs = {
-  postId: Scalars["Int"];
+  postId: Scalars['Int'];
 };
+
 
 export type MutationEditArticleArgs = {
   input: EditArticleInput;
 };
 
+
 export type MutationEditArticleCategoryArgs = {
-  category: Scalars["String"];
-  id: Scalars["Int"];
+  category: Scalars['String'];
+  id: Scalars['Int'];
 };
+
 
 export type MutationOpenCommentArgs = {
-  commentId: Scalars["Int"];
+  commentId: Scalars['Int'];
 };
+
 
 export type MutationOpenPostArgs = {
-  postId: Scalars["Int"];
+  postId: Scalars['Int'];
 };
+
 
 export type MutationRegenerateTokenArgs = {
-  id: Scalars["String"];
-  refreshToken: Scalars["String"];
+  id: Scalars['String'];
+  refreshToken: Scalars['String'];
 };
 
+
 export type MutationRemoveArticleCategoryArgs = {
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 };
 
 export enum Os {
-  Android = "ANDROID",
-  Ios = "IOS",
+  Android = 'ANDROID',
+  Ios = 'IOS'
 }
 
 export type Place = {
-  __typename?: "Place";
+  __typename?: 'Place';
   /** 도로명 주소 */
-  address?: Maybe<Scalars["String"]>;
-  areaId?: Maybe<Scalars["Int"]>;
-  category?: Maybe<Scalars["String"]>;
-  categoryGroup?: Maybe<Scalars["String"]>;
+  address?: Maybe<Scalars['String']>;
+  areaId?: Maybe<Scalars['Int']>;
+  category?: Maybe<Scalars['String']>;
+  categoryGroup?: Maybe<Scalars['String']>;
   /** 카카오 API 상의 ID */
-  externalId: Scalars["String"];
-  id: Scalars["Int"];
+  externalId: Scalars['String'];
+  id: Scalars['Int'];
   /** y 좌표 */
-  latitude: Scalars["String"];
+  latitude: Scalars['String'];
   /** x 좌표 */
-  longitude: Scalars["String"];
-  name: Scalars["String"];
+  longitude: Scalars['String'];
+  name: Scalars['String'];
   /** 장소 연락처 */
-  phone?: Maybe<Scalars["String"]>;
+  phone?: Maybe<Scalars['String']>;
   posts?: Maybe<Array<Post>>;
   /** 카테고리 이모지 */
-  symbol?: Maybe<Scalars["String"]>;
+  symbol?: Maybe<Scalars['String']>;
   tags?: Maybe<Array<Tag>>;
   /** 장소에 올라온 가장 최근 이미지 */
   thumbnail?: Maybe<Image>;
-  url?: Maybe<Scalars["String"]>;
+  url?: Maybe<Scalars['String']>;
 };
 
 export type PlaceInput = {
   /** 도로명 주소 */
-  address?: InputMaybe<Scalars["String"]>;
-  areaId?: InputMaybe<Scalars["Int"]>;
-  category?: InputMaybe<Scalars["String"]>;
-  categoryGroup?: InputMaybe<Scalars["String"]>;
+  address?: InputMaybe<Scalars['String']>;
+  areaId?: InputMaybe<Scalars['Int']>;
+  category?: InputMaybe<Scalars['String']>;
+  categoryGroup?: InputMaybe<Scalars['String']>;
   /** 카카오 API 상의 ID */
-  externalId: Scalars["String"];
-  id: Scalars["Int"];
+  externalId: Scalars['String'];
+  id: Scalars['Int'];
   /** y 좌표 */
-  latitude: Scalars["String"];
+  latitude: Scalars['String'];
   /** x 좌표 */
-  longitude: Scalars["String"];
-  name: Scalars["String"];
+  longitude: Scalars['String'];
+  name: Scalars['String'];
   /** 장소 연락처 */
-  phone?: InputMaybe<Scalars["String"]>;
+  phone?: InputMaybe<Scalars['String']>;
   posts?: InputMaybe<Array<PostInput>>;
   /** 카테고리 이모지 */
-  symbol?: InputMaybe<Scalars["String"]>;
+  symbol?: InputMaybe<Scalars['String']>;
   tags?: InputMaybe<Array<TagInput>>;
   /** 장소에 올라온 가장 최근 이미지 */
   thumbnail?: InputMaybe<ImageInput>;
-  url?: InputMaybe<Scalars["String"]>;
+  url?: InputMaybe<Scalars['String']>;
 };
 
 export type Post = {
-  __typename?: "Post";
+  __typename?: 'Post';
   area?: Maybe<Area>;
   comments?: Maybe<Array<Comment>>;
-  content: Scalars["String"];
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  id: Scalars["Int"];
+  content: Scalars['String'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['Int'];
   images?: Maybe<Array<PostsImages>>;
   likes?: Maybe<Array<Like>>;
   /** 공개 여부 */
-  open?: Maybe<Scalars["Boolean"]>;
+  open?: Maybe<Scalars['Boolean']>;
   place: Place;
   profile: Profile;
   reports?: Maybe<Array<PostReport>>;
   tags?: Maybe<Array<Tag>>;
-  updatedAt?: Maybe<Scalars["DateTime"]>;
-  views: Scalars["Int"];
+  updatedAt?: Maybe<Scalars['DateTime']>;
+  views: Scalars['Int'];
 };
 
 export type PostInput = {
   area?: InputMaybe<AreaInput>;
   comments?: InputMaybe<Array<CommentInput>>;
-  content: Scalars["String"];
+  content: Scalars['String'];
   images?: InputMaybe<Array<PostsImagesInput>>;
   likes?: InputMaybe<Array<LikeInput>>;
   /** 공개 여부 */
-  open?: InputMaybe<Scalars["Boolean"]>;
+  open?: InputMaybe<Scalars['Boolean']>;
   place: PlaceInput;
   profile: ProfileInput;
   reports?: InputMaybe<Array<PostReportInput>>;
   tags?: InputMaybe<Array<TagInput>>;
-  views: Scalars["Int"];
+  views: Scalars['Int'];
 };
 
 export type PostReport = {
-  __typename?: "PostReport";
-  id: Scalars["Int"];
+  __typename?: 'PostReport';
+  id: Scalars['Int'];
   /** 기타 신고 사유 */
-  other?: Maybe<Scalars["String"]>;
+  other?: Maybe<Scalars['String']>;
   post?: Maybe<Post>;
   /** 신고 사유 */
-  reasonId?: Maybe<Scalars["Int"]>;
-  reportedAt?: Maybe<Scalars["DateTime"]>;
+  reasonId?: Maybe<Scalars['Int']>;
+  reportedAt?: Maybe<Scalars['DateTime']>;
   /** 신고자 */
   reporter: Profile;
   /** 피신고자 */
@@ -580,13 +596,13 @@ export type PostReport = {
 };
 
 export type PostReportInput = {
-  id: Scalars["Int"];
+  id: Scalars['Int'];
   /** 기타 신고 사유 */
-  other?: InputMaybe<Scalars["String"]>;
+  other?: InputMaybe<Scalars['String']>;
   post?: InputMaybe<PostInput>;
   /** 신고 사유 */
-  reasonId?: InputMaybe<Scalars["Int"]>;
-  reportedAt?: InputMaybe<Scalars["DateTime"]>;
+  reasonId?: InputMaybe<Scalars['Int']>;
+  reportedAt?: InputMaybe<Scalars['DateTime']>;
   /** 신고자 */
   reporter: ProfileInput;
   /** 피신고자 */
@@ -594,36 +610,36 @@ export type PostReportInput = {
 };
 
 export type PostsImages = {
-  __typename?: "PostsImages";
+  __typename?: 'PostsImages';
   image: Image;
-  index?: Maybe<Scalars["Int"]>;
+  index?: Maybe<Scalars['Int']>;
   post?: Maybe<Post>;
 };
 
 export type PostsImagesInput = {
   image: ImageInput;
-  index?: InputMaybe<Scalars["Int"]>;
+  index?: InputMaybe<Scalars['Int']>;
   post?: InputMaybe<PostInput>;
 };
 
 export type Profile = {
-  __typename?: "Profile";
+  __typename?: 'Profile';
   avatar?: Maybe<Image>;
   blockTarget?: Maybe<Array<UserBlock>>;
   blocks?: Maybe<Array<UserBlock>>;
-  commentableDate: Scalars["String"];
+  commentableDate: Scalars['String'];
   comments?: Maybe<Array<Comment>>;
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  id: Scalars["Int"];
-  introduce?: Maybe<Scalars["String"]>;
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['Int'];
+  introduce?: Maybe<Scalars['String']>;
   likes?: Maybe<Array<Like>>;
-  nickname: Scalars["String"];
+  nickname: Scalars['String'];
   postImages?: Maybe<Array<Image>>;
-  postableDate: Scalars["String"];
+  postableDate: Scalars['String'];
   posts?: Maybe<Array<Post>>;
   reported?: Maybe<Array<Report>>;
   reports?: Maybe<Array<Report>>;
-  updatedAt?: Maybe<Scalars["DateTime"]>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
   user?: Maybe<User>;
 };
 
@@ -631,13 +647,13 @@ export type ProfileInput = {
   avatar?: InputMaybe<ImageInput>;
   blockTarget?: InputMaybe<Array<UserBlockInput>>;
   blocks?: InputMaybe<Array<UserBlockInput>>;
-  commentableDate?: InputMaybe<Scalars["String"]>;
+  commentableDate?: InputMaybe<Scalars['String']>;
   comments?: InputMaybe<Array<CommentInput>>;
-  introduce?: InputMaybe<Scalars["String"]>;
+  introduce?: InputMaybe<Scalars['String']>;
   likes?: InputMaybe<Array<LikeInput>>;
-  nickname: Scalars["String"];
+  nickname: Scalars['String'];
   postImages?: InputMaybe<Array<ImageInput>>;
-  postableDate?: InputMaybe<Scalars["String"]>;
+  postableDate?: InputMaybe<Scalars['String']>;
   posts?: InputMaybe<Array<PostInput>>;
   reported?: InputMaybe<Array<ReportInput>>;
   reports?: InputMaybe<Array<ReportInput>>;
@@ -645,12 +661,12 @@ export type ProfileInput = {
 };
 
 export type Query = {
-  __typename?: "Query";
+  __typename?: 'Query';
   adminLogin: AdminLoginResult;
-  countArticle: Array<Scalars["Int"]>;
+  countArticle: Array<Scalars['Int']>;
   countPostAndCommentByArea: Array<CountResult>;
-  countPosting: Array<Scalars["Int"]>;
-  countProfile: Array<Scalars["Int"]>;
+  countPosting: Array<Scalars['Int']>;
+  countProfile: Array<Scalars['Int']>;
   getArea: Area;
   getAreas: Array<Area>;
   getArticle: Article;
@@ -665,66 +681,77 @@ export type Query = {
   searchArticles: Array<Article>;
 };
 
+
 export type QueryAdminLoginArgs = {
-  id: Scalars["String"];
-  password: Scalars["String"];
+  id: Scalars['String'];
+  password: Scalars['String'];
 };
+
 
 export type QueryGetAreaArgs = {
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 };
+
 
 export type QueryGetArticleArgs = {
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 };
+
 
 export type QueryGetArticleForEditArgs = {
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 };
+
 
 export type QueryGetArticlesArgs = {
-  areaId?: InputMaybe<Scalars["Int"]>;
+  areaId?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type QueryGetCommentsArgs = {
-  limit?: InputMaybe<Scalars["Int"]>;
-  offset?: InputMaybe<Scalars["Int"]>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type QueryGetCommentsByAreaArgs = {
-  areaId: Scalars["Int"];
-  limit?: InputMaybe<Scalars["Int"]>;
-  offset?: InputMaybe<Scalars["Int"]>;
+  areaId: Scalars['Int'];
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type QueryGetPostsArgs = {
-  limit?: InputMaybe<Scalars["Int"]>;
-  offset?: InputMaybe<Scalars["Int"]>;
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type QueryGetPostsByAreaArgs = {
-  areaId: Scalars["Int"];
-  limit?: InputMaybe<Scalars["Int"]>;
-  offset?: InputMaybe<Scalars["Int"]>;
+  areaId: Scalars['Int'];
+  limit?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']>;
 };
+
 
 export type QueryLoginExtensionArgs = {
-  id: Scalars["String"];
+  id: Scalars['String'];
 };
 
+
 export type QuerySearchArticlesArgs = {
-  areaId?: InputMaybe<Scalars["Int"]>;
-  keyword?: InputMaybe<Scalars["String"]>;
+  areaId?: InputMaybe<Scalars['Int']>;
+  keyword?: InputMaybe<Scalars['String']>;
 };
 
 export type Report = {
-  __typename?: "Report";
-  id: Scalars["Int"];
+  __typename?: 'Report';
+  id: Scalars['Int'];
   /** 기타 신고 사유 */
-  other?: Maybe<Scalars["String"]>;
+  other?: Maybe<Scalars['String']>;
   /** 신고 사유 */
-  reasonId?: Maybe<Scalars["Int"]>;
-  reportedAt?: Maybe<Scalars["DateTime"]>;
+  reasonId?: Maybe<Scalars['Int']>;
+  reportedAt?: Maybe<Scalars['DateTime']>;
   /** 신고자 */
   reporter: Profile;
   /** 피신고자 */
@@ -732,12 +759,12 @@ export type Report = {
 };
 
 export type ReportInput = {
-  id: Scalars["Int"];
+  id: Scalars['Int'];
   /** 기타 신고 사유 */
-  other?: InputMaybe<Scalars["String"]>;
+  other?: InputMaybe<Scalars['String']>;
   /** 신고 사유 */
-  reasonId?: InputMaybe<Scalars["Int"]>;
-  reportedAt?: InputMaybe<Scalars["DateTime"]>;
+  reasonId?: InputMaybe<Scalars['Int']>;
+  reportedAt?: InputMaybe<Scalars['DateTime']>;
   /** 신고자 */
   reporter: ProfileInput;
   /** 피신고자 */
@@ -745,874 +772,385 @@ export type ReportInput = {
 };
 
 export enum Role {
-  Admin = "ADMIN",
-  Test = "TEST",
-  User = "USER",
+  Admin = 'ADMIN',
+  Test = 'TEST',
+  User = 'USER'
 }
 
 export type Tag = {
-  __typename?: "Tag";
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  id: Scalars["Int"];
-  numberOfPosts: Scalars["Int"];
+  __typename?: 'Tag';
+  createdAt?: Maybe<Scalars['DateTime']>;
+  id: Scalars['Int'];
+  numberOfPosts: Scalars['Int'];
   posts?: Maybe<Array<Post>>;
-  tag: Scalars["String"];
+  tag: Scalars['String'];
 };
 
 export type TagInput = {
-  createdAt?: InputMaybe<Scalars["DateTime"]>;
-  id: Scalars["Int"];
-  numberOfPosts?: InputMaybe<Scalars["Int"]>;
+  createdAt?: InputMaybe<Scalars['DateTime']>;
+  id: Scalars['Int'];
+  numberOfPosts?: InputMaybe<Scalars['Int']>;
   posts?: InputMaybe<Array<PostInput>>;
-  tag: Scalars["String"];
+  tag: Scalars['String'];
 };
 
 export enum Trend {
-  Decrease = "DECREASE",
-  Increase = "INCREASE",
-  Same = "SAME",
+  Decrease = 'DECREASE',
+  Increase = 'INCREASE',
+  Same = 'SAME'
 }
 
 export type UploadImageInput = {
-  encoding?: InputMaybe<Scalars["String"]>;
-  index?: InputMaybe<Scalars["Int"]>;
-  mimetype?: InputMaybe<Scalars["String"]>;
-  path?: InputMaybe<Scalars["String"]>;
+  encoding?: InputMaybe<Scalars['String']>;
+  index?: InputMaybe<Scalars['Int']>;
+  mimetype?: InputMaybe<Scalars['String']>;
+  path?: InputMaybe<Scalars['String']>;
 };
 
 export type User = {
-  __typename?: "User";
-  FCMToken?: Maybe<Scalars["String"]>;
+  __typename?: 'User';
+  FCMToken?: Maybe<Scalars['String']>;
   accept: Accept;
-  activated: Scalars["Boolean"];
-  blocked: Scalars["Boolean"];
-  createdAt?: Maybe<Scalars["DateTime"]>;
-  email: Scalars["String"];
-  externalId: Scalars["String"];
-  id: Scalars["Int"];
+  activated: Scalars['Boolean'];
+  blocked: Scalars['Boolean'];
+  createdAt?: Maybe<Scalars['DateTime']>;
+  email: Scalars['String'];
+  externalId: Scalars['String'];
+  id: Scalars['Int'];
   os: Os;
   profile: Profile;
   role: Role;
-  updatedAt?: Maybe<Scalars["DateTime"]>;
+  updatedAt?: Maybe<Scalars['DateTime']>;
 };
 
 export type UserBlock = {
-  __typename?: "UserBlock";
+  __typename?: 'UserBlock';
   /** block당한 사람 */
   blockTarget: Profile;
-  blockedAt?: Maybe<Scalars["DateTime"]>;
+  blockedAt?: Maybe<Scalars['DateTime']>;
   /** block한 사람 */
   blocker: Profile;
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 };
 
 export type UserBlockInput = {
   /** block당한 사람 */
   blockTarget: ProfileInput;
-  blockedAt?: InputMaybe<Scalars["DateTime"]>;
+  blockedAt?: InputMaybe<Scalars['DateTime']>;
   /** block한 사람 */
   blocker: ProfileInput;
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 };
 
 export type UserInput = {
-  FCMToken?: InputMaybe<Scalars["String"]>;
+  FCMToken?: InputMaybe<Scalars['String']>;
   accept: AcceptInput;
-  activated?: InputMaybe<Scalars["Boolean"]>;
-  blocked?: InputMaybe<Scalars["Boolean"]>;
-  email: Scalars["String"];
-  externalId: Scalars["String"];
+  activated?: InputMaybe<Scalars['Boolean']>;
+  blocked?: InputMaybe<Scalars['Boolean']>;
+  email: Scalars['String'];
+  externalId: Scalars['String'];
   os: Os;
   profile: ProfileInput;
   role: Role;
 };
 
-export type LoginResultFragment = {
-  __typename?: "AdminLoginResult";
-  accessToken: string;
-  refreshToken?: string | null;
-  owner?: string | null;
-};
+export type LoginResultFragment = { __typename?: 'AdminLoginResult', accessToken: string, refreshToken?: string | null, owner?: string | null };
 
-export type ArticleUnitFragment = {
-  __typename?: "Article";
-  id: number;
-  title: string;
-  editor: string;
-  state: ArticleState;
-  area: {
-    __typename?: "Area";
-    id: number;
-    region2depth: string;
-    domestic: boolean;
-  };
-  category: { __typename?: "ArticleCategory"; category: string };
-  thumbnail?: { __typename?: "Image"; id: number; path?: string | null } | null;
-};
+export type ArticleUnitFragment = { __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, category: { __typename?: 'ArticleCategory', category: string }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null };
 
-export type ArticleDetailFragment = {
-  __typename?: "Article";
-  id: number;
-  updatedAt?: any | null;
-  title: string;
-  contents?: string | null;
-  views: number;
-  state: ArticleState;
-  editor: string;
-  category: { __typename?: "ArticleCategory"; id: number; category: string };
-  area: {
-    __typename?: "Area";
-    id: number;
-    region2depth: string;
-    domestic: boolean;
-  };
-  thumbnail?: { __typename?: "Image"; id: number; path?: string | null } | null;
-  places?: Array<{
-    __typename?: "ArticlePlace";
-    id: number;
-    placeName?: string | null;
-    placeURL?: string | null;
-    category?: string | null;
-  }> | null;
-  articleContents?: Array<{
-    __typename?: "ArticleContent";
-    id: number;
-    index?: number | null;
-    subtitle?: string | null;
-    content?: string | null;
-    image?: {
-      __typename?: "Image";
-      path?: string | null;
-      mimetype?: string | null;
-    } | null;
-    place?: {
-      __typename?: "ArticlePlace";
-      id: number;
-      placeName?: string | null;
-      placeURL?: string | null;
-      category?: string | null;
-    } | null;
-  }> | null;
-  images?: Array<{
-    __typename?: "Image";
-    id: number;
-    path?: string | null;
-  }> | null;
-};
+export type ArticleDetailFragment = { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null };
 
-export type CategoryUnitFragment = {
-  __typename?: "ArticleCategory";
-  id: number;
-  category: string;
-};
+export type CategoryUnitFragment = { __typename?: 'ArticleCategory', id: number, category: string };
 
-export type ArticleContentFragment = {
-  __typename?: "ArticleContent";
-  id: number;
-  index?: number | null;
-  subtitle?: string | null;
-  content?: string | null;
-  image?: {
-    __typename?: "Image";
-    path?: string | null;
-    mimetype?: string | null;
-  } | null;
-  place?: {
-    __typename?: "ArticlePlace";
-    id: number;
-    placeName?: string | null;
-    placeURL?: string | null;
-    category?: string | null;
-  } | null;
-};
+export type ArticleContentFragment = { __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null };
 
-export type ArticlePlaceFragment = {
-  __typename?: "ArticlePlace";
-  id: number;
-  placeName?: string | null;
-  placeURL?: string | null;
-  category?: string | null;
-};
+export type ArticlePlaceFragment = { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null };
 
-export type ArticleImageFragment = {
-  __typename?: "Image";
-  id: number;
-  path?: string | null;
-  mimetype?: string | null;
-  encoding?: string | null;
-};
+export type ArticleImageFragment = { __typename?: 'Image', id: number, path?: string | null, mimetype?: string | null, encoding?: string | null };
 
-export type CountResultFragment = {
-  __typename?: "CountResult";
-  areaId: number;
-  region2depth: string;
-  posts: number;
-  comments: number;
-};
+export type CountResultFragment = { __typename?: 'CountResult', areaId: number, region2depth: string, posts: number, comments: number };
 
-export type AreaUnitFragment = {
-  __typename?: "Area";
-  id: number;
-  region2depth: string;
-  symbol: string;
-  domestic: boolean;
-  activate: boolean;
-};
+export type AreaUnitFragment = { __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean };
 
 export type AddArticleCategoryMutationVariables = Exact<{
-  category: Scalars["String"];
+  category: Scalars['String'];
 }>;
 
-export type AddArticleCategoryMutation = {
-  __typename?: "Mutation";
-  addArticleCategory: boolean;
-};
+
+export type AddArticleCategoryMutation = { __typename?: 'Mutation', addArticleCategory: boolean };
 
 export type EditArticleCategoryMutationVariables = Exact<{
-  id: Scalars["Int"];
-  category: Scalars["String"];
+  id: Scalars['Int'];
+  category: Scalars['String'];
 }>;
 
-export type EditArticleCategoryMutation = {
-  __typename?: "Mutation";
-  editArticleCategory: boolean;
-};
+
+export type EditArticleCategoryMutation = { __typename?: 'Mutation', editArticleCategory: boolean };
 
 export type RemoveArticleCategoryMutationVariables = Exact<{
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 }>;
 
-export type RemoveArticleCategoryMutation = {
-  __typename?: "Mutation";
-  removeArticleCategory: boolean;
-};
+
+export type RemoveArticleCategoryMutation = { __typename?: 'Mutation', removeArticleCategory: boolean };
 
 export type CreateArticleMutationVariables = Exact<{
   input: CreateArticleInput;
 }>;
 
-export type CreateArticleMutation = {
-  __typename?: "Mutation";
-  createArticle: {
-    __typename?: "Article";
-    id: number;
-    updatedAt?: any | null;
-    title: string;
-    contents?: string | null;
-    views: number;
-    state: ArticleState;
-    editor: string;
-    category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: {
-      __typename?: "Area";
-      id: number;
-      region2depth: string;
-      domestic: boolean;
-    };
-    thumbnail?: {
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    } | null;
-    places?: Array<{
-      __typename?: "ArticlePlace";
-      id: number;
-      placeName?: string | null;
-      placeURL?: string | null;
-      category?: string | null;
-    }> | null;
-    articleContents?: Array<{
-      __typename?: "ArticleContent";
-      id: number;
-      index?: number | null;
-      subtitle?: string | null;
-      content?: string | null;
-      image?: {
-        __typename?: "Image";
-        path?: string | null;
-        mimetype?: string | null;
-      } | null;
-      place?: {
-        __typename?: "ArticlePlace";
-        id: number;
-        placeName?: string | null;
-        placeURL?: string | null;
-        category?: string | null;
-      } | null;
-    }> | null;
-    images?: Array<{
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    }> | null;
-  };
-};
+
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type EditArticleMutationVariables = Exact<{
   input: EditArticleInput;
 }>;
 
-export type EditArticleMutation = {
-  __typename?: "Mutation";
-  editArticle: {
-    __typename?: "Article";
-    id: number;
-    updatedAt?: any | null;
-    title: string;
-    contents?: string | null;
-    views: number;
-    state: ArticleState;
-    editor: string;
-    category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: {
-      __typename?: "Area";
-      id: number;
-      region2depth: string;
-      domestic: boolean;
-    };
-    thumbnail?: {
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    } | null;
-    places?: Array<{
-      __typename?: "ArticlePlace";
-      id: number;
-      placeName?: string | null;
-      placeURL?: string | null;
-      category?: string | null;
-    }> | null;
-    articleContents?: Array<{
-      __typename?: "ArticleContent";
-      id: number;
-      index?: number | null;
-      subtitle?: string | null;
-      content?: string | null;
-      image?: {
-        __typename?: "Image";
-        path?: string | null;
-        mimetype?: string | null;
-      } | null;
-      place?: {
-        __typename?: "ArticlePlace";
-        id: number;
-        placeName?: string | null;
-        placeURL?: string | null;
-        category?: string | null;
-      } | null;
-    }> | null;
-    images?: Array<{
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    }> | null;
-  };
-};
+
+export type EditArticleMutation = { __typename?: 'Mutation', editArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type DeleteArticleMutationVariables = Exact<{
-  id: Scalars["Float"];
+  id: Scalars['Float'];
 }>;
 
-export type DeleteArticleMutation = {
-  __typename?: "Mutation";
-  deleteArticle: boolean;
-};
+
+export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: boolean };
 
 export type ChangeArticleStateMutationVariables = Exact<{
-  id: Scalars["Float"];
-  state: Scalars["String"];
+  id: Scalars['Float'];
+  state: Scalars['String'];
 }>;
 
-export type ChangeArticleStateMutation = {
-  __typename?: "Mutation";
-  changeArticleState: {
-    __typename?: "Article";
-    id: number;
-    updatedAt?: any | null;
-    title: string;
-    contents?: string | null;
-    views: number;
-    state: ArticleState;
-    editor: string;
-    category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: {
-      __typename?: "Area";
-      id: number;
-      region2depth: string;
-      domestic: boolean;
-    };
-    thumbnail?: {
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    } | null;
-    places?: Array<{
-      __typename?: "ArticlePlace";
-      id: number;
-      placeName?: string | null;
-      placeURL?: string | null;
-      category?: string | null;
-    }> | null;
-    articleContents?: Array<{
-      __typename?: "ArticleContent";
-      id: number;
-      index?: number | null;
-      subtitle?: string | null;
-      content?: string | null;
-      image?: {
-        __typename?: "Image";
-        path?: string | null;
-        mimetype?: string | null;
-      } | null;
-      place?: {
-        __typename?: "ArticlePlace";
-        id: number;
-        placeName?: string | null;
-        placeURL?: string | null;
-        category?: string | null;
-      } | null;
-    }> | null;
-    images?: Array<{
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    }> | null;
-  };
-};
+
+export type ChangeArticleStateMutation = { __typename?: 'Mutation', changeArticleState: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type CreateAdminMutationVariables = Exact<{
-  id: Scalars["String"];
-  password: Scalars["String"];
-  owner: Scalars["String"];
+  id: Scalars['String'];
+  password: Scalars['String'];
+  owner: Scalars['String'];
 }>;
 
-export type CreateAdminMutation = {
-  __typename?: "Mutation";
-  createAdmin: boolean;
-};
+
+export type CreateAdminMutation = { __typename?: 'Mutation', createAdmin: boolean };
 
 export type RegenerateTokenMutationVariables = Exact<{
-  id: Scalars["String"];
-  refreshToken: Scalars["String"];
+  id: Scalars['String'];
+  refreshToken: Scalars['String'];
 }>;
 
-export type RegenerateTokenMutation = {
-  __typename?: "Mutation";
-  regenerateToken: {
-    __typename?: "AdminLoginResult";
-    accessToken: string;
-    refreshToken?: string | null;
-    owner?: string | null;
-  };
-};
+
+export type RegenerateTokenMutation = { __typename?: 'Mutation', regenerateToken: { __typename?: 'AdminLoginResult', accessToken: string, refreshToken?: string | null, owner?: string | null } };
 
 export type AddAndroidVersionMutationVariables = Exact<{
-  version: Scalars["String"];
+  version: Scalars['String'];
 }>;
 
-export type AddAndroidVersionMutation = {
-  __typename?: "Mutation";
-  addAndroidVersion: string;
-};
+
+export type AddAndroidVersionMutation = { __typename?: 'Mutation', addAndroidVersion: string };
 
 export type AddIosVersionMutationVariables = Exact<{
-  version: Scalars["String"];
+  version: Scalars['String'];
 }>;
 
-export type AddIosVersionMutation = {
-  __typename?: "Mutation";
-  addAndroidVersion: string;
-};
+
+export type AddIosVersionMutation = { __typename?: 'Mutation', addAndroidVersion: string };
 
 export type AdminLoginQueryVariables = Exact<{
-  id: Scalars["String"];
-  password: Scalars["String"];
+  id: Scalars['String'];
+  password: Scalars['String'];
 }>;
 
-export type AdminLoginQuery = {
-  __typename?: "Query";
-  adminLogin: {
-    __typename?: "AdminLoginResult";
-    accessToken: string;
-    refreshToken?: string | null;
-    owner?: string | null;
-  };
-};
+
+export type AdminLoginQuery = { __typename?: 'Query', adminLogin: { __typename?: 'AdminLoginResult', accessToken: string, refreshToken?: string | null, owner?: string | null } };
 
 export type LoginExtensionQueryVariables = Exact<{
-  id: Scalars["String"];
+  id: Scalars['String'];
 }>;
 
-export type LoginExtensionQuery = {
-  __typename?: "Query";
-  loginExtension: {
-    __typename?: "AdminLoginResult";
-    accessToken: string;
-    refreshToken?: string | null;
-    owner?: string | null;
-  };
-};
 
-export type CountPostingQueryVariables = Exact<{ [key: string]: never }>;
+export type LoginExtensionQuery = { __typename?: 'Query', loginExtension: { __typename?: 'AdminLoginResult', accessToken: string, refreshToken?: string | null, owner?: string | null } };
 
-export type CountPostingQuery = {
-  __typename?: "Query";
-  countPosting: Array<number>;
-};
+export type CountPostingQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type CountProfileQueryVariables = Exact<{ [key: string]: never }>;
 
-export type CountProfileQuery = {
-  __typename?: "Query";
-  countProfile: Array<number>;
-};
+export type CountPostingQuery = { __typename?: 'Query', countPosting: Array<number> };
 
-export type GetAreasQueryVariables = Exact<{ [key: string]: never }>;
+export type CountProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
-export type GetAreasQuery = {
-  __typename?: "Query";
-  getAreas: Array<{
-    __typename?: "Area";
-    id: number;
-    region2depth: string;
-    symbol: string;
-    domestic: boolean;
-    activate: boolean;
-  }>;
-};
+
+export type CountProfileQuery = { __typename?: 'Query', countProfile: Array<number> };
+
+export type GetAreasQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAreasQuery = { __typename?: 'Query', getAreas: Array<{ __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean }> };
 
 export type GetArticleQueryVariables = Exact<{
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 }>;
 
-export type GetArticleQuery = {
-  __typename?: "Query";
-  getArticle: {
-    __typename?: "Article";
-    id: number;
-    updatedAt?: any | null;
-    title: string;
-    contents?: string | null;
-    views: number;
-    state: ArticleState;
-    editor: string;
-    category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: {
-      __typename?: "Area";
-      id: number;
-      region2depth: string;
-      domestic: boolean;
-    };
-    thumbnail?: {
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    } | null;
-    places?: Array<{
-      __typename?: "ArticlePlace";
-      id: number;
-      placeName?: string | null;
-      placeURL?: string | null;
-      category?: string | null;
-    }> | null;
-    articleContents?: Array<{
-      __typename?: "ArticleContent";
-      id: number;
-      index?: number | null;
-      subtitle?: string | null;
-      content?: string | null;
-      image?: {
-        __typename?: "Image";
-        path?: string | null;
-        mimetype?: string | null;
-      } | null;
-      place?: {
-        __typename?: "ArticlePlace";
-        id: number;
-        placeName?: string | null;
-        placeURL?: string | null;
-        category?: string | null;
-      } | null;
-    }> | null;
-    images?: Array<{
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    }> | null;
-  };
-};
+
+export type GetArticleQuery = { __typename?: 'Query', getArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type GetArticlesQueryVariables = Exact<{
-  areaId?: InputMaybe<Scalars["Int"]>;
+  areaId?: InputMaybe<Scalars['Int']>;
 }>;
 
-export type GetArticlesQuery = {
-  __typename?: "Query";
-  getArticles: Array<{
-    __typename?: "Article";
-    id: number;
-    title: string;
-    editor: string;
-    state: ArticleState;
-    area: {
-      __typename?: "Area";
-      id: number;
-      region2depth: string;
-      domestic: boolean;
-    };
-    category: { __typename?: "ArticleCategory"; category: string };
-    thumbnail?: {
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    } | null;
-  }>;
-};
 
-export type GetArticleCategoriesQueryVariables = Exact<{
-  [key: string]: never;
-}>;
+export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, category: { __typename?: 'ArticleCategory', category: string }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null }> };
 
-export type GetArticleCategoriesQuery = {
-  __typename?: "Query";
-  getArticleCategories: Array<{
-    __typename?: "ArticleCategory";
-    id: number;
-    category: string;
-  }>;
-};
+export type GetArticleCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetArticleCategoriesQuery = { __typename?: 'Query', getArticleCategories: Array<{ __typename?: 'ArticleCategory', id: number, category: string }> };
 
 export type SearchArticlesQueryVariables = Exact<{
-  keyword?: InputMaybe<Scalars["String"]>;
-  areaId?: InputMaybe<Scalars["Int"]>;
+  keyword?: InputMaybe<Scalars['String']>;
+  areaId?: InputMaybe<Scalars['Int']>;
 }>;
 
-export type SearchArticlesQuery = {
-  __typename?: "Query";
-  searchArticles: Array<{
-    __typename?: "Article";
-    id: number;
-    title: string;
-    editor: string;
-    state: ArticleState;
-    area: {
-      __typename?: "Area";
-      id: number;
-      region2depth: string;
-      domestic: boolean;
-    };
-    category: { __typename?: "ArticleCategory"; category: string };
-    thumbnail?: {
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    } | null;
-  }>;
-};
+
+export type SearchArticlesQuery = { __typename?: 'Query', searchArticles: Array<{ __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, category: { __typename?: 'ArticleCategory', category: string }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null }> };
 
 export type GetArticleForEditQueryVariables = Exact<{
-  id: Scalars["Int"];
+  id: Scalars['Int'];
 }>;
 
-export type GetArticleForEditQuery = {
-  __typename?: "Query";
-  getArticleForEdit: {
-    __typename?: "Article";
-    id: number;
-    updatedAt?: any | null;
-    title: string;
-    contents?: string | null;
-    views: number;
-    state: ArticleState;
-    editor: string;
-    category: { __typename?: "ArticleCategory"; id: number; category: string };
-    area: {
-      __typename?: "Area";
-      id: number;
-      region2depth: string;
-      domestic: boolean;
-    };
-    thumbnail?: {
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    } | null;
-    places?: Array<{
-      __typename?: "ArticlePlace";
-      id: number;
-      placeName?: string | null;
-      placeURL?: string | null;
-      category?: string | null;
-    }> | null;
-    articleContents?: Array<{
-      __typename?: "ArticleContent";
-      id: number;
-      index?: number | null;
-      subtitle?: string | null;
-      content?: string | null;
-      image?: {
-        __typename?: "Image";
-        path?: string | null;
-        mimetype?: string | null;
-      } | null;
-      place?: {
-        __typename?: "ArticlePlace";
-        id: number;
-        placeName?: string | null;
-        placeURL?: string | null;
-        category?: string | null;
-      } | null;
-    }> | null;
-    images?: Array<{
-      __typename?: "Image";
-      id: number;
-      path?: string | null;
-    }> | null;
-  };
-};
 
-export type CountPostAndCommentByAreaQueryVariables = Exact<{
-  [key: string]: never;
-}>;
+export type GetArticleForEditQuery = { __typename?: 'Query', getArticleForEdit: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
-export type CountPostAndCommentByAreaQuery = {
-  __typename?: "Query";
-  countPostAndCommentByArea: Array<{
-    __typename?: "CountResult";
-    areaId: number;
-    region2depth: string;
-    posts: number;
-    comments: number;
-  }>;
-};
+export type CountPostAndCommentByAreaQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CountPostAndCommentByAreaQuery = { __typename?: 'Query', countPostAndCommentByArea: Array<{ __typename?: 'CountResult', areaId: number, region2depth: string, posts: number, comments: number }> };
 
 export const LoginResultFragmentDoc = gql`
-  fragment LoginResult on AdminLoginResult {
-    accessToken
-    refreshToken
-    owner
-  }
-`;
+    fragment LoginResult on AdminLoginResult {
+  accessToken
+  refreshToken
+  owner
+}
+    `;
 export const ArticleUnitFragmentDoc = gql`
-  fragment ArticleUnit on Article {
+    fragment ArticleUnit on Article {
+  id
+  title
+  area {
     id
-    title
-    area {
-      id
-      region2depth
-      domestic
-    }
-    category {
-      category
-    }
-    editor
-    thumbnail {
-      id
-      path
-    }
-    state
+    region2depth
+    domestic
   }
-`;
-export const CategoryUnitFragmentDoc = gql`
-  fragment CategoryUnit on ArticleCategory {
-    id
+  category {
     category
   }
-`;
-export const ArticlePlaceFragmentDoc = gql`
-  fragment ArticlePlace on ArticlePlace {
-    id
-    placeName
-    placeURL
-    category
-  }
-`;
-export const ArticleContentFragmentDoc = gql`
-  fragment ArticleContent on ArticleContent {
-    id
-    index
-    image {
-      path
-      mimetype
-    }
-    place {
-      ...ArticlePlace
-    }
-    subtitle
-    content
-  }
-  ${ArticlePlaceFragmentDoc}
-`;
-export const ArticleDetailFragmentDoc = gql`
-  fragment ArticleDetail on Article {
-    id
-    updatedAt
-    title
-    contents
-    views
-    state
-    category {
-      ...CategoryUnit
-    }
-    area {
-      id
-      region2depth
-      domestic
-    }
-    thumbnail {
-      id
-      path
-    }
-    editor
-    places {
-      ...ArticlePlace
-    }
-    articleContents {
-      ...ArticleContent
-    }
-    images {
-      id
-      path
-    }
-  }
-  ${CategoryUnitFragmentDoc}
-  ${ArticlePlaceFragmentDoc}
-  ${ArticleContentFragmentDoc}
-`;
-export const ArticleImageFragmentDoc = gql`
-  fragment ArticleImage on Image {
+  editor
+  thumbnail {
     id
     path
+  }
+  state
+}
+    `;
+export const CategoryUnitFragmentDoc = gql`
+    fragment CategoryUnit on ArticleCategory {
+  id
+  category
+}
+    `;
+export const ArticlePlaceFragmentDoc = gql`
+    fragment ArticlePlace on ArticlePlace {
+  id
+  placeName
+  placeURL
+  category
+}
+    `;
+export const ArticleContentFragmentDoc = gql`
+    fragment ArticleContent on ArticleContent {
+  id
+  index
+  image {
+    path
     mimetype
-    encoding
   }
-`;
-export const CountResultFragmentDoc = gql`
-  fragment CountResult on CountResult {
-    areaId
-    region2depth
-    posts
-    comments
+  place {
+    ...ArticlePlace
   }
-`;
-export const AreaUnitFragmentDoc = gql`
-  fragment AreaUnit on Area {
+  subtitle
+  content
+}
+    ${ArticlePlaceFragmentDoc}`;
+export const ArticleDetailFragmentDoc = gql`
+    fragment ArticleDetail on Article {
+  id
+  updatedAt
+  title
+  contents
+  views
+  state
+  category {
+    ...CategoryUnit
+  }
+  area {
     id
     region2depth
-    symbol
     domestic
-    activate
   }
-`;
+  thumbnail {
+    id
+    path
+  }
+  editor
+  places {
+    ...ArticlePlace
+  }
+  articleContents {
+    ...ArticleContent
+  }
+  images {
+    id
+    path
+  }
+}
+    ${CategoryUnitFragmentDoc}
+${ArticlePlaceFragmentDoc}
+${ArticleContentFragmentDoc}`;
+export const ArticleImageFragmentDoc = gql`
+    fragment ArticleImage on Image {
+  id
+  path
+  mimetype
+  encoding
+}
+    `;
+export const CountResultFragmentDoc = gql`
+    fragment CountResult on CountResult {
+  areaId
+  region2depth
+  posts
+  comments
+}
+    `;
+export const AreaUnitFragmentDoc = gql`
+    fragment AreaUnit on Area {
+  id
+  region2depth
+  symbol
+  domestic
+  activate
+}
+    `;
 export const AddArticleCategoryDocument = gql`
-  mutation addArticleCategory($category: String!) {
-    addArticleCategory(category: $category)
-  }
-`;
-export type AddArticleCategoryMutationFn = Apollo.MutationFunction<
-  AddArticleCategoryMutation,
-  AddArticleCategoryMutationVariables
->;
+    mutation addArticleCategory($category: String!) {
+  addArticleCategory(category: $category)
+}
+    `;
+export type AddArticleCategoryMutationFn = Apollo.MutationFunction<AddArticleCategoryMutation, AddArticleCategoryMutationVariables>;
+export type AddArticleCategoryComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddArticleCategoryMutation, AddArticleCategoryMutationVariables>, 'mutation'>;
+
+    export const AddArticleCategoryComponent = (props: AddArticleCategoryComponentProps) => (
+      <ApolloReactComponents.Mutation<AddArticleCategoryMutation, AddArticleCategoryMutationVariables> mutation={AddArticleCategoryDocument} {...props} />
+    );
+    
 
 /**
  * __useAddArticleCategoryMutation__
@@ -1631,36 +1169,25 @@ export type AddArticleCategoryMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useAddArticleCategoryMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddArticleCategoryMutation,
-    AddArticleCategoryMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    AddArticleCategoryMutation,
-    AddArticleCategoryMutationVariables
-  >(AddArticleCategoryDocument, options);
-}
-export type AddArticleCategoryMutationHookResult = ReturnType<
-  typeof useAddArticleCategoryMutation
->;
-export type AddArticleCategoryMutationResult =
-  Apollo.MutationResult<AddArticleCategoryMutation>;
-export type AddArticleCategoryMutationOptions = Apollo.BaseMutationOptions<
-  AddArticleCategoryMutation,
-  AddArticleCategoryMutationVariables
->;
+export function useAddArticleCategoryMutation(baseOptions?: Apollo.MutationHookOptions<AddArticleCategoryMutation, AddArticleCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddArticleCategoryMutation, AddArticleCategoryMutationVariables>(AddArticleCategoryDocument, options);
+      }
+export type AddArticleCategoryMutationHookResult = ReturnType<typeof useAddArticleCategoryMutation>;
+export type AddArticleCategoryMutationResult = Apollo.MutationResult<AddArticleCategoryMutation>;
+export type AddArticleCategoryMutationOptions = Apollo.BaseMutationOptions<AddArticleCategoryMutation, AddArticleCategoryMutationVariables>;
 export const EditArticleCategoryDocument = gql`
-  mutation editArticleCategory($id: Int!, $category: String!) {
-    editArticleCategory(id: $id, category: $category)
-  }
-`;
-export type EditArticleCategoryMutationFn = Apollo.MutationFunction<
-  EditArticleCategoryMutation,
-  EditArticleCategoryMutationVariables
->;
+    mutation editArticleCategory($id: Int!, $category: String!) {
+  editArticleCategory(id: $id, category: $category)
+}
+    `;
+export type EditArticleCategoryMutationFn = Apollo.MutationFunction<EditArticleCategoryMutation, EditArticleCategoryMutationVariables>;
+export type EditArticleCategoryComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditArticleCategoryMutation, EditArticleCategoryMutationVariables>, 'mutation'>;
+
+    export const EditArticleCategoryComponent = (props: EditArticleCategoryComponentProps) => (
+      <ApolloReactComponents.Mutation<EditArticleCategoryMutation, EditArticleCategoryMutationVariables> mutation={EditArticleCategoryDocument} {...props} />
+    );
+    
 
 /**
  * __useEditArticleCategoryMutation__
@@ -1680,36 +1207,25 @@ export type EditArticleCategoryMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useEditArticleCategoryMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    EditArticleCategoryMutation,
-    EditArticleCategoryMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    EditArticleCategoryMutation,
-    EditArticleCategoryMutationVariables
-  >(EditArticleCategoryDocument, options);
-}
-export type EditArticleCategoryMutationHookResult = ReturnType<
-  typeof useEditArticleCategoryMutation
->;
-export type EditArticleCategoryMutationResult =
-  Apollo.MutationResult<EditArticleCategoryMutation>;
-export type EditArticleCategoryMutationOptions = Apollo.BaseMutationOptions<
-  EditArticleCategoryMutation,
-  EditArticleCategoryMutationVariables
->;
+export function useEditArticleCategoryMutation(baseOptions?: Apollo.MutationHookOptions<EditArticleCategoryMutation, EditArticleCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditArticleCategoryMutation, EditArticleCategoryMutationVariables>(EditArticleCategoryDocument, options);
+      }
+export type EditArticleCategoryMutationHookResult = ReturnType<typeof useEditArticleCategoryMutation>;
+export type EditArticleCategoryMutationResult = Apollo.MutationResult<EditArticleCategoryMutation>;
+export type EditArticleCategoryMutationOptions = Apollo.BaseMutationOptions<EditArticleCategoryMutation, EditArticleCategoryMutationVariables>;
 export const RemoveArticleCategoryDocument = gql`
-  mutation removeArticleCategory($id: Int!) {
-    removeArticleCategory(id: $id)
-  }
-`;
-export type RemoveArticleCategoryMutationFn = Apollo.MutationFunction<
-  RemoveArticleCategoryMutation,
-  RemoveArticleCategoryMutationVariables
->;
+    mutation removeArticleCategory($id: Int!) {
+  removeArticleCategory(id: $id)
+}
+    `;
+export type RemoveArticleCategoryMutationFn = Apollo.MutationFunction<RemoveArticleCategoryMutation, RemoveArticleCategoryMutationVariables>;
+export type RemoveArticleCategoryComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<RemoveArticleCategoryMutation, RemoveArticleCategoryMutationVariables>, 'mutation'>;
+
+    export const RemoveArticleCategoryComponent = (props: RemoveArticleCategoryComponentProps) => (
+      <ApolloReactComponents.Mutation<RemoveArticleCategoryMutation, RemoveArticleCategoryMutationVariables> mutation={RemoveArticleCategoryDocument} {...props} />
+    );
+    
 
 /**
  * __useRemoveArticleCategoryMutation__
@@ -1728,39 +1244,27 @@ export type RemoveArticleCategoryMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useRemoveArticleCategoryMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    RemoveArticleCategoryMutation,
-    RemoveArticleCategoryMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    RemoveArticleCategoryMutation,
-    RemoveArticleCategoryMutationVariables
-  >(RemoveArticleCategoryDocument, options);
-}
-export type RemoveArticleCategoryMutationHookResult = ReturnType<
-  typeof useRemoveArticleCategoryMutation
->;
-export type RemoveArticleCategoryMutationResult =
-  Apollo.MutationResult<RemoveArticleCategoryMutation>;
-export type RemoveArticleCategoryMutationOptions = Apollo.BaseMutationOptions<
-  RemoveArticleCategoryMutation,
-  RemoveArticleCategoryMutationVariables
->;
+export function useRemoveArticleCategoryMutation(baseOptions?: Apollo.MutationHookOptions<RemoveArticleCategoryMutation, RemoveArticleCategoryMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveArticleCategoryMutation, RemoveArticleCategoryMutationVariables>(RemoveArticleCategoryDocument, options);
+      }
+export type RemoveArticleCategoryMutationHookResult = ReturnType<typeof useRemoveArticleCategoryMutation>;
+export type RemoveArticleCategoryMutationResult = Apollo.MutationResult<RemoveArticleCategoryMutation>;
+export type RemoveArticleCategoryMutationOptions = Apollo.BaseMutationOptions<RemoveArticleCategoryMutation, RemoveArticleCategoryMutationVariables>;
 export const CreateArticleDocument = gql`
-  mutation createArticle($input: CreateArticleInput!) {
-    createArticle(input: $input) {
-      ...ArticleDetail
-    }
+    mutation createArticle($input: CreateArticleInput!) {
+  createArticle(input: $input) {
+    ...ArticleDetail
   }
-  ${ArticleDetailFragmentDoc}
-`;
-export type CreateArticleMutationFn = Apollo.MutationFunction<
-  CreateArticleMutation,
-  CreateArticleMutationVariables
->;
+}
+    ${ArticleDetailFragmentDoc}`;
+export type CreateArticleMutationFn = Apollo.MutationFunction<CreateArticleMutation, CreateArticleMutationVariables>;
+export type CreateArticleComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateArticleMutation, CreateArticleMutationVariables>, 'mutation'>;
+
+    export const CreateArticleComponent = (props: CreateArticleComponentProps) => (
+      <ApolloReactComponents.Mutation<CreateArticleMutation, CreateArticleMutationVariables> mutation={CreateArticleDocument} {...props} />
+    );
+    
 
 /**
  * __useCreateArticleMutation__
@@ -1779,39 +1283,27 @@ export type CreateArticleMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateArticleMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateArticleMutation,
-    CreateArticleMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    CreateArticleMutation,
-    CreateArticleMutationVariables
-  >(CreateArticleDocument, options);
-}
-export type CreateArticleMutationHookResult = ReturnType<
-  typeof useCreateArticleMutation
->;
-export type CreateArticleMutationResult =
-  Apollo.MutationResult<CreateArticleMutation>;
-export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<
-  CreateArticleMutation,
-  CreateArticleMutationVariables
->;
+export function useCreateArticleMutation(baseOptions?: Apollo.MutationHookOptions<CreateArticleMutation, CreateArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateArticleMutation, CreateArticleMutationVariables>(CreateArticleDocument, options);
+      }
+export type CreateArticleMutationHookResult = ReturnType<typeof useCreateArticleMutation>;
+export type CreateArticleMutationResult = Apollo.MutationResult<CreateArticleMutation>;
+export type CreateArticleMutationOptions = Apollo.BaseMutationOptions<CreateArticleMutation, CreateArticleMutationVariables>;
 export const EditArticleDocument = gql`
-  mutation editArticle($input: EditArticleInput!) {
-    editArticle(input: $input) {
-      ...ArticleDetail
-    }
+    mutation editArticle($input: EditArticleInput!) {
+  editArticle(input: $input) {
+    ...ArticleDetail
   }
-  ${ArticleDetailFragmentDoc}
-`;
-export type EditArticleMutationFn = Apollo.MutationFunction<
-  EditArticleMutation,
-  EditArticleMutationVariables
->;
+}
+    ${ArticleDetailFragmentDoc}`;
+export type EditArticleMutationFn = Apollo.MutationFunction<EditArticleMutation, EditArticleMutationVariables>;
+export type EditArticleComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<EditArticleMutation, EditArticleMutationVariables>, 'mutation'>;
+
+    export const EditArticleComponent = (props: EditArticleComponentProps) => (
+      <ApolloReactComponents.Mutation<EditArticleMutation, EditArticleMutationVariables> mutation={EditArticleDocument} {...props} />
+    );
+    
 
 /**
  * __useEditArticleMutation__
@@ -1830,36 +1322,25 @@ export type EditArticleMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useEditArticleMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    EditArticleMutation,
-    EditArticleMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<EditArticleMutation, EditArticleMutationVariables>(
-    EditArticleDocument,
-    options
-  );
-}
-export type EditArticleMutationHookResult = ReturnType<
-  typeof useEditArticleMutation
->;
-export type EditArticleMutationResult =
-  Apollo.MutationResult<EditArticleMutation>;
-export type EditArticleMutationOptions = Apollo.BaseMutationOptions<
-  EditArticleMutation,
-  EditArticleMutationVariables
->;
+export function useEditArticleMutation(baseOptions?: Apollo.MutationHookOptions<EditArticleMutation, EditArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<EditArticleMutation, EditArticleMutationVariables>(EditArticleDocument, options);
+      }
+export type EditArticleMutationHookResult = ReturnType<typeof useEditArticleMutation>;
+export type EditArticleMutationResult = Apollo.MutationResult<EditArticleMutation>;
+export type EditArticleMutationOptions = Apollo.BaseMutationOptions<EditArticleMutation, EditArticleMutationVariables>;
 export const DeleteArticleDocument = gql`
-  mutation deleteArticle($id: Float!) {
-    deleteArticle(id: $id)
-  }
-`;
-export type DeleteArticleMutationFn = Apollo.MutationFunction<
-  DeleteArticleMutation,
-  DeleteArticleMutationVariables
->;
+    mutation deleteArticle($id: Float!) {
+  deleteArticle(id: $id)
+}
+    `;
+export type DeleteArticleMutationFn = Apollo.MutationFunction<DeleteArticleMutation, DeleteArticleMutationVariables>;
+export type DeleteArticleComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<DeleteArticleMutation, DeleteArticleMutationVariables>, 'mutation'>;
+
+    export const DeleteArticleComponent = (props: DeleteArticleComponentProps) => (
+      <ApolloReactComponents.Mutation<DeleteArticleMutation, DeleteArticleMutationVariables> mutation={DeleteArticleDocument} {...props} />
+    );
+    
 
 /**
  * __useDeleteArticleMutation__
@@ -1878,39 +1359,27 @@ export type DeleteArticleMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useDeleteArticleMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    DeleteArticleMutation,
-    DeleteArticleMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    DeleteArticleMutation,
-    DeleteArticleMutationVariables
-  >(DeleteArticleDocument, options);
-}
-export type DeleteArticleMutationHookResult = ReturnType<
-  typeof useDeleteArticleMutation
->;
-export type DeleteArticleMutationResult =
-  Apollo.MutationResult<DeleteArticleMutation>;
-export type DeleteArticleMutationOptions = Apollo.BaseMutationOptions<
-  DeleteArticleMutation,
-  DeleteArticleMutationVariables
->;
+export function useDeleteArticleMutation(baseOptions?: Apollo.MutationHookOptions<DeleteArticleMutation, DeleteArticleMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteArticleMutation, DeleteArticleMutationVariables>(DeleteArticleDocument, options);
+      }
+export type DeleteArticleMutationHookResult = ReturnType<typeof useDeleteArticleMutation>;
+export type DeleteArticleMutationResult = Apollo.MutationResult<DeleteArticleMutation>;
+export type DeleteArticleMutationOptions = Apollo.BaseMutationOptions<DeleteArticleMutation, DeleteArticleMutationVariables>;
 export const ChangeArticleStateDocument = gql`
-  mutation changeArticleState($id: Float!, $state: String!) {
-    changeArticleState(id: $id, state: $state) {
-      ...ArticleDetail
-    }
+    mutation changeArticleState($id: Float!, $state: String!) {
+  changeArticleState(id: $id, state: $state) {
+    ...ArticleDetail
   }
-  ${ArticleDetailFragmentDoc}
-`;
-export type ChangeArticleStateMutationFn = Apollo.MutationFunction<
-  ChangeArticleStateMutation,
-  ChangeArticleStateMutationVariables
->;
+}
+    ${ArticleDetailFragmentDoc}`;
+export type ChangeArticleStateMutationFn = Apollo.MutationFunction<ChangeArticleStateMutation, ChangeArticleStateMutationVariables>;
+export type ChangeArticleStateComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<ChangeArticleStateMutation, ChangeArticleStateMutationVariables>, 'mutation'>;
+
+    export const ChangeArticleStateComponent = (props: ChangeArticleStateComponentProps) => (
+      <ApolloReactComponents.Mutation<ChangeArticleStateMutation, ChangeArticleStateMutationVariables> mutation={ChangeArticleStateDocument} {...props} />
+    );
+    
 
 /**
  * __useChangeArticleStateMutation__
@@ -1930,36 +1399,25 @@ export type ChangeArticleStateMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useChangeArticleStateMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    ChangeArticleStateMutation,
-    ChangeArticleStateMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    ChangeArticleStateMutation,
-    ChangeArticleStateMutationVariables
-  >(ChangeArticleStateDocument, options);
-}
-export type ChangeArticleStateMutationHookResult = ReturnType<
-  typeof useChangeArticleStateMutation
->;
-export type ChangeArticleStateMutationResult =
-  Apollo.MutationResult<ChangeArticleStateMutation>;
-export type ChangeArticleStateMutationOptions = Apollo.BaseMutationOptions<
-  ChangeArticleStateMutation,
-  ChangeArticleStateMutationVariables
->;
+export function useChangeArticleStateMutation(baseOptions?: Apollo.MutationHookOptions<ChangeArticleStateMutation, ChangeArticleStateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeArticleStateMutation, ChangeArticleStateMutationVariables>(ChangeArticleStateDocument, options);
+      }
+export type ChangeArticleStateMutationHookResult = ReturnType<typeof useChangeArticleStateMutation>;
+export type ChangeArticleStateMutationResult = Apollo.MutationResult<ChangeArticleStateMutation>;
+export type ChangeArticleStateMutationOptions = Apollo.BaseMutationOptions<ChangeArticleStateMutation, ChangeArticleStateMutationVariables>;
 export const CreateAdminDocument = gql`
-  mutation createAdmin($id: String!, $password: String!, $owner: String!) {
-    createAdmin(id: $id, password: $password, owner: $owner)
-  }
-`;
-export type CreateAdminMutationFn = Apollo.MutationFunction<
-  CreateAdminMutation,
-  CreateAdminMutationVariables
->;
+    mutation createAdmin($id: String!, $password: String!, $owner: String!) {
+  createAdmin(id: $id, password: $password, owner: $owner)
+}
+    `;
+export type CreateAdminMutationFn = Apollo.MutationFunction<CreateAdminMutation, CreateAdminMutationVariables>;
+export type CreateAdminComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateAdminMutation, CreateAdminMutationVariables>, 'mutation'>;
+
+    export const CreateAdminComponent = (props: CreateAdminComponentProps) => (
+      <ApolloReactComponents.Mutation<CreateAdminMutation, CreateAdminMutationVariables> mutation={CreateAdminDocument} {...props} />
+    );
+    
 
 /**
  * __useCreateAdminMutation__
@@ -1980,39 +1438,27 @@ export type CreateAdminMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useCreateAdminMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    CreateAdminMutation,
-    CreateAdminMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<CreateAdminMutation, CreateAdminMutationVariables>(
-    CreateAdminDocument,
-    options
-  );
-}
-export type CreateAdminMutationHookResult = ReturnType<
-  typeof useCreateAdminMutation
->;
-export type CreateAdminMutationResult =
-  Apollo.MutationResult<CreateAdminMutation>;
-export type CreateAdminMutationOptions = Apollo.BaseMutationOptions<
-  CreateAdminMutation,
-  CreateAdminMutationVariables
->;
+export function useCreateAdminMutation(baseOptions?: Apollo.MutationHookOptions<CreateAdminMutation, CreateAdminMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateAdminMutation, CreateAdminMutationVariables>(CreateAdminDocument, options);
+      }
+export type CreateAdminMutationHookResult = ReturnType<typeof useCreateAdminMutation>;
+export type CreateAdminMutationResult = Apollo.MutationResult<CreateAdminMutation>;
+export type CreateAdminMutationOptions = Apollo.BaseMutationOptions<CreateAdminMutation, CreateAdminMutationVariables>;
 export const RegenerateTokenDocument = gql`
-  mutation regenerateToken($id: String!, $refreshToken: String!) {
-    regenerateToken(id: $id, refreshToken: $refreshToken) {
-      ...LoginResult
-    }
+    mutation regenerateToken($id: String!, $refreshToken: String!) {
+  regenerateToken(id: $id, refreshToken: $refreshToken) {
+    ...LoginResult
   }
-  ${LoginResultFragmentDoc}
-`;
-export type RegenerateTokenMutationFn = Apollo.MutationFunction<
-  RegenerateTokenMutation,
-  RegenerateTokenMutationVariables
->;
+}
+    ${LoginResultFragmentDoc}`;
+export type RegenerateTokenMutationFn = Apollo.MutationFunction<RegenerateTokenMutation, RegenerateTokenMutationVariables>;
+export type RegenerateTokenComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<RegenerateTokenMutation, RegenerateTokenMutationVariables>, 'mutation'>;
+
+    export const RegenerateTokenComponent = (props: RegenerateTokenComponentProps) => (
+      <ApolloReactComponents.Mutation<RegenerateTokenMutation, RegenerateTokenMutationVariables> mutation={RegenerateTokenDocument} {...props} />
+    );
+    
 
 /**
  * __useRegenerateTokenMutation__
@@ -2032,36 +1478,25 @@ export type RegenerateTokenMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useRegenerateTokenMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    RegenerateTokenMutation,
-    RegenerateTokenMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    RegenerateTokenMutation,
-    RegenerateTokenMutationVariables
-  >(RegenerateTokenDocument, options);
-}
-export type RegenerateTokenMutationHookResult = ReturnType<
-  typeof useRegenerateTokenMutation
->;
-export type RegenerateTokenMutationResult =
-  Apollo.MutationResult<RegenerateTokenMutation>;
-export type RegenerateTokenMutationOptions = Apollo.BaseMutationOptions<
-  RegenerateTokenMutation,
-  RegenerateTokenMutationVariables
->;
+export function useRegenerateTokenMutation(baseOptions?: Apollo.MutationHookOptions<RegenerateTokenMutation, RegenerateTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RegenerateTokenMutation, RegenerateTokenMutationVariables>(RegenerateTokenDocument, options);
+      }
+export type RegenerateTokenMutationHookResult = ReturnType<typeof useRegenerateTokenMutation>;
+export type RegenerateTokenMutationResult = Apollo.MutationResult<RegenerateTokenMutation>;
+export type RegenerateTokenMutationOptions = Apollo.BaseMutationOptions<RegenerateTokenMutation, RegenerateTokenMutationVariables>;
 export const AddAndroidVersionDocument = gql`
-  mutation addAndroidVersion($version: String!) {
-    addAndroidVersion(version: $version)
-  }
-`;
-export type AddAndroidVersionMutationFn = Apollo.MutationFunction<
-  AddAndroidVersionMutation,
-  AddAndroidVersionMutationVariables
->;
+    mutation addAndroidVersion($version: String!) {
+  addAndroidVersion(version: $version)
+}
+    `;
+export type AddAndroidVersionMutationFn = Apollo.MutationFunction<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>;
+export type AddAndroidVersionComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>, 'mutation'>;
+
+    export const AddAndroidVersionComponent = (props: AddAndroidVersionComponentProps) => (
+      <ApolloReactComponents.Mutation<AddAndroidVersionMutation, AddAndroidVersionMutationVariables> mutation={AddAndroidVersionDocument} {...props} />
+    );
+    
 
 /**
  * __useAddAndroidVersionMutation__
@@ -2080,36 +1515,25 @@ export type AddAndroidVersionMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useAddAndroidVersionMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddAndroidVersionMutation,
-    AddAndroidVersionMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    AddAndroidVersionMutation,
-    AddAndroidVersionMutationVariables
-  >(AddAndroidVersionDocument, options);
-}
-export type AddAndroidVersionMutationHookResult = ReturnType<
-  typeof useAddAndroidVersionMutation
->;
-export type AddAndroidVersionMutationResult =
-  Apollo.MutationResult<AddAndroidVersionMutation>;
-export type AddAndroidVersionMutationOptions = Apollo.BaseMutationOptions<
-  AddAndroidVersionMutation,
-  AddAndroidVersionMutationVariables
->;
+export function useAddAndroidVersionMutation(baseOptions?: Apollo.MutationHookOptions<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>(AddAndroidVersionDocument, options);
+      }
+export type AddAndroidVersionMutationHookResult = ReturnType<typeof useAddAndroidVersionMutation>;
+export type AddAndroidVersionMutationResult = Apollo.MutationResult<AddAndroidVersionMutation>;
+export type AddAndroidVersionMutationOptions = Apollo.BaseMutationOptions<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>;
 export const AddIosVersionDocument = gql`
-  mutation addIosVersion($version: String!) {
-    addAndroidVersion(version: $version)
-  }
-`;
-export type AddIosVersionMutationFn = Apollo.MutationFunction<
-  AddIosVersionMutation,
-  AddIosVersionMutationVariables
->;
+    mutation addIosVersion($version: String!) {
+  addAndroidVersion(version: $version)
+}
+    `;
+export type AddIosVersionMutationFn = Apollo.MutationFunction<AddIosVersionMutation, AddIosVersionMutationVariables>;
+export type AddIosVersionComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddIosVersionMutation, AddIosVersionMutationVariables>, 'mutation'>;
+
+    export const AddIosVersionComponent = (props: AddIosVersionComponentProps) => (
+      <ApolloReactComponents.Mutation<AddIosVersionMutation, AddIosVersionMutationVariables> mutation={AddIosVersionDocument} {...props} />
+    );
+    
 
 /**
  * __useAddIosVersionMutation__
@@ -2128,35 +1552,26 @@ export type AddIosVersionMutationFn = Apollo.MutationFunction<
  *   },
  * });
  */
-export function useAddIosVersionMutation(
-  baseOptions?: Apollo.MutationHookOptions<
-    AddIosVersionMutation,
-    AddIosVersionMutationVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useMutation<
-    AddIosVersionMutation,
-    AddIosVersionMutationVariables
-  >(AddIosVersionDocument, options);
-}
-export type AddIosVersionMutationHookResult = ReturnType<
-  typeof useAddIosVersionMutation
->;
-export type AddIosVersionMutationResult =
-  Apollo.MutationResult<AddIosVersionMutation>;
-export type AddIosVersionMutationOptions = Apollo.BaseMutationOptions<
-  AddIosVersionMutation,
-  AddIosVersionMutationVariables
->;
+export function useAddIosVersionMutation(baseOptions?: Apollo.MutationHookOptions<AddIosVersionMutation, AddIosVersionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddIosVersionMutation, AddIosVersionMutationVariables>(AddIosVersionDocument, options);
+      }
+export type AddIosVersionMutationHookResult = ReturnType<typeof useAddIosVersionMutation>;
+export type AddIosVersionMutationResult = Apollo.MutationResult<AddIosVersionMutation>;
+export type AddIosVersionMutationOptions = Apollo.BaseMutationOptions<AddIosVersionMutation, AddIosVersionMutationVariables>;
 export const AdminLoginDocument = gql`
-  query adminLogin($id: String!, $password: String!) {
-    adminLogin(id: $id, password: $password) {
-      ...LoginResult
-    }
+    query adminLogin($id: String!, $password: String!) {
+  adminLogin(id: $id, password: $password) {
+    ...LoginResult
   }
-  ${LoginResultFragmentDoc}
-`;
+}
+    ${LoginResultFragmentDoc}`;
+export type AdminLoginComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<AdminLoginQuery, AdminLoginQueryVariables>, 'query'> & ({ variables: AdminLoginQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const AdminLoginComponent = (props: AdminLoginComponentProps) => (
+      <ApolloReactComponents.Query<AdminLoginQuery, AdminLoginQueryVariables> query={AdminLoginDocument} {...props} />
+    );
+    
 
 /**
  * __useAdminLoginQuery__
@@ -2175,49 +1590,30 @@ export const AdminLoginDocument = gql`
  *   },
  * });
  */
-export function useAdminLoginQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    AdminLoginQuery,
-    AdminLoginQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<AdminLoginQuery, AdminLoginQueryVariables>(
-    AdminLoginDocument,
-    options
-  );
-}
-export function useAdminLoginLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    AdminLoginQuery,
-    AdminLoginQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<AdminLoginQuery, AdminLoginQueryVariables>(
-    AdminLoginDocument,
-    options
-  );
-}
+export function useAdminLoginQuery(baseOptions: Apollo.QueryHookOptions<AdminLoginQuery, AdminLoginQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AdminLoginQuery, AdminLoginQueryVariables>(AdminLoginDocument, options);
+      }
+export function useAdminLoginLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AdminLoginQuery, AdminLoginQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AdminLoginQuery, AdminLoginQueryVariables>(AdminLoginDocument, options);
+        }
 export type AdminLoginQueryHookResult = ReturnType<typeof useAdminLoginQuery>;
-export type AdminLoginLazyQueryHookResult = ReturnType<
-  typeof useAdminLoginLazyQuery
->;
-export type AdminLoginQueryResult = Apollo.QueryResult<
-  AdminLoginQuery,
-  AdminLoginQueryVariables
->;
-export function refetchAdminLoginQuery(variables: AdminLoginQueryVariables) {
-  return { query: AdminLoginDocument, variables: variables };
-}
+export type AdminLoginLazyQueryHookResult = ReturnType<typeof useAdminLoginLazyQuery>;
+export type AdminLoginQueryResult = Apollo.QueryResult<AdminLoginQuery, AdminLoginQueryVariables>;
 export const LoginExtensionDocument = gql`
-  query loginExtension($id: String!) {
-    loginExtension(id: $id) {
-      ...LoginResult
-    }
+    query loginExtension($id: String!) {
+  loginExtension(id: $id) {
+    ...LoginResult
   }
-  ${LoginResultFragmentDoc}
-`;
+}
+    ${LoginResultFragmentDoc}`;
+export type LoginExtensionComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<LoginExtensionQuery, LoginExtensionQueryVariables>, 'query'> & ({ variables: LoginExtensionQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const LoginExtensionComponent = (props: LoginExtensionComponentProps) => (
+      <ApolloReactComponents.Query<LoginExtensionQuery, LoginExtensionQueryVariables> query={LoginExtensionDocument} {...props} />
+    );
+    
 
 /**
  * __useLoginExtensionQuery__
@@ -2235,50 +1631,28 @@ export const LoginExtensionDocument = gql`
  *   },
  * });
  */
-export function useLoginExtensionQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    LoginExtensionQuery,
-    LoginExtensionQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<LoginExtensionQuery, LoginExtensionQueryVariables>(
-    LoginExtensionDocument,
-    options
-  );
-}
-export function useLoginExtensionLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    LoginExtensionQuery,
-    LoginExtensionQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<LoginExtensionQuery, LoginExtensionQueryVariables>(
-    LoginExtensionDocument,
-    options
-  );
-}
-export type LoginExtensionQueryHookResult = ReturnType<
-  typeof useLoginExtensionQuery
->;
-export type LoginExtensionLazyQueryHookResult = ReturnType<
-  typeof useLoginExtensionLazyQuery
->;
-export type LoginExtensionQueryResult = Apollo.QueryResult<
-  LoginExtensionQuery,
-  LoginExtensionQueryVariables
->;
-export function refetchLoginExtensionQuery(
-  variables: LoginExtensionQueryVariables
-) {
-  return { query: LoginExtensionDocument, variables: variables };
-}
+export function useLoginExtensionQuery(baseOptions: Apollo.QueryHookOptions<LoginExtensionQuery, LoginExtensionQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<LoginExtensionQuery, LoginExtensionQueryVariables>(LoginExtensionDocument, options);
+      }
+export function useLoginExtensionLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<LoginExtensionQuery, LoginExtensionQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<LoginExtensionQuery, LoginExtensionQueryVariables>(LoginExtensionDocument, options);
+        }
+export type LoginExtensionQueryHookResult = ReturnType<typeof useLoginExtensionQuery>;
+export type LoginExtensionLazyQueryHookResult = ReturnType<typeof useLoginExtensionLazyQuery>;
+export type LoginExtensionQueryResult = Apollo.QueryResult<LoginExtensionQuery, LoginExtensionQueryVariables>;
 export const CountPostingDocument = gql`
-  query countPosting {
-    countPosting
-  }
-`;
+    query countPosting {
+  countPosting
+}
+    `;
+export type CountPostingComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<CountPostingQuery, CountPostingQueryVariables>, 'query'>;
+
+    export const CountPostingComponent = (props: CountPostingComponentProps) => (
+      <ApolloReactComponents.Query<CountPostingQuery, CountPostingQueryVariables> query={CountPostingDocument} {...props} />
+    );
+    
 
 /**
  * __useCountPostingQuery__
@@ -2295,50 +1669,28 @@ export const CountPostingDocument = gql`
  *   },
  * });
  */
-export function useCountPostingQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    CountPostingQuery,
-    CountPostingQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CountPostingQuery, CountPostingQueryVariables>(
-    CountPostingDocument,
-    options
-  );
-}
-export function useCountPostingLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CountPostingQuery,
-    CountPostingQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<CountPostingQuery, CountPostingQueryVariables>(
-    CountPostingDocument,
-    options
-  );
-}
-export type CountPostingQueryHookResult = ReturnType<
-  typeof useCountPostingQuery
->;
-export type CountPostingLazyQueryHookResult = ReturnType<
-  typeof useCountPostingLazyQuery
->;
-export type CountPostingQueryResult = Apollo.QueryResult<
-  CountPostingQuery,
-  CountPostingQueryVariables
->;
-export function refetchCountPostingQuery(
-  variables?: CountPostingQueryVariables
-) {
-  return { query: CountPostingDocument, variables: variables };
-}
+export function useCountPostingQuery(baseOptions?: Apollo.QueryHookOptions<CountPostingQuery, CountPostingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CountPostingQuery, CountPostingQueryVariables>(CountPostingDocument, options);
+      }
+export function useCountPostingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CountPostingQuery, CountPostingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CountPostingQuery, CountPostingQueryVariables>(CountPostingDocument, options);
+        }
+export type CountPostingQueryHookResult = ReturnType<typeof useCountPostingQuery>;
+export type CountPostingLazyQueryHookResult = ReturnType<typeof useCountPostingLazyQuery>;
+export type CountPostingQueryResult = Apollo.QueryResult<CountPostingQuery, CountPostingQueryVariables>;
 export const CountProfileDocument = gql`
-  query countProfile {
-    countProfile
-  }
-`;
+    query countProfile {
+  countProfile
+}
+    `;
+export type CountProfileComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<CountProfileQuery, CountProfileQueryVariables>, 'query'>;
+
+    export const CountProfileComponent = (props: CountProfileComponentProps) => (
+      <ApolloReactComponents.Query<CountProfileQuery, CountProfileQueryVariables> query={CountProfileDocument} {...props} />
+    );
+    
 
 /**
  * __useCountProfileQuery__
@@ -2355,53 +1707,30 @@ export const CountProfileDocument = gql`
  *   },
  * });
  */
-export function useCountProfileQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    CountProfileQuery,
-    CountProfileQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<CountProfileQuery, CountProfileQueryVariables>(
-    CountProfileDocument,
-    options
-  );
-}
-export function useCountProfileLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CountProfileQuery,
-    CountProfileQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<CountProfileQuery, CountProfileQueryVariables>(
-    CountProfileDocument,
-    options
-  );
-}
-export type CountProfileQueryHookResult = ReturnType<
-  typeof useCountProfileQuery
->;
-export type CountProfileLazyQueryHookResult = ReturnType<
-  typeof useCountProfileLazyQuery
->;
-export type CountProfileQueryResult = Apollo.QueryResult<
-  CountProfileQuery,
-  CountProfileQueryVariables
->;
-export function refetchCountProfileQuery(
-  variables?: CountProfileQueryVariables
-) {
-  return { query: CountProfileDocument, variables: variables };
-}
+export function useCountProfileQuery(baseOptions?: Apollo.QueryHookOptions<CountProfileQuery, CountProfileQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CountProfileQuery, CountProfileQueryVariables>(CountProfileDocument, options);
+      }
+export function useCountProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CountProfileQuery, CountProfileQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CountProfileQuery, CountProfileQueryVariables>(CountProfileDocument, options);
+        }
+export type CountProfileQueryHookResult = ReturnType<typeof useCountProfileQuery>;
+export type CountProfileLazyQueryHookResult = ReturnType<typeof useCountProfileLazyQuery>;
+export type CountProfileQueryResult = Apollo.QueryResult<CountProfileQuery, CountProfileQueryVariables>;
 export const GetAreasDocument = gql`
-  query getAreas {
-    getAreas {
-      ...AreaUnit
-    }
+    query getAreas {
+  getAreas {
+    ...AreaUnit
   }
-  ${AreaUnitFragmentDoc}
-`;
+}
+    ${AreaUnitFragmentDoc}`;
+export type GetAreasComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetAreasQuery, GetAreasQueryVariables>, 'query'>;
+
+    export const GetAreasComponent = (props: GetAreasComponentProps) => (
+      <ApolloReactComponents.Query<GetAreasQuery, GetAreasQueryVariables> query={GetAreasDocument} {...props} />
+    );
+    
 
 /**
  * __useGetAreasQuery__
@@ -2418,46 +1747,30 @@ export const GetAreasDocument = gql`
  *   },
  * });
  */
-export function useGetAreasQuery(
-  baseOptions?: Apollo.QueryHookOptions<GetAreasQuery, GetAreasQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetAreasQuery, GetAreasQueryVariables>(
-    GetAreasDocument,
-    options
-  );
-}
-export function useGetAreasLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetAreasQuery,
-    GetAreasQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetAreasQuery, GetAreasQueryVariables>(
-    GetAreasDocument,
-    options
-  );
-}
+export function useGetAreasQuery(baseOptions?: Apollo.QueryHookOptions<GetAreasQuery, GetAreasQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetAreasQuery, GetAreasQueryVariables>(GetAreasDocument, options);
+      }
+export function useGetAreasLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetAreasQuery, GetAreasQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetAreasQuery, GetAreasQueryVariables>(GetAreasDocument, options);
+        }
 export type GetAreasQueryHookResult = ReturnType<typeof useGetAreasQuery>;
-export type GetAreasLazyQueryHookResult = ReturnType<
-  typeof useGetAreasLazyQuery
->;
-export type GetAreasQueryResult = Apollo.QueryResult<
-  GetAreasQuery,
-  GetAreasQueryVariables
->;
-export function refetchGetAreasQuery(variables?: GetAreasQueryVariables) {
-  return { query: GetAreasDocument, variables: variables };
-}
+export type GetAreasLazyQueryHookResult = ReturnType<typeof useGetAreasLazyQuery>;
+export type GetAreasQueryResult = Apollo.QueryResult<GetAreasQuery, GetAreasQueryVariables>;
 export const GetArticleDocument = gql`
-  query getArticle($id: Int!) {
-    getArticle(id: $id) {
-      ...ArticleDetail
-    }
+    query getArticle($id: Int!) {
+  getArticle(id: $id) {
+    ...ArticleDetail
   }
-  ${ArticleDetailFragmentDoc}
-`;
+}
+    ${ArticleDetailFragmentDoc}`;
+export type GetArticleComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetArticleQuery, GetArticleQueryVariables>, 'query'> & ({ variables: GetArticleQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetArticleComponent = (props: GetArticleComponentProps) => (
+      <ApolloReactComponents.Query<GetArticleQuery, GetArticleQueryVariables> query={GetArticleDocument} {...props} />
+    );
+    
 
 /**
  * __useGetArticleQuery__
@@ -2475,49 +1788,30 @@ export const GetArticleDocument = gql`
  *   },
  * });
  */
-export function useGetArticleQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetArticleQuery,
-    GetArticleQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetArticleQuery, GetArticleQueryVariables>(
-    GetArticleDocument,
-    options
-  );
-}
-export function useGetArticleLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetArticleQuery,
-    GetArticleQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetArticleQuery, GetArticleQueryVariables>(
-    GetArticleDocument,
-    options
-  );
-}
+export function useGetArticleQuery(baseOptions: Apollo.QueryHookOptions<GetArticleQuery, GetArticleQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, options);
+      }
+export function useGetArticleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArticleQuery, GetArticleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetArticleQuery, GetArticleQueryVariables>(GetArticleDocument, options);
+        }
 export type GetArticleQueryHookResult = ReturnType<typeof useGetArticleQuery>;
-export type GetArticleLazyQueryHookResult = ReturnType<
-  typeof useGetArticleLazyQuery
->;
-export type GetArticleQueryResult = Apollo.QueryResult<
-  GetArticleQuery,
-  GetArticleQueryVariables
->;
-export function refetchGetArticleQuery(variables: GetArticleQueryVariables) {
-  return { query: GetArticleDocument, variables: variables };
-}
+export type GetArticleLazyQueryHookResult = ReturnType<typeof useGetArticleLazyQuery>;
+export type GetArticleQueryResult = Apollo.QueryResult<GetArticleQuery, GetArticleQueryVariables>;
 export const GetArticlesDocument = gql`
-  query getArticles($areaId: Int) {
-    getArticles(areaId: $areaId) {
-      ...ArticleUnit
-    }
+    query getArticles($areaId: Int) {
+  getArticles(areaId: $areaId) {
+    ...ArticleUnit
   }
-  ${ArticleUnitFragmentDoc}
-`;
+}
+    ${ArticleUnitFragmentDoc}`;
+export type GetArticlesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetArticlesQuery, GetArticlesQueryVariables>, 'query'>;
+
+    export const GetArticlesComponent = (props: GetArticlesComponentProps) => (
+      <ApolloReactComponents.Query<GetArticlesQuery, GetArticlesQueryVariables> query={GetArticlesDocument} {...props} />
+    );
+    
 
 /**
  * __useGetArticlesQuery__
@@ -2535,49 +1829,31 @@ export const GetArticlesDocument = gql`
  *   },
  * });
  */
-export function useGetArticlesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetArticlesQuery,
-    GetArticlesQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<GetArticlesQuery, GetArticlesQueryVariables>(
-    GetArticlesDocument,
-    options
-  );
-}
-export function useGetArticlesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetArticlesQuery,
-    GetArticlesQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<GetArticlesQuery, GetArticlesQueryVariables>(
-    GetArticlesDocument,
-    options
-  );
-}
+export function useGetArticlesQuery(baseOptions?: Apollo.QueryHookOptions<GetArticlesQuery, GetArticlesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetArticlesQuery, GetArticlesQueryVariables>(GetArticlesDocument, options);
+      }
+export function useGetArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArticlesQuery, GetArticlesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetArticlesQuery, GetArticlesQueryVariables>(GetArticlesDocument, options);
+        }
 export type GetArticlesQueryHookResult = ReturnType<typeof useGetArticlesQuery>;
-export type GetArticlesLazyQueryHookResult = ReturnType<
-  typeof useGetArticlesLazyQuery
->;
-export type GetArticlesQueryResult = Apollo.QueryResult<
-  GetArticlesQuery,
-  GetArticlesQueryVariables
->;
-export function refetchGetArticlesQuery(variables?: GetArticlesQueryVariables) {
-  return { query: GetArticlesDocument, variables: variables };
-}
+export type GetArticlesLazyQueryHookResult = ReturnType<typeof useGetArticlesLazyQuery>;
+export type GetArticlesQueryResult = Apollo.QueryResult<GetArticlesQuery, GetArticlesQueryVariables>;
 export const GetArticleCategoriesDocument = gql`
-  query getArticleCategories {
-    getArticleCategories {
-      id
-      category
-    }
+    query getArticleCategories {
+  getArticleCategories {
+    id
+    category
   }
-`;
+}
+    `;
+export type GetArticleCategoriesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetArticleCategoriesQuery, GetArticleCategoriesQueryVariables>, 'query'>;
+
+    export const GetArticleCategoriesComponent = (props: GetArticleCategoriesComponentProps) => (
+      <ApolloReactComponents.Query<GetArticleCategoriesQuery, GetArticleCategoriesQueryVariables> query={GetArticleCategoriesDocument} {...props} />
+    );
+    
 
 /**
  * __useGetArticleCategoriesQuery__
@@ -2594,53 +1870,30 @@ export const GetArticleCategoriesDocument = gql`
  *   },
  * });
  */
-export function useGetArticleCategoriesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    GetArticleCategoriesQuery,
-    GetArticleCategoriesQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetArticleCategoriesQuery,
-    GetArticleCategoriesQueryVariables
-  >(GetArticleCategoriesDocument, options);
-}
-export function useGetArticleCategoriesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetArticleCategoriesQuery,
-    GetArticleCategoriesQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetArticleCategoriesQuery,
-    GetArticleCategoriesQueryVariables
-  >(GetArticleCategoriesDocument, options);
-}
-export type GetArticleCategoriesQueryHookResult = ReturnType<
-  typeof useGetArticleCategoriesQuery
->;
-export type GetArticleCategoriesLazyQueryHookResult = ReturnType<
-  typeof useGetArticleCategoriesLazyQuery
->;
-export type GetArticleCategoriesQueryResult = Apollo.QueryResult<
-  GetArticleCategoriesQuery,
-  GetArticleCategoriesQueryVariables
->;
-export function refetchGetArticleCategoriesQuery(
-  variables?: GetArticleCategoriesQueryVariables
-) {
-  return { query: GetArticleCategoriesDocument, variables: variables };
-}
+export function useGetArticleCategoriesQuery(baseOptions?: Apollo.QueryHookOptions<GetArticleCategoriesQuery, GetArticleCategoriesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetArticleCategoriesQuery, GetArticleCategoriesQueryVariables>(GetArticleCategoriesDocument, options);
+      }
+export function useGetArticleCategoriesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArticleCategoriesQuery, GetArticleCategoriesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetArticleCategoriesQuery, GetArticleCategoriesQueryVariables>(GetArticleCategoriesDocument, options);
+        }
+export type GetArticleCategoriesQueryHookResult = ReturnType<typeof useGetArticleCategoriesQuery>;
+export type GetArticleCategoriesLazyQueryHookResult = ReturnType<typeof useGetArticleCategoriesLazyQuery>;
+export type GetArticleCategoriesQueryResult = Apollo.QueryResult<GetArticleCategoriesQuery, GetArticleCategoriesQueryVariables>;
 export const SearchArticlesDocument = gql`
-  query searchArticles($keyword: String, $areaId: Int) {
-    searchArticles(keyword: $keyword, areaId: $areaId) {
-      ...ArticleUnit
-    }
+    query searchArticles($keyword: String, $areaId: Int) {
+  searchArticles(keyword: $keyword, areaId: $areaId) {
+    ...ArticleUnit
   }
-  ${ArticleUnitFragmentDoc}
-`;
+}
+    ${ArticleUnitFragmentDoc}`;
+export type SearchArticlesComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SearchArticlesQuery, SearchArticlesQueryVariables>, 'query'>;
+
+    export const SearchArticlesComponent = (props: SearchArticlesComponentProps) => (
+      <ApolloReactComponents.Query<SearchArticlesQuery, SearchArticlesQueryVariables> query={SearchArticlesDocument} {...props} />
+    );
+    
 
 /**
  * __useSearchArticlesQuery__
@@ -2659,53 +1912,30 @@ export const SearchArticlesDocument = gql`
  *   },
  * });
  */
-export function useSearchArticlesQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    SearchArticlesQuery,
-    SearchArticlesQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SearchArticlesQuery, SearchArticlesQueryVariables>(
-    SearchArticlesDocument,
-    options
-  );
-}
-export function useSearchArticlesLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SearchArticlesQuery,
-    SearchArticlesQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<SearchArticlesQuery, SearchArticlesQueryVariables>(
-    SearchArticlesDocument,
-    options
-  );
-}
-export type SearchArticlesQueryHookResult = ReturnType<
-  typeof useSearchArticlesQuery
->;
-export type SearchArticlesLazyQueryHookResult = ReturnType<
-  typeof useSearchArticlesLazyQuery
->;
-export type SearchArticlesQueryResult = Apollo.QueryResult<
-  SearchArticlesQuery,
-  SearchArticlesQueryVariables
->;
-export function refetchSearchArticlesQuery(
-  variables?: SearchArticlesQueryVariables
-) {
-  return { query: SearchArticlesDocument, variables: variables };
-}
+export function useSearchArticlesQuery(baseOptions?: Apollo.QueryHookOptions<SearchArticlesQuery, SearchArticlesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchArticlesQuery, SearchArticlesQueryVariables>(SearchArticlesDocument, options);
+      }
+export function useSearchArticlesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchArticlesQuery, SearchArticlesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchArticlesQuery, SearchArticlesQueryVariables>(SearchArticlesDocument, options);
+        }
+export type SearchArticlesQueryHookResult = ReturnType<typeof useSearchArticlesQuery>;
+export type SearchArticlesLazyQueryHookResult = ReturnType<typeof useSearchArticlesLazyQuery>;
+export type SearchArticlesQueryResult = Apollo.QueryResult<SearchArticlesQuery, SearchArticlesQueryVariables>;
 export const GetArticleForEditDocument = gql`
-  query getArticleForEdit($id: Int!) {
-    getArticleForEdit(id: $id) {
-      ...ArticleDetail
-    }
+    query getArticleForEdit($id: Int!) {
+  getArticleForEdit(id: $id) {
+    ...ArticleDetail
   }
-  ${ArticleDetailFragmentDoc}
-`;
+}
+    ${ArticleDetailFragmentDoc}`;
+export type GetArticleForEditComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetArticleForEditQuery, GetArticleForEditQueryVariables>, 'query'> & ({ variables: GetArticleForEditQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const GetArticleForEditComponent = (props: GetArticleForEditComponentProps) => (
+      <ApolloReactComponents.Query<GetArticleForEditQuery, GetArticleForEditQueryVariables> query={GetArticleForEditDocument} {...props} />
+    );
+    
 
 /**
  * __useGetArticleForEditQuery__
@@ -2723,53 +1953,30 @@ export const GetArticleForEditDocument = gql`
  *   },
  * });
  */
-export function useGetArticleForEditQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    GetArticleForEditQuery,
-    GetArticleForEditQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    GetArticleForEditQuery,
-    GetArticleForEditQueryVariables
-  >(GetArticleForEditDocument, options);
-}
-export function useGetArticleForEditLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    GetArticleForEditQuery,
-    GetArticleForEditQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    GetArticleForEditQuery,
-    GetArticleForEditQueryVariables
-  >(GetArticleForEditDocument, options);
-}
-export type GetArticleForEditQueryHookResult = ReturnType<
-  typeof useGetArticleForEditQuery
->;
-export type GetArticleForEditLazyQueryHookResult = ReturnType<
-  typeof useGetArticleForEditLazyQuery
->;
-export type GetArticleForEditQueryResult = Apollo.QueryResult<
-  GetArticleForEditQuery,
-  GetArticleForEditQueryVariables
->;
-export function refetchGetArticleForEditQuery(
-  variables: GetArticleForEditQueryVariables
-) {
-  return { query: GetArticleForEditDocument, variables: variables };
-}
+export function useGetArticleForEditQuery(baseOptions: Apollo.QueryHookOptions<GetArticleForEditQuery, GetArticleForEditQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetArticleForEditQuery, GetArticleForEditQueryVariables>(GetArticleForEditDocument, options);
+      }
+export function useGetArticleForEditLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetArticleForEditQuery, GetArticleForEditQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetArticleForEditQuery, GetArticleForEditQueryVariables>(GetArticleForEditDocument, options);
+        }
+export type GetArticleForEditQueryHookResult = ReturnType<typeof useGetArticleForEditQuery>;
+export type GetArticleForEditLazyQueryHookResult = ReturnType<typeof useGetArticleForEditLazyQuery>;
+export type GetArticleForEditQueryResult = Apollo.QueryResult<GetArticleForEditQuery, GetArticleForEditQueryVariables>;
 export const CountPostAndCommentByAreaDocument = gql`
-  query countPostAndCommentByArea {
-    countPostAndCommentByArea {
-      ...CountResult
-    }
+    query countPostAndCommentByArea {
+  countPostAndCommentByArea {
+    ...CountResult
   }
-  ${CountResultFragmentDoc}
-`;
+}
+    ${CountResultFragmentDoc}`;
+export type CountPostAndCommentByAreaComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<CountPostAndCommentByAreaQuery, CountPostAndCommentByAreaQueryVariables>, 'query'>;
+
+    export const CountPostAndCommentByAreaComponent = (props: CountPostAndCommentByAreaComponentProps) => (
+      <ApolloReactComponents.Query<CountPostAndCommentByAreaQuery, CountPostAndCommentByAreaQueryVariables> query={CountPostAndCommentByAreaDocument} {...props} />
+    );
+    
 
 /**
  * __useCountPostAndCommentByAreaQuery__
@@ -2786,42 +1993,14 @@ export const CountPostAndCommentByAreaDocument = gql`
  *   },
  * });
  */
-export function useCountPostAndCommentByAreaQuery(
-  baseOptions?: Apollo.QueryHookOptions<
-    CountPostAndCommentByAreaQuery,
-    CountPostAndCommentByAreaQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<
-    CountPostAndCommentByAreaQuery,
-    CountPostAndCommentByAreaQueryVariables
-  >(CountPostAndCommentByAreaDocument, options);
-}
-export function useCountPostAndCommentByAreaLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    CountPostAndCommentByAreaQuery,
-    CountPostAndCommentByAreaQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<
-    CountPostAndCommentByAreaQuery,
-    CountPostAndCommentByAreaQueryVariables
-  >(CountPostAndCommentByAreaDocument, options);
-}
-export type CountPostAndCommentByAreaQueryHookResult = ReturnType<
-  typeof useCountPostAndCommentByAreaQuery
->;
-export type CountPostAndCommentByAreaLazyQueryHookResult = ReturnType<
-  typeof useCountPostAndCommentByAreaLazyQuery
->;
-export type CountPostAndCommentByAreaQueryResult = Apollo.QueryResult<
-  CountPostAndCommentByAreaQuery,
-  CountPostAndCommentByAreaQueryVariables
->;
-export function refetchCountPostAndCommentByAreaQuery(
-  variables?: CountPostAndCommentByAreaQueryVariables
-) {
-  return { query: CountPostAndCommentByAreaDocument, variables: variables };
-}
+export function useCountPostAndCommentByAreaQuery(baseOptions?: Apollo.QueryHookOptions<CountPostAndCommentByAreaQuery, CountPostAndCommentByAreaQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CountPostAndCommentByAreaQuery, CountPostAndCommentByAreaQueryVariables>(CountPostAndCommentByAreaDocument, options);
+      }
+export function useCountPostAndCommentByAreaLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CountPostAndCommentByAreaQuery, CountPostAndCommentByAreaQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CountPostAndCommentByAreaQuery, CountPostAndCommentByAreaQueryVariables>(CountPostAndCommentByAreaDocument, options);
+        }
+export type CountPostAndCommentByAreaQueryHookResult = ReturnType<typeof useCountPostAndCommentByAreaQuery>;
+export type CountPostAndCommentByAreaLazyQueryHookResult = ReturnType<typeof useCountPostAndCommentByAreaLazyQuery>;
+export type CountPostAndCommentByAreaQueryResult = Apollo.QueryResult<CountPostAndCommentByAreaQuery, CountPostAndCommentByAreaQueryVariables>;

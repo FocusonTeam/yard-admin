@@ -9,6 +9,8 @@ import { isLoggedVar, userIdVar, userNameVar } from '../models/fragmentVar';
 
 const Login = () => {
 
+  console.log("endpoint :: ", process.env.REACT_APP_GRAPHQL_ENDPOINT);
+
   const navigate = useNavigate();
 
   const [adminID, setAdminID] = useState("");
