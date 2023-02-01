@@ -4,7 +4,6 @@ import {COLORS} from '../styles/colors';
 import { useNavigate } from 'react-router-dom';
 import { ArticleUnitFragment } from '../generated/graphql';
 import { SampleImg } from 'assets/images';
-import { useEncodeUri } from 'hooks';
 import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 
 interface ArticleProps {
