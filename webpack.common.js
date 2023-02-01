@@ -1,8 +1,9 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const path = require("path");
-const { ProvidePlugin } = require("webpack");
+const { ProvidePlugin, DefinePlugin } = require("webpack");
 const dotenv = require('dotenv');
+dotenv.config();  //.env 파일 파싱한 객체 리턴되어 process.env로 세팅
 
 module.exports = {
   entry: "./src/index.tsx",
@@ -55,6 +56,9 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./public/index.html",
+    }),
+    new DefinePlugin({
+      "process.env": JSON.stringify(process.env)
     }),
     new CleanWebpackPlugin(),
     new ProvidePlugin({
