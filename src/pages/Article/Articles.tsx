@@ -84,10 +84,8 @@ export default function Articles(props : any) {
     }
     if(areaId === 0 && keyword === ""){
       console.log("case 4");
-      console.log("articleall", articleAllVar);
       setArticleData(articleAllVar || allData);
     }
-    console.log("필터링 이후 areaId", areaId, "keyword :", keyword, articleData);
     console.log(firstPostIndex, lastPostIndex);
     // setCurrentPosts(articleData.slice(firstPostIndex, lastPostIndex));
   }, [areaId, keyword, firstPostIndex, lastPostIndex]);

@@ -53,7 +53,6 @@ export default function ArticleEditor () {
       setTitle(data.getArticleForEdit.title);
       setCategoryId(data.getArticleForEdit.category.id);
       setAreaId(data.getArticleForEdit.area.id);
-      console.log("data.getArticleForEdit", data.getArticleForEdit);
       if(data?.getArticleForEdit.articleContents !== null){
         setContentCards({Contents : data.getArticleForEdit.articleContents!});
       }
@@ -91,8 +90,6 @@ export default function ArticleEditor () {
       image: _.isEmpty(card.image) ? null : {path : card.image.path, mimetype: card.image.mimetype}
     }))
 
-    console.log(categoryId, areaId, title, "content::", contentsInput); 
-
     const input : EditArticleInput = {
       id: state,
       title: title,
@@ -101,8 +98,6 @@ export default function ArticleEditor () {
       categoryId: categoryId,
       contents: contentsInput
     }
-
-    console.log(input);
 
     try{
       const results = await editArticle({

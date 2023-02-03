@@ -31,15 +31,12 @@ export default function WriteArticle() {
 
   //아티클 첫 작성시 스토리지 클리어, 아티클 작성 중 새로고침시 스토리지 유지
   useEffect(() => {
-    console.log("contentCards in writer", contentCards);
     if(contentCards.length === 0){
       addEmptyContentCard();
     }
   }, [contentCards]);
 
   const onSaveContent = useCallback(async () => {
-
-    console.log(categoryId, area, title, "content::", contentCards); 
 
     if(categoryId !== 0 && area !== 0 && title !== ""){
 

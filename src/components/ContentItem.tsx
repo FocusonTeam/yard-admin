@@ -36,8 +36,6 @@ function ContentItem({
   );
 
   useEffect(() => {
-    
-    console.log("image 점검:", contentsCard);
 
     //컨텐츠에 이미지 있는 경우 - 이미지 경로
     if(contentsCard.image?.path !== null){
@@ -46,7 +44,6 @@ function ContentItem({
 
     //컨텐츠에 이미지 없는 경우
     if(contentsCard.image === null || contentsCard.image === undefined || _.isEmpty(contentsCard.image)){
-      console.log("빈 객체");
       setOriginImage(false);
     }
   }, [contentsCard]);
@@ -54,7 +51,6 @@ function ContentItem({
   useEffect(() => {
     //새로운 이미지로 삽입
     if(originImage === false && image !== null){
-      console.log("image", image);
 
       const imageInput = {
         path: image[0],

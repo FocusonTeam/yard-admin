@@ -44,8 +44,6 @@ const Login = () => {
 
     const result = await loginResult({variables: {id : adminID, password: password}});
     if(result.data){
-
-      console.log(adminID, password);
       setMismatchError(false);
 
       setLoginToken('accessToken', result.data.adminLogin.accessToken);

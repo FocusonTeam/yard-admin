@@ -66,13 +66,10 @@ const PreviewArticle = (props: any) => {
   }
   useEffect(() => {
     let phone = phoneSize[device];
-    console.log(phoneSize, device);
     setWidth(phone?.size.width || 0);
     setHeight(phone?.size.height || 0);
     setDeviceContainer(phone?.className || "");
     setDeviceImage(phone?.safeArea || "");
-
-    console.log("w, h", width, height, deviceContainer);
     SCREEN_WIDTH = width;
   }, [width, height, device, deviceImage]);
   

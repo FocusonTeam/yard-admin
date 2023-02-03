@@ -9,7 +9,6 @@ import ArticleCard from './ArticleCard';
 const ArticleList = ({props} : any) => {
 
   const articlesListVar = useReactiveVar(articleUnitsVar);
-  console.log("articlesList :: ", articlesListVar);
 
   if(articlesListVar === null || articlesListVar === undefined){
     return (<div>

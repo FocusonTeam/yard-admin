@@ -21,7 +21,6 @@ export default function YardManage() {
   const [editCategory] = useEditArticleCategoryMutation({fetchPolicy: 'network-only'});
 
   console.log(addInfo);
-  console.log("actionInfo", actionInfo);
 
   useEffect(() => {
     switch(actionInfo){

@@ -35,12 +35,10 @@ export function ImageInputButton({handleImage} : any) {
     setImages(imageList as never[]);
 
     const file = imageList[0];
-    console.log(file);
 
     if(file === undefined){
       return null;
     }else{
-      console.log(file.file);
       compressImage(file.file!);
     }
   };

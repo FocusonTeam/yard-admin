@@ -14,7 +14,6 @@ const SearchBar = ({handleChange} : any) => {
 
   const handleEnterPress = (e:any) => {
     if(e.key === 'Enter'){
-      console.log("enter clicked", keyword);
       handleChange(keyword);
     }
   }

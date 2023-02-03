@@ -21,7 +21,6 @@ const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, per
 export default function AreaPieChart() {
 
 	const activateByArea = useCountPostAndCommentByAreaQuery({fetchPolicy: 'no-cache'});
-	console.log(activateByArea.data?.countPostAndCommentByArea);
 
 	const data = activateByArea.data?.countPostAndCommentByArea;
 	

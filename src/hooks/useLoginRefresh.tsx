@@ -19,16 +19,12 @@ function useLoginRefresh(){
 
   const loginWithRefreshToken = useCallback(async() => {
 
-    console.log(userId, refreshToken);
-
     const result = await regenerateToken({
       variables: {
         id: userId!,
         refreshToken: refreshToken
       },
     });
-
-    console.log(result);
 
     if(result.data){
       removeLoginToken('accessToken');

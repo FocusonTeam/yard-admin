@@ -11,11 +11,9 @@ const httpLink = createHttpLink({
   uri : process.env.REACT_APP_GRAPHQL_ENDPOINT //admin Server
 });
 
-
 const authLink = setContext(async (req, {headers}) => {
 
   const token = await getLoginToken('accessToken');
-  console.log(token);
 
   return {
     ...headers,
@@ -34,7 +32,7 @@ const errorLink = onError(({graphQLErrors, networkError}) => {
   }
 
   if (networkError) {
-      console.log(`[Network Error] Message: ${networkError.message}, Name: ${networkError.name}`);
+      console.log(`[Network Error] Message: ${networkError.message}, Name: ${networkError.name}, Cause: ${networkError.cause}`);
   }
 });
 

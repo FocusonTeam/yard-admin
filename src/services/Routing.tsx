@@ -32,7 +32,6 @@ const Routing = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("routing", errMessageVar);
         if(errMessageVar === "Login Token Expired"){
             console.log(errMessageVar);
             loginWithRefreshToken();

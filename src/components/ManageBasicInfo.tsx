@@ -17,7 +17,6 @@ export default function ManageBasicInfo({theme, handleChange, handleContent} : a
   const [infoDataList, setInfoDataList] = useState<InfoModel[]>([]);
 
   useEffect(() => {
-    console.log("theme", theme);
     switch(theme){
       case('categories'):
         getCategoryList();

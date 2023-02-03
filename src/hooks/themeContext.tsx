@@ -13,10 +13,8 @@ interface Props {
 
 export const ThemeContextProvider = ({ children }: Props) => {
   const [theme, setTheme] = useState("light");
-  console.log(theme);
 
   const toggleTheme = () => {
-    console.log(theme);
     if (theme === "light") {
       setTheme("dark");
     } else {

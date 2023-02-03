@@ -41,7 +41,6 @@ export default function ArticleDetail() {
 
   useEffect(() => {
     if(data?.getArticleForEdit){
-      console.log("data.getArticleForEdit", data.getArticleForEdit);
       if(data?.getArticleForEdit.articleContents !== null){
         setContentCards({Contents : data.getArticleForEdit.articleContents!});
       }
@@ -60,8 +59,6 @@ export default function ArticleDetail() {
   };
 
   const onClickCardRemove = useCallback(async () => {
-
-    console.log(data?.getArticleForEdit);
 
     const result = await deleteArticle({
       variables : {id : state.id}
