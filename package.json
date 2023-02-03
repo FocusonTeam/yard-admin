@@ -3,6 +3,7 @@
   "name": "yard-admin",
   "version": "1.0.2",
   "private": false,
+  "proxy" : "http://adminserver.theyard.co.kr",
   "dependencies": {
     "@apollo/client": "^3.7.2",
     "@chakra-ui/react": "^2.4.6",
