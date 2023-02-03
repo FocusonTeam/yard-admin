@@ -7,11 +7,6 @@ dotenv.config();  //.env 파일 파싱한 객체 리턴되어 process.env로 세
 
 module.exports = {
   entry: "./src/index.tsx",
-  devSever: {
-    proxy: {
-      '/graphql': 'adminserver.theyard.co.kr'
-    }
-  },
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
     modules: [path.resolve(__dirname, "src"), "node_modules"],
