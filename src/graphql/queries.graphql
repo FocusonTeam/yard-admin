@@ -18,6 +18,10 @@ query countProfile {
   countProfile
 }
 
+query countArticle {
+  countArticle
+}
+
 query getAreas {
   getAreas {
     ...AreaUnit

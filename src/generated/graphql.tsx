@@ -387,7 +387,6 @@ export type Mutation = {
   changeArticleState: Article;
   closeComment: Scalars['Boolean'];
   closePost: Scalars['Boolean'];
-  createAdmin: Scalars['Boolean'];
   createArticle: Article;
   deleteArticle: Scalars['Boolean'];
   deleteComment: Scalars['Boolean'];
@@ -429,13 +428,6 @@ export type MutationCloseCommentArgs = {
 
 export type MutationClosePostArgs = {
   postId: Scalars['Int'];
-};
-
-
-export type MutationCreateAdminArgs = {
-  id: Scalars['String'];
-  owner: Scalars['String'];
-  password: Scalars['String'];
 };
 
 
@@ -673,10 +665,13 @@ export type Query = {
   getArticleCategories: Array<ArticleCategory>;
   getArticleForEdit: Article;
   getArticles: Array<Article>;
+  getCommentReports: Array<CommentReport>;
   getComments: Array<Comment>;
   getCommentsByArea: Array<Comment>;
+  getPostReports: Array<PostReport>;
   getPosts: Array<Post>;
   getPostsByArea: Array<Post>;
+  getUserReports: Array<UserReport>;
   loginExtension: AdminLoginResult;
   searchArticles: Array<Article>;
 };
@@ -854,6 +849,20 @@ export type UserInput = {
   role: Role;
 };
 
+export type UserReport = {
+  __typename?: 'UserReport';
+  id: Scalars['Int'];
+  /** 기타 신고 사유 */
+  other?: Maybe<Scalars['String']>;
+  /** 신고 사유 */
+  reasonId?: Maybe<Scalars['Int']>;
+  reportedAt?: Maybe<Scalars['DateTime']>;
+  /** 신고자 */
+  reporter: Profile;
+  /** 피신고자 */
+  respondent: Profile;
+};
+
 export type LoginResultFragment = { __typename?: 'AdminLoginResult', accessToken: string, refreshToken?: string | null, owner?: string | null };
 
 export type ArticleUnitFragment = { __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, category: { __typename?: 'ArticleCategory', category: string }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null };
@@ -923,15 +932,6 @@ export type ChangeArticleStateMutationVariables = Exact<{
 
 export type ChangeArticleStateMutation = { __typename?: 'Mutation', changeArticleState: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
-export type CreateAdminMutationVariables = Exact<{
-  id: Scalars['String'];
-  password: Scalars['String'];
-  owner: Scalars['String'];
-}>;
-
-
-export type CreateAdminMutation = { __typename?: 'Mutation', createAdmin: boolean };
-
 export type RegenerateTokenMutationVariables = Exact<{
   id: Scalars['String'];
   refreshToken: Scalars['String'];
@@ -978,6 +978,11 @@ export type CountProfileQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CountProfileQuery = { __typename?: 'Query', countProfile: Array<number> };
+
+export type CountArticleQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CountArticleQuery = { __typename?: 'Query', countArticle: Array<number> };
 
 export type GetAreasQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1406,45 +1411,6 @@ export function useChangeArticleStateMutation(baseOptions?: Apollo.MutationHookO
 export type ChangeArticleStateMutationHookResult = ReturnType<typeof useChangeArticleStateMutation>;
 export type ChangeArticleStateMutationResult = Apollo.MutationResult<ChangeArticleStateMutation>;
 export type ChangeArticleStateMutationOptions = Apollo.BaseMutationOptions<ChangeArticleStateMutation, ChangeArticleStateMutationVariables>;
-export const CreateAdminDocument = gql`
-    mutation createAdmin($id: String!, $password: String!, $owner: String!) {
-  createAdmin(id: $id, password: $password, owner: $owner)
-}
-    `;
-export type CreateAdminMutationFn = Apollo.MutationFunction<CreateAdminMutation, CreateAdminMutationVariables>;
-export type CreateAdminComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<CreateAdminMutation, CreateAdminMutationVariables>, 'mutation'>;
-
-    export const CreateAdminComponent = (props: CreateAdminComponentProps) => (
-      <ApolloReactComponents.Mutation<CreateAdminMutation, CreateAdminMutationVariables> mutation={CreateAdminDocument} {...props} />
-    );
-    
-
-/**
- * __useCreateAdminMutation__
- *
- * To run a mutation, you first call `useCreateAdminMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useCreateAdminMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [createAdminMutation, { data, loading, error }] = useCreateAdminMutation({
- *   variables: {
- *      id: // value for 'id'
- *      password: // value for 'password'
- *      owner: // value for 'owner'
- *   },
- * });
- */
-export function useCreateAdminMutation(baseOptions?: Apollo.MutationHookOptions<CreateAdminMutation, CreateAdminMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<CreateAdminMutation, CreateAdminMutationVariables>(CreateAdminDocument, options);
-      }
-export type CreateAdminMutationHookResult = ReturnType<typeof useCreateAdminMutation>;
-export type CreateAdminMutationResult = Apollo.MutationResult<CreateAdminMutation>;
-export type CreateAdminMutationOptions = Apollo.BaseMutationOptions<CreateAdminMutation, CreateAdminMutationVariables>;
 export const RegenerateTokenDocument = gql`
     mutation regenerateToken($id: String!, $refreshToken: String!) {
   regenerateToken(id: $id, refreshToken: $refreshToken) {
@@ -1718,6 +1684,44 @@ export function useCountProfileLazyQuery(baseOptions?: Apollo.LazyQueryHookOptio
 export type CountProfileQueryHookResult = ReturnType<typeof useCountProfileQuery>;
 export type CountProfileLazyQueryHookResult = ReturnType<typeof useCountProfileLazyQuery>;
 export type CountProfileQueryResult = Apollo.QueryResult<CountProfileQuery, CountProfileQueryVariables>;
+export const CountArticleDocument = gql`
+    query countArticle {
+  countArticle
+}
+    `;
+export type CountArticleComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<CountArticleQuery, CountArticleQueryVariables>, 'query'>;
+
+    export const CountArticleComponent = (props: CountArticleComponentProps) => (
+      <ApolloReactComponents.Query<CountArticleQuery, CountArticleQueryVariables> query={CountArticleDocument} {...props} />
+    );
+    
+
+/**
+ * __useCountArticleQuery__
+ *
+ * To run a query within a React component, call `useCountArticleQuery` and pass it any options that fit your needs.
+ * When your component renders, `useCountArticleQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useCountArticleQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useCountArticleQuery(baseOptions?: Apollo.QueryHookOptions<CountArticleQuery, CountArticleQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<CountArticleQuery, CountArticleQueryVariables>(CountArticleDocument, options);
+      }
+export function useCountArticleLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<CountArticleQuery, CountArticleQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<CountArticleQuery, CountArticleQueryVariables>(CountArticleDocument, options);
+        }
+export type CountArticleQueryHookResult = ReturnType<typeof useCountArticleQuery>;
+export type CountArticleLazyQueryHookResult = ReturnType<typeof useCountArticleLazyQuery>;
+export type CountArticleQueryResult = Apollo.QueryResult<CountArticleQuery, CountArticleQueryVariables>;
 export const GetAreasDocument = gql`
     query getAreas {
   getAreas {

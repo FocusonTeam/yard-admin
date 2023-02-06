@@ -3,14 +3,14 @@ import {IoPeople, IoCart} from 'react-icons/io5'
 import {CgFeed} from 'react-icons/cg';
 import {GrArticle} from 'react-icons/gr';
 import { DashboardStat } from './atoms/DashboardStat';
-import { useCountPostingQuery, useCountProfileQuery } from "generated/graphql";
-import { useReactiveVar } from '@apollo/client';
-import { DashboardVar } from 'models/fragmentVar';
+import { useCountPostingQuery, useCountProfileQuery, useCountArticleQuery } from "generated/graphql";
+
 
 const DashboardStatsGrid = () => {
 
 	const Users = useCountProfileQuery({fetchPolicy: 'no-cache'});
 	const Posts = useCountPostingQuery({fetchPolicy: 'no-cache'});
+	const Articles = useCountArticleQuery({fetchPolicy: 'no-cache'});
 
 	const count = [
 		{
@@ -25,14 +25,16 @@ const DashboardStatsGrid = () => {
 
 	useEffect(() => {
 		if(Users.data){
-			if((Users.data?.countProfile[0] - Users.data?.countProfile[1]) >= 0){
-				count[0].variation = Users.data.countProfile[0] - Users.data?.countProfile[1];
-				count[0].increase = true;
+			count[0].increase = true;
+			count[0].variation = Users.data.countProfile[1];
+			// if((Users.data?.countProfile[0] - Users.data?.countProfile[1]) >= 0){
+			// 	count[0].variation = Users.data.countProfile[0] - Users.data?.countProfile[1];
+			// 	count[0].increase = true;
 
-			}else{
-				count[0].variation = Users.data.countProfile[1] - Users.data?.countProfile[0];
-				count[0].increase = false;
-			}
+			// }else{
+			// 	count[0].variation = Users.data.countProfile[1] - Users.data?.countProfile[0];
+			// 	count[0].increase = false;
+			// }
 		}
 
 		if(Posts.data){
@@ -45,6 +47,10 @@ const DashboardStatsGrid = () => {
 			}
 		}
 
+		if(Articles.data){
+			count[2].variation = Articles.data.countArticle[1];
+		}
+
 	}, []);
 
 
@@ -55,7 +61,7 @@ const DashboardStatsGrid = () => {
       <DashboardStat backgroundColor='bg-orange-600' label='Total Feeds' icon={<CgFeed className="text-2xl text-white" />} 
 				count={Posts.data?.countPosting[0]} increase={count[1].increase} variation={count[1].variation}/>
       <DashboardStat backgroundColor='bg-green-400' label='Total Articles' icon={<GrArticle className="text-2xl text-white" />} 
-				count={24} increase={true} variation={3}/>
+				count={Articles.data?.countArticle[0]} increase={true} variation={count[2].variation}/>
 		</div>
 	)
 }

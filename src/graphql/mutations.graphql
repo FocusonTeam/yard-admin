@@ -32,9 +32,9 @@ mutation changeArticleState($id: Float!, $state: String!){
   }
 }
 
-mutation createAdmin($id: String!, $password: String!, $owner: String!){
-  createAdmin(id: $id, password: $password, owner: $owner)
-}
+# mutation createAdmin($id: String!, $password: String!, $owner: String!){
+#   createAdmin(id: $id, password: $password, owner: $owner)
+# }
 
 mutation regenerateToken($id: String!, $refreshToken: String!){
   regenerateToken(id: $id, refreshToken: $refreshToken){
