@@ -45,6 +45,7 @@ export function ImageInputButton({handleImage} : any) {
 
   const compressImage = async(image: File) => {
     try {
+      //TODO :: 이미지 사이즈 200byte 정도로
       const options = {
         maxSizeMB: 1,
         maxWidthOrHeight: 1920,
