@@ -20,21 +20,23 @@ const DashboardStatsGrid = () => {
 		{
 			variation: 0,
 			increase : true
+		},
+		{
+			variation: 0,
+			increase : true
 		}
 	]
 
 	useEffect(() => {
 		if(Users.data){
-			count[0].increase = true;
-			count[0].variation = Users.data.countProfile[1];
-			// if((Users.data?.countProfile[0] - Users.data?.countProfile[1]) >= 0){
-			// 	count[0].variation = Users.data.countProfile[0] - Users.data?.countProfile[1];
-			// 	count[0].increase = true;
+			if((Users.data?.countProfile[0] - Users.data?.countProfile[1]) >= 0){
+				count[0].variation = Users.data.countProfile[0] - Users.data?.countProfile[1];
+				count[0].increase = true;
 
-			// }else{
-			// 	count[0].variation = Users.data.countProfile[1] - Users.data?.countProfile[0];
-			// 	count[0].increase = false;
-			// }
+			}else{
+				count[0].variation = Users.data.countProfile[1] - Users.data?.countProfile[0];
+				count[0].increase = false;
+			}
 		}
 
 		if(Posts.data){
