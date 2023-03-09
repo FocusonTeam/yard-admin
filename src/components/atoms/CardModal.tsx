@@ -1,6 +1,5 @@
 import React, { FC, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { COLORS } from 'styles/colors';
 import { Button } from './Button';
 
 export type CardModalProps = {
@@ -56,16 +55,5 @@ const CardModalContainer = styled.div`
     justify-content: flex-end;
   }
 `;
-
-const ModalButton = styled.button`
-  margin-left: 1rem;
-`
-
-const ButtonText = styled.div<{type: number}>`
-  border-radius: 0.5rem;
-  border-color: ${props => props.type === 0 ? COLORS.charcol : props.type === 1 ? COLORS.accentColor : COLORS.red };
-  color: ${props => props.type === 0 ? COLORS.charcol : props.type === 1 ? COLORS.accentColor : COLORS.red };
-`
-
 
 export default CardModal;

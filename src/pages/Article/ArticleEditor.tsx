@@ -51,8 +51,8 @@ export default function ArticleEditor () {
   useEffect(() => {
     if(data?.getArticleForEdit){
       setTitle(data.getArticleForEdit.title);
-      setCategoryId(data.getArticleForEdit.category.id);
-      setAreaId(data.getArticleForEdit.area.id);
+      setCategoryId(data?.getArticleForEdit.category!.id);
+      setAreaId(data?.getArticleForEdit.area!.id);
       if(data?.getArticleForEdit.articleContents !== null){
         setContentCards({Contents : data.getArticleForEdit.articleContents!});
       }
@@ -149,9 +149,9 @@ export default function ArticleEditor () {
         />
       <div className='flex gap-10 z-10 items-center mb-12'>
           <Label text="카테고리"/>
-          <SelectBox theme="categories" picked={data?.getArticleForEdit.category.id || categoryId} handleChange={setCategoryId}/>
+          <SelectBox theme="categories" picked={data?.getArticleForEdit.category?.id || categoryId} handleChange={setCategoryId}/>
           <Label text="지역"/>
-          <SelectBox theme="areas" picked={data?.getArticleForEdit.area.id || areaId} handleChange={setAreaId}/>
+          <SelectBox theme="areas" picked={data?.getArticleForEdit.area?.id || areaId} handleChange={setAreaId}/>
       </div>
       {/* 컨텐츠 리스트 */}
       <CardContainer>

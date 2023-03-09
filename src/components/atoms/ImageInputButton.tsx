@@ -5,7 +5,7 @@ import AWS from 'aws-sdk';
 import { v4 as uuidv4 } from 'uuid';
 import imageCompression from 'browser-image-compression';
 
-import { alerts, ARTICLES_IMAGES_REF } from "utils/index";
+import { alerts, ARTICLES_IMAGES_REF, AREA_IMAGES_REF } from "utils/index";
 
 const REGION = process.env.REACT_APP_AWS_REGION;
 const S3_BUCKET = process.env.REACT_APP_AWS_S3_BUCKET_NAME;
@@ -17,7 +17,7 @@ AWS.config.update({
   secretAccessKey: SECRET_ACCESS_KEY,
 });
 
-export function ImageInputButton({handleImage} : any) {
+export function ImageInputButton({savePath, handleImage} : any) {
 
   const [images, setImages] = useState([]);
   const [imgUrl, setImgUrl] = useState(null);
@@ -53,7 +53,7 @@ export function ImageInputButton({handleImage} : any) {
       const compressedImage = await imageCompression(image, options);
 
       console.log(compressedImage.type);
-      const filekey = `${ARTICLES_IMAGES_REF}/${fileName}${compressedImage.name}`
+      const filekey = `${savePath === "ARTICLE" ? ARTICLES_IMAGES_REF: AREA_IMAGES_REF}/${fileName}${compressedImage.name}`
 
       const params = {
         Bucket: "yard-image-dev",
@@ -91,7 +91,7 @@ export function ImageInputButton({handleImage} : any) {
 
   return (
     <>
-        <div className="flex	bg-slate-100 rounded-md justify-center content-center p-4">
+      <div className="flex	bg-slate-100 rounded-md justify-center content-center p-4">
       <Progress value={progresspercent} size='xs' colorScheme='pink' />
       <ImageUploading
         value={images}
@@ -115,7 +115,7 @@ export function ImageInputButton({handleImage} : any) {
               onClick={onImageUpload}
               {...dragProps}
             >
-              Click or Drop here
+              이미지 추가
             </button>
             {errors && <div>
               {errors.maxNumber && <span>Number of selected images exceed maxNumber</span>}

@@ -83,6 +83,8 @@ export default function WriteArticle() {
     }
   }, [contentCards, title, area, categoryId]);
 
+
+  //TODO :: 배포하기
   const onReviewContent = useCallback(() => {
     if(categoryId !== 0 || area !== 0 || title !== "" || contentCards === null){
 
@@ -101,7 +103,7 @@ export default function WriteArticle() {
           </>
           <div>
             <Button label='임시저장' onClick={onSaveContent} tailStyle='text-[#19A2F7] mx-8 font-semibold'/>
-            <Button label='검토하기' primary={true}/>
+            <Button label='검토하기' onClick={onReviewContent} primary={true}/>
           </div>
         </ButtonContainer>
         <TitleInput 

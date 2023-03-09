@@ -18,6 +18,7 @@ import useContentFunc from 'hooks/useContentFunc'
 import Label from 'components/atoms/Label'
 import { State, alerts } from 'utils/index'
 import _ from 'lodash';
+import { ArticleState } from 'generated/graphql';
 
 const CLOUD_STORAGE_BASE_URL = process.env.REACT_APP_AWS_S3_URL;
 
@@ -96,7 +97,7 @@ export default function ArticleDetail() {
         const results_inprogress = await changeArticleState({
           variables: {
             id: state,
-            state : State.DONE
+            state : ArticleState.Done
           }
         })
         if(results_inprogress.data){
@@ -111,7 +112,7 @@ export default function ArticleDetail() {
         const results_done = await changeArticleState({
           variables: {
             id: state,
-            state : State.UPLOADED
+            state : ArticleState.Uploaded
           }
         })
         if(results_done.data){
@@ -126,7 +127,7 @@ export default function ArticleDetail() {
         const results_down = await changeArticleState({
           variables: {
             id: state,
-            state : State.DONE
+            state : ArticleState.Inprogress
           }
         })
         if(results_down.data){
@@ -173,7 +174,7 @@ export default function ArticleDetail() {
 
       <DetailContainer>
         <HeadWrapper>
-          <Area domestic={true}>{data?.getArticleForEdit.area.region2depth}</Area>
+          <Area domestic={true}>{data?.getArticleForEdit.area?.region2depth}</Area>
           <Title title={data?.getArticleForEdit.title}/>
           {data?.getArticleForEdit.category === null || data?.getArticleForEdit.category === undefined ? <></> : <>
             <SubTitle subtitle={data?.getArticleForEdit.category.category}/>

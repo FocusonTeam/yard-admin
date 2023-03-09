@@ -6,24 +6,57 @@ import ManageBasicInfo from 'components/ManageBasicInfo';
 import ModalBase from 'common/ModalBase';
 import CardModal from 'components/atoms/CardModal';
 import { COLORS } from 'styles/colors';
-import { useAddArticleCategoryMutation } from 'generated/graphql';
-import { useEditArticleCategoryMutation } from '../../generated/graphql';
+import { useAddAreaImageMutation, useAddArticleCategoryMutation, useEditArticleCategoryMutation } from 'generated/graphql';
 import { alerts } from 'utils/alerts';
+import { Tab } from '@headlessui/react';
+import { classNames } from 'utils/classNames';
+import ManageAreaInfo from 'components/ManageAreaInfo';
+import { ImageInputButton } from 'components/atoms/ImageInputButton';
+import { UploadAreaImageInput, AddAreaImageInput } from '../../generated/graphql';
+import RadioButton from 'components/atoms/RadioButton';
 
 export default function YardManage() {
 
+
   const [actionInfo, setActionInfo] = useState<String>("");
   const [addInfo, setAddInfo] = useState({id: 0, name: ""});
+  const [location, setLocation] = useState({latitude: "", longtitude: ""})
 
   let modalTitle = "";
   
   const [createCategory] = useAddArticleCategoryMutation({fetchPolicy: 'network-only'});
   const [editCategory] = useEditArticleCategoryMutation({fetchPolicy: 'network-only'});
+  const [addAreaImage] = useAddAreaImageMutation({fetchPolicy: 'network-only'});
 
-  console.log(addInfo);
+  const [tabCategory, setTabCategory] = useState({
+    '지역 정보': <ManageAreaInfo handleChange={setActionInfo} handleContent={setAddInfo}/>,
+    '아티클 카테고리': <ManageBasicInfo theme="categories" handleChange={setActionInfo} handleContent={setAddInfo}/>
+  });
+
+
+  const [nationalOr, setNationalOr] = useState({ national : false, international: false }); // 지역 국내/외 선택
+  const onChangeNational = (e : any) => {
+    const { name } = e.target
+    if (name === 'international') {
+      setNationalOr({ national: false, international: true })
+    }
+    if (name === 'national') {
+      setNationalOr({ national: true, international: false })
+    }
+  }
+
+  const [image, setImage] = useState([]);   // For 지역이미지 추가
+
+  useEffect(() => {
+    console.log(image);
+  }, [image])
 
   useEffect(() => {
     switch(actionInfo){
+      case "Search Area":
+        modalTitle = "지역 추가"
+        setIsActive(true);
+        break;
       case "Edit Category" :
         modalTitle = "카테고리 수정"
         setIsActive(true);
@@ -36,6 +69,10 @@ export default function YardManage() {
         modalTitle = "지역 오픈";
         setIsActive(true);
         break;
+      case "Add Area Image":
+        modalTitle = "지역 이미지 추가"
+        setIsActive(true);
+        break;
       default:
         break;
     }
@@ -43,8 +80,17 @@ export default function YardManage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
-    setAddInfo({id: addInfo.id, name: value});
+    console.log(name, value);
+    
+    if(name === "latitude"){
+      setLocation({latitude : value, longtitude: location.longtitude});
+    }else if(name === "longtitude"){
+      setLocation({latitude : location.latitude, longtitude: value});
+    }else{
+      setAddInfo({id: addInfo.id, name: value});
+    }
   };
+
 
 
   // Modal Active
@@ -64,6 +110,10 @@ export default function YardManage() {
 
   const transferData = useCallback(async () => {
     switch(actionInfo){
+      case "Search Area":
+        
+
+      break;
       case "Add Category":
         const results = await createCategory({
           variables : {
@@ -98,50 +148,178 @@ export default function YardManage() {
           alerts({status : "error", title : "카테고리 수정을 할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
         }
         break;
+      case "Add Area Image":
+        console.log(addInfo.id, addInfo.name);
+        console.log(image);
+        const uploadInput : UploadAreaImageInput = {
+          path: image[0],
+          mimetype: image[1],
+          encoding: null,
+          title: addInfo.name
+        };
+        const addAreaInput : AddAreaImageInput = {
+          imageInput : uploadInput,
+          areaId : addInfo.id
+        }
+
+        const addImageResults = await addAreaImage({
+          variables: {
+            input: addAreaInput
+          }
+        })
+
+        if(addImageResults.data){
+          console.log(addImageResults.data);
+          onClickModalOff();
+          window.location.reload();
+        }
+        if(addImageResults.errors){
+          onClickModalOff();
+          alerts({status : "error", title : "지역 이미지 추가를 할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
+        }
+      break;
     }
   }, []);
+
+
+  //TODO :: Add Area + Search Modal(배민 참고) 만들기
+
+  const renderModalComponent = (actionInfo : any) => {
+    switch(actionInfo){
+      case "Add Category":
+        return (
+          <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="추가" actionEvent={onClickAction}>
+            <Label text="카테고리를 추가하시겠습니까?" size="XL"/>
+            <Label text="추가한 카테고리는 아티클 작성 및 수정시 사용가능합니다" size="MD"/>
+            <CategoryInput
+              name="addCategory"
+              onChange={(e) => handleChange(e)}
+              placeholder="* 추가할 카테고리를 입력하세요" 
+              type="text" 
+              defaultValue={addInfo.name}
+            />
+          </CardModal>
+        )
+      case "Search Area":
+        return (
+          <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="검색" actionEvent={onClickAction}>
+            <Label text="지역을 추가하시겠습니까?" size="XL"/>
+            <Label text="추가할 지역을 검색해보세요" size="MD"/>
+            <div className='flex p-2 gap-4 bg-white items-center justify-center rounded-xl'>
+              <RadioButton
+                name="national"
+                id="national"
+                value="national"
+                text="국내"
+                onChange={onChangeNational}
+                checked={nationalOr.national}
+              />
+              <RadioButton
+                name="international"
+                id="international"
+                value="international"
+                text="해외"
+                onChange={onChangeNational}
+                checked={nationalOr.international}
+              />
+            </div>
+            <AreaInput
+                name="latitude"
+                onChange={(e) => handleChange(e)}
+                placeholder="* 위도 (latitude) " 
+                type="text" 
+                defaultValue={addInfo.name}
+              />
+            <Label text={"예) 37.3738"} size="MD"/>
+            <AreaInput
+                name="longtitude"
+                onChange={(e) => handleChange(e)}
+                placeholder="* 경도 (longtitude) " 
+                type="text" 
+                defaultValue={addInfo.name}
+              />
+            <Label text={"예) 128.4009"} size="MD"/>
+          </CardModal>
+        )
+      case "Open Area":
+        return (
+          <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="확인" actionEvent={onClickAction}>
+            {/* 아직 지원되지 않는 기능입니다. 필요시 담당 개발자에게 요청해주세요 */}
+            지역을 오픈하시겠습니까?
+            <br />
+            오픈 즉시 앱에 반영됩니다
+          </CardModal>
+        )
+      case "Edit Category":
+        return (
+          <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="수정" actionEvent={onClickAction}>
+            <Label text="카테고리를 수정하시겠습니까?" size="XL"/>
+            <Label text="수정 즉시 앱에 반영됩니다" size="MD"/>
+            <CategoryInput
+              name="editCategory"
+              onChange={(e) => handleChange(e)}
+              placeholder="* 수정할 카테고리를 입력하세요" 
+              type="text" 
+              defaultValue={addInfo.name}
+            />
+          </CardModal>
+        )
+      case "Add Area Image":
+        return (
+          <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="저장" actionEvent={onClickAction}>
+            <Label text="지역 이미지를 추가하시겠습니까?" size="XL"/>
+            <Label text="수정 즉시 앱에 반영됩니다" size="MD"/>
+            <br />
+            <ImageInputButton savePath="AREA" handleImage={setImage}/>
+            <CategoryInput
+              name="addImageTitle"
+              onChange={(e) => handleChange(e)}
+              placeholder="* 추가할 이미지의 지역명을 입력하세요" 
+              type="text" 
+              defaultValue={addInfo.name}
+            />
+          </CardModal>
+        )
+      
+      default:
+        break;
+    }
+  }
 
   return (
     <>
     <Container>
-      <Label text="야드 운영 관리" size="XL"/>      
-      <ManageBasicInfo theme="areas" handleChange={setActionInfo} />
-      <ManageBasicInfo theme="categories" handleChange={setActionInfo} handleContent={setAddInfo}/>
+      {/* <Label text="야드 운영 관리" size="XL"/>     */}
+      <Tab.Group>
+        <Tab.List className="flex space-x-1 rounded-xl p-2">
+          {Object.keys(tabCategory).map((category) => (
+            <Tab
+              key={category}
+              className={({ selected }) =>
+                classNames(
+                  'p-2 mr-6 border-b-4 transition-colors duration-300 text-3xl',
+                  selected
+                    ? 'border-gray-500 font-bold'
+                    : 'font-medium border-transparent hover:bg-white/[0.12] hover:text-gray-500'
+                )
+              }
+              >
+                {category}
+              </Tab>
+            ))}
+        </Tab.List>
+        <Tab.Panels>
+          {Object.values(tabCategory).map((component, idx) => (
+              <Tab.Panel key={idx}>
+                {component}
+              </Tab.Panel>
+          ))}
+        </Tab.Panels>
+      </Tab.Group>
     </Container>
 
     <ModalBase active={isActive} closeEvent={onClickModalOff}>
-      {actionInfo === "Add Category"? (
-        <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="추가" actionEvent={onClickAction}>
-          <Label text="카테고리를 추가하시겠습니까?" size="XL"/>
-          <Label text="추가한 카테고리는 아티클 작성 및 수정시 사용가능합니다" size="MD"/>
-          <CategoryInput
-            name="addCategory"
-            onChange={(e) => handleChange(e)}
-            placeholder="* 추가할 카테고리를 입력하세요" 
-            type="text" 
-            defaultValue={addInfo.name}
-          />
-        </CardModal>
-      ) : actionInfo === "Open Area" ? (
-        <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="확인" actionEvent={onClickAction}>
-          아직 지원되지 않는 기능입니다. 필요시 담당 개발자에게 요청해주세요
-          {/* 지역을 오픈하시겠습니까?
-          <br />
-          오픈 즉시 앱에 반영됩니다 */}
-        </CardModal>
-      ) : (
-        <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="수정" actionEvent={onClickAction}>
-          <Label text="카테고리를 수정하시겠습니까?" size="XL"/>
-          <Label text="수정 즉시 앱에 반영됩니다" size="MD"/>
-          <CategoryInput
-            name="editCategory"
-            onChange={(e) => handleChange(e)}
-            placeholder="* 수정할 카테고리를 입력하세요" 
-            type="text" 
-            defaultValue={addInfo.name}
-          />
-        </CardModal>
-      )}
+      {renderModalComponent(actionInfo)}
     </ModalBase>
     </>
 
@@ -159,15 +337,23 @@ const Container = styled.div`
   background-color: white;
 `
 
-const ModalText = styled.div`
-  display: flex;
-`
-
 const CategoryInput = styled.input`
   width: 400px;
   padding: 1em;
   margin-top: 50px;
   margin-bottom: 50px;
+  color: ${COLORS.charcol};
+  font-size: large;
+  background: white;
+  border: 0.5px solid;
+  border-color: ${COLORS.lightGray};
+  border-radius: 3px;
+`;
+
+const AreaInput = styled.input`
+  width: 400px;
+  padding: 1em;
+  margin-top: 16px;
   color: ${COLORS.charcol};
   font-size: large;
   background: white;

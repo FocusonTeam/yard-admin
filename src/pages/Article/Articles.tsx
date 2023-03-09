@@ -71,7 +71,7 @@ export default function Articles(props : any) {
   useEffect(() => {
     if(areaId !== 0 && keyword === ""){
       console.log("case 1", areaId);
-      const filterData = allData.filter((set) => set.area.id === areaId);
+      const filterData = allData.filter((set) => set.area?.id === areaId);
       setArticleData(filterData);
     }
     if(areaId === 0 && keyword !== ""){
@@ -80,7 +80,7 @@ export default function Articles(props : any) {
     }
     if(areaId !== 0 && keyword !== ""){
       console.log("case 3");
-      setArticleData(allData.filter(set => set.area.id === areaId && set.title.includes(keyword))!);
+      setArticleData(allData.filter(set => set.area?.id === areaId && set.title.includes(keyword))!);
     }
     if(areaId === 0 && keyword === ""){
       console.log("case 4");

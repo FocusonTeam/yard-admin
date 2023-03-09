@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Divider } from '@chakra-ui/react'
 
-import { useGetAreasLazyQuery, useGetArticleCategoriesLazyQuery } from 'generated/graphql';
+import { AreaUnitFragment, useGetAreasLazyQuery, useGetArticleCategoriesLazyQuery } from 'generated/graphql';
 import Label from './atoms/Label';
 import { COLORS } from 'styles/colors';
 import { InfoModel } from 'models/models';
@@ -15,32 +15,25 @@ export default function ManageBasicInfo({theme, handleChange, handleContent} : a
   const [areaResult, setAreaResult] = useGetAreasLazyQuery();
   const [categoryResult, setCategoryResult] = useGetArticleCategoriesLazyQuery();
   const [infoDataList, setInfoDataList] = useState<InfoModel[]>([]);
+  const [areaDataList, setAreaDataList] = useState<AreaUnitFragment[]>([]);
 
   useEffect(() => {
-    switch(theme){
-      case('categories'):
-        getCategoryList();
-        break;
-      case('areas'):
-        getAreaList();
-        break;
-      default:
-        break;
-    }
+    getCategoryList();
   }, [setInfoDataList]);
 
-  const getAreaList = async() => {
-    const result = await areaResult({});
-    if(result.data?.getAreas){
-      let datalist = result.data?.getAreas.map((item) => {
-        return {id: item.id, name: item.region2depth + item.symbol, activate : item.activate, domestice: item.domestic}
-      })
-      setInfoDataList(datalist);
-    }
-    if(result.error){
-      console.log("area 못 불러와요");
-    }
-  };
+  // const getAreaList = async() => {
+  //   const result = await areaResult({});
+  //   if(result.data?.getAreas){
+  //     let datalist = result.data?.getAreas.map((item) => {
+  //       return {id: item.id, name: item.region2depth + item.symbol, activate : item.activate, domestice: item.domestic}
+  //     })
+  //     setInfoDataList(datalist);
+  //     setAreaDataList(result.data.getAreas);
+  //   }
+  //   if(result.error){
+  //     console.log("area 못 불러와요");
+  //   }
+  // };
 
   const getCategoryList = async() => {
     const result = await categoryResult({});
@@ -64,33 +57,14 @@ export default function ManageBasicInfo({theme, handleChange, handleContent} : a
     handleChange("Add Category");
   }
 
-  const onClickOpenArea = () => {
-    handleChange("Open Area")
-  }
-
   return (
     <Card>
       <CardHeader>
-        <Label text={theme === "areas"? "야드 지역 정보" : "아티클 카테고리 정보"} size="XL"/>
-        {theme === "areas"? (<></>) : (
-          <AddButton onClick={onClickAddCategory}><IoAddSharp size="32"/></AddButton>
-        )}
+        <Label text={"아티클 카테고리 정보"} size="XL"/>
+        <AddButton onClick={onClickAddCategory}><IoAddSharp size="32"/></AddButton>
       </CardHeader>
       <Divider/>
-      {theme === "areas"? (
-        <CardBody>
-          {infoDataList.map((item, index) => (
-                <CardCol key={index}>
-                  <CardText>{item.name}</CardText>
-                  {item.activate? (
-                    <Button label='오픈' tailStyle='bg-neutral-700 text-white p-2 border rounded-lg mx-8 w-20 font-semibold' />) : (
-                    <Button label='오픈하기' onClick={onClickOpenArea} tailStyle='text-[#19A2F7] mx-8 w-20 font-semibold'/>
-                  )}
-                </CardCol>
-            ))}
-        </CardBody>
-      ) : (
-        <CardBody>
+      <CardBody>
           {infoDataList.map((item, index) => (
             <CardCol key={index}>
               <CardText>{item.name}</CardText>
@@ -98,7 +72,6 @@ export default function ManageBasicInfo({theme, handleChange, handleContent} : a
             </CardCol>
           ))}
       </CardBody>
-      )}
     </Card>
   )
 }
@@ -127,6 +100,7 @@ const CardBody = styled.div`
   display: flex;
   flex-direction: column;
 `
+
 const CardCol = styled.div`
   display: inline-flex;
   flex-direction: row;
