@@ -10,6 +10,8 @@ type ColumnProps = {
     value: string;
 };
 
+//TODO :: Avatar Cell, 피드 비활성화 버튼
+
 const FEEDCOLUMNS = [
     {
         Header : 'Id',
