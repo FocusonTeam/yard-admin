@@ -28,6 +28,12 @@ query getAreas {
   }
 }
 
+query searchAreaData($domestic: Boolean!, $longitude: String!, $latitude: String!) {
+  searchAreaData(domestic : $domestic, longitude : $longitude, latitude: $latitude) {
+    ...AreaData
+  }
+}
+
 query getArticle($id : Int!){
   getArticle(id: $id){
     ...ArticleDetail

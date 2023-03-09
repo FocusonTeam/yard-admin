@@ -21,19 +21,30 @@ export type Scalars = {
 
 export type Accept = {
   __typename?: 'Accept';
+  activityNotification: Scalars['Boolean'];
   copylight: Scalars['Boolean'];
   location: Scalars['Boolean'];
   marketing: Scalars['Boolean'];
+  officialNotification: Scalars['Boolean'];
   privacy: Scalars['Boolean'];
+  pushNotification: Scalars['Boolean'];
   terms: Scalars['Boolean'];
 };
 
 export type AcceptInput = {
+  activityNotification?: InputMaybe<Scalars['Boolean']>;
   copylight?: InputMaybe<Scalars['Boolean']>;
   location?: InputMaybe<Scalars['Boolean']>;
   marketing?: InputMaybe<Scalars['Boolean']>;
+  officialNotification?: InputMaybe<Scalars['Boolean']>;
   privacy?: InputMaybe<Scalars['Boolean']>;
+  pushNotification?: InputMaybe<Scalars['Boolean']>;
   terms?: InputMaybe<Scalars['Boolean']>;
+};
+
+export type AddAreaImageInput = {
+  areaId: Scalars['Int'];
+  imageInput: UploadAreaImageInput;
 };
 
 export type AdminLoginResult = {
@@ -80,6 +91,21 @@ export type Area = {
   /** 고정된 첫번째 이미지 */
   thumbnail?: Maybe<Image>;
   updatedAt?: Maybe<Scalars['DateTime']>;
+};
+
+export type AreaData = {
+  __typename?: 'AreaData';
+  code: Scalars['String'];
+  name: Scalars['String'];
+  region1depth: Scalars['String'];
+  region2depth: Scalars['String'];
+};
+
+export type AreaDataInput = {
+  code: Scalars['String'];
+  name: Scalars['String'];
+  region1depth: Scalars['String'];
+  region2depth: Scalars['String'];
 };
 
 export type AreaImages = {
@@ -149,9 +175,9 @@ export type AreaTrendInput = {
 
 export type Article = {
   __typename?: 'Article';
-  area: Area;
+  area?: Maybe<Area>;
   articleContents?: Maybe<Array<ArticleContent>>;
-  category: ArticleCategory;
+  category?: Maybe<ArticleCategory>;
   contents?: Maybe<Scalars['String']>;
   createdAt?: Maybe<Scalars['DateTime']>;
   editor: Scalars['String'];
@@ -203,9 +229,9 @@ export type ArticleContentInput = {
 };
 
 export type ArticleInput = {
-  area: AreaInput;
+  area?: InputMaybe<AreaInput>;
   articleContents?: InputMaybe<Array<ArticleContentInput>>;
-  category: ArticleCategoryInput;
+  category?: InputMaybe<ArticleCategoryInput>;
   contents?: InputMaybe<Scalars['String']>;
   editor: Scalars['String'];
   images?: InputMaybe<Array<ImageInput>>;
@@ -321,6 +347,26 @@ export type CountResultInput = {
   region2depth: Scalars['String'];
 };
 
+export type CreateAreaInput = {
+  activate: Scalars['Boolean'];
+  /** 법정구역 코드 */
+  code: Scalars['String'];
+  description?: InputMaybe<Scalars['String']>;
+  domestic: Scalars['Boolean'];
+  /** y 좌표 */
+  latitude?: InputMaybe<Scalars['String']>;
+  /** x 좌표 */
+  longitude?: InputMaybe<Scalars['String']>;
+  /** 군 단위 영어 이름 */
+  name?: InputMaybe<Scalars['String']>;
+  /** 시도 단위 */
+  region1depth?: InputMaybe<Scalars['String']>;
+  /** 군 단위 */
+  region2depth: Scalars['String'];
+  /** 이모지 심볼 */
+  symbol: Scalars['String'];
+};
+
 export type CreateArticleInput = {
   areaId: Scalars['Int'];
   categoryId: Scalars['Int'];
@@ -329,6 +375,44 @@ export type CreateArticleInput = {
   thumbnailIndex?: InputMaybe<Scalars['Int']>;
   title: Scalars['String'];
 };
+
+export type Creations = {
+  __typename?: 'Creations';
+  /** 내용 */
+  contents: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  /** 창작자의 닉네임 */
+  creator: Scalars['String'];
+  /** 창작물의 id */
+  id: Scalars['Int'];
+  /** POST인 경우 이미지 */
+  images?: Maybe<Array<Image>>;
+  /** 신고 여부 */
+  reported: Scalars['Boolean'];
+  /** POST or COMMENT */
+  type?: Maybe<CreationsType>;
+};
+
+export type CreationsInput = {
+  /** 내용 */
+  contents: Scalars['String'];
+  createdAt: Scalars['DateTime'];
+  /** 창작자의 닉네임 */
+  creator: Scalars['String'];
+  /** 창작물의 id */
+  id: Scalars['Int'];
+  /** POST인 경우 이미지 */
+  images?: InputMaybe<Array<ImageInput>>;
+  /** 신고 여부 */
+  reported: Scalars['Boolean'];
+  /** POST or COMMENT */
+  type?: InputMaybe<CreationsType>;
+};
+
+export enum CreationsType {
+  Comment = 'COMMENT',
+  Post = 'POST'
+}
 
 export type EditArticleInput = {
   areaId: Scalars['Int'];
@@ -381,27 +465,32 @@ export type LikeInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  addAndroidVersion: Scalars['String'];
+  addArea: Area;
+  addAreaImage: Area;
   addArticleCategory: Scalars['Boolean'];
-  addIosVersion: Scalars['String'];
+  addServiceVersion: Service;
   changeArticleState: Article;
-  closeComment: Scalars['Boolean'];
-  closePost: Scalars['Boolean'];
+  changeCreationsState: Scalars['Boolean'];
+  changeVersionState: Service;
   createArticle: Article;
   deleteArticle: Scalars['Boolean'];
-  deleteComment: Scalars['Boolean'];
-  deletePost: Scalars['Boolean'];
+  deleteCreations: Scalars['Boolean'];
   editArticle: Article;
   editArticleCategory: Scalars['Boolean'];
-  openComment: Scalars['Boolean'];
-  openPost: Scalars['Boolean'];
   regenerateToken: AdminLoginResult;
+  removeAreaImage: Area;
   removeArticleCategory: Scalars['Boolean'];
+  setAreaActivate: Area;
 };
 
 
-export type MutationAddAndroidVersionArgs = {
-  version: Scalars['String'];
+export type MutationAddAreaArgs = {
+  input: CreateAreaInput;
+};
+
+
+export type MutationAddAreaImageArgs = {
+  input: AddAreaImageInput;
 };
 
 
@@ -410,24 +499,29 @@ export type MutationAddArticleCategoryArgs = {
 };
 
 
-export type MutationAddIosVersionArgs = {
+export type MutationAddServiceVersionArgs = {
+  os: Os;
   version: Scalars['String'];
 };
 
 
 export type MutationChangeArticleStateArgs = {
   id: Scalars['Float'];
-  state: Scalars['String'];
+  state: ArticleState;
 };
 
 
-export type MutationCloseCommentArgs = {
-  commentId: Scalars['Int'];
+export type MutationChangeCreationsStateArgs = {
+  id: Scalars['Int'];
+  state: Scalars['Boolean'];
+  type: CreationsType;
 };
 
 
-export type MutationClosePostArgs = {
-  postId: Scalars['Int'];
+export type MutationChangeVersionStateArgs = {
+  os: Os;
+  shouldUpdate: Scalars['Boolean'];
+  version: Scalars['String'];
 };
 
 
@@ -441,13 +535,9 @@ export type MutationDeleteArticleArgs = {
 };
 
 
-export type MutationDeleteCommentArgs = {
-  commentId: Scalars['Int'];
-};
-
-
-export type MutationDeletePostArgs = {
-  postId: Scalars['Int'];
+export type MutationDeleteCreationsArgs = {
+  id: Scalars['Int'];
+  type: CreationsType;
 };
 
 
@@ -462,25 +552,59 @@ export type MutationEditArticleCategoryArgs = {
 };
 
 
-export type MutationOpenCommentArgs = {
-  commentId: Scalars['Int'];
-};
-
-
-export type MutationOpenPostArgs = {
-  postId: Scalars['Int'];
-};
-
-
 export type MutationRegenerateTokenArgs = {
   id: Scalars['String'];
   refreshToken: Scalars['String'];
 };
 
 
+export type MutationRemoveAreaImageArgs = {
+  areaId: Scalars['Float'];
+  imageId: Scalars['Float'];
+};
+
+
 export type MutationRemoveArticleCategoryArgs = {
   id: Scalars['Int'];
 };
+
+
+export type MutationSetAreaActivateArgs = {
+  activate: Scalars['Boolean'];
+  id: Scalars['Int'];
+};
+
+export type Notification = {
+  __typename?: 'Notification';
+  activist?: Maybe<Profile>;
+  contents?: Maybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
+  id: Scalars['Int'];
+  notiType: NotificationType;
+  profile: Profile;
+  read: Scalars['Boolean'];
+  targetId?: Maybe<Scalars['Int']>;
+};
+
+export type NotificationInput = {
+  activist?: InputMaybe<ProfileInput>;
+  contents?: InputMaybe<Scalars['String']>;
+  createdAt: Scalars['DateTime'];
+  id: Scalars['Int'];
+  notiType: NotificationType;
+  profile: ProfileInput;
+  read?: InputMaybe<Scalars['Boolean']>;
+  targetId?: InputMaybe<Scalars['Int']>;
+};
+
+export enum NotificationType {
+  Article = 'ARTICLE',
+  Comment = 'COMMENT',
+  Feed = 'FEED',
+  Like = 'LIKE',
+  Official = 'OFFICIAL',
+  Post = 'POST'
+}
 
 export enum Os {
   Android = 'ANDROID',
@@ -626,6 +750,7 @@ export type Profile = {
   introduce?: Maybe<Scalars['String']>;
   likes?: Maybe<Array<Like>>;
   nickname: Scalars['String'];
+  notifications?: Maybe<Array<Notification>>;
   postImages?: Maybe<Array<Image>>;
   postableDate: Scalars['String'];
   posts?: Maybe<Array<Post>>;
@@ -644,6 +769,7 @@ export type ProfileInput = {
   introduce?: InputMaybe<Scalars['String']>;
   likes?: InputMaybe<Array<LikeInput>>;
   nickname: Scalars['String'];
+  notifications?: InputMaybe<Array<NotificationInput>>;
   postImages?: InputMaybe<Array<ImageInput>>;
   postableDate?: InputMaybe<Scalars['String']>;
   posts?: InputMaybe<Array<PostInput>>;
@@ -665,14 +791,11 @@ export type Query = {
   getArticleCategories: Array<ArticleCategory>;
   getArticleForEdit: Article;
   getArticles: Array<Article>;
-  getCommentReports: Array<CommentReport>;
-  getComments: Array<Comment>;
-  getCommentsByArea: Array<Comment>;
-  getPostReports: Array<PostReport>;
-  getPosts: Array<Post>;
-  getPostsByArea: Array<Post>;
-  getUserReports: Array<UserReport>;
+  getCreations: Array<Creations>;
+  getPost: Post;
+  getReports: Array<PostReport>;
   loginExtension: AdminLoginResult;
+  searchAreaData: AreaData;
   searchArticles: Array<Article>;
 };
 
@@ -703,34 +826,32 @@ export type QueryGetArticlesArgs = {
 };
 
 
-export type QueryGetCommentsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+export type QueryGetCreationsArgs = {
+  reported?: InputMaybe<Scalars['Boolean']>;
+  type?: InputMaybe<CreationsType>;
 };
 
 
-export type QueryGetCommentsByAreaArgs = {
-  areaId: Scalars['Int'];
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+export type QueryGetPostArgs = {
+  id: Scalars['Int'];
+  type: CreationsType;
 };
 
 
-export type QueryGetPostsArgs = {
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
-};
-
-
-export type QueryGetPostsByAreaArgs = {
-  areaId: Scalars['Int'];
-  limit?: InputMaybe<Scalars['Int']>;
-  offset?: InputMaybe<Scalars['Int']>;
+export type QueryGetReportsArgs = {
+  type: ReportType;
 };
 
 
 export type QueryLoginExtensionArgs = {
   id: Scalars['String'];
+};
+
+
+export type QuerySearchAreaDataArgs = {
+  domestic: Scalars['Boolean'];
+  latitude: Scalars['String'];
+  longitude: Scalars['String'];
 };
 
 
@@ -766,11 +887,24 @@ export type ReportInput = {
   respondent: ProfileInput;
 };
 
+export enum ReportType {
+  Comment = 'COMMENT',
+  Post = 'POST',
+  User = 'USER'
+}
+
 export enum Role {
   Admin = 'ADMIN',
   Test = 'TEST',
   User = 'USER'
 }
+
+export type Service = {
+  __typename?: 'Service';
+  createdAt: Scalars['DateTime'];
+  shouldUpdate: Scalars['Boolean'];
+  version: Scalars['String'];
+};
 
 export type Tag = {
   __typename?: 'Tag';
@@ -794,6 +928,13 @@ export enum Trend {
   Increase = 'INCREASE',
   Same = 'SAME'
 }
+
+export type UploadAreaImageInput = {
+  encoding?: InputMaybe<Scalars['String']>;
+  mimetype?: InputMaybe<Scalars['String']>;
+  path?: InputMaybe<Scalars['String']>;
+  title: Scalars['String'];
+};
 
 export type UploadImageInput = {
   encoding?: InputMaybe<Scalars['String']>;
@@ -849,25 +990,15 @@ export type UserInput = {
   role: Role;
 };
 
-export type UserReport = {
-  __typename?: 'UserReport';
-  id: Scalars['Int'];
-  /** 기타 신고 사유 */
-  other?: Maybe<Scalars['String']>;
-  /** 신고 사유 */
-  reasonId?: Maybe<Scalars['Int']>;
-  reportedAt?: Maybe<Scalars['DateTime']>;
-  /** 신고자 */
-  reporter: Profile;
-  /** 피신고자 */
-  respondent: Profile;
-};
+export type ServiceFragment = { __typename?: 'Service', version: string, shouldUpdate: boolean, createdAt: any };
 
 export type LoginResultFragment = { __typename?: 'AdminLoginResult', accessToken: string, refreshToken?: string | null, owner?: string | null };
 
-export type ArticleUnitFragment = { __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, category: { __typename?: 'ArticleCategory', category: string }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null };
+export type AreaDataFragment = { __typename?: 'AreaData', code: string, region1depth: string, region2depth: string, name: string };
 
-export type ArticleDetailFragment = { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null };
+export type ArticleUnitFragment = { __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, category?: { __typename?: 'ArticleCategory', category: string } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null };
+
+export type ArticleDetailFragment = { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category?: { __typename?: 'ArticleCategory', id: number, category: string } | null, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null };
 
 export type CategoryUnitFragment = { __typename?: 'ArticleCategory', id: number, category: string };
 
@@ -879,7 +1010,7 @@ export type ArticleImageFragment = { __typename?: 'Image', id: number, path?: st
 
 export type CountResultFragment = { __typename?: 'CountResult', areaId: number, region2depth: string, posts: number, comments: number };
 
-export type AreaUnitFragment = { __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean };
+export type AreaUnitFragment = { __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean, images?: Array<{ __typename?: 'AreaImages', title?: string | null, image?: { __typename?: 'Image', id: number, path?: string | null } | null }> | null };
 
 export type AddArticleCategoryMutationVariables = Exact<{
   category: Scalars['String'];
@@ -903,19 +1034,26 @@ export type RemoveArticleCategoryMutationVariables = Exact<{
 
 export type RemoveArticleCategoryMutation = { __typename?: 'Mutation', removeArticleCategory: boolean };
 
+export type AddAreaImageMutationVariables = Exact<{
+  input: AddAreaImageInput;
+}>;
+
+
+export type AddAreaImageMutation = { __typename?: 'Mutation', addAreaImage: { __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean, images?: Array<{ __typename?: 'AreaImages', title?: string | null, image?: { __typename?: 'Image', id: number, path?: string | null } | null }> | null } };
+
 export type CreateArticleMutationVariables = Exact<{
   input: CreateArticleInput;
 }>;
 
 
-export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
+export type CreateArticleMutation = { __typename?: 'Mutation', createArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category?: { __typename?: 'ArticleCategory', id: number, category: string } | null, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type EditArticleMutationVariables = Exact<{
   input: EditArticleInput;
 }>;
 
 
-export type EditArticleMutation = { __typename?: 'Mutation', editArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
+export type EditArticleMutation = { __typename?: 'Mutation', editArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category?: { __typename?: 'ArticleCategory', id: number, category: string } | null, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type DeleteArticleMutationVariables = Exact<{
   id: Scalars['Float'];
@@ -926,11 +1064,11 @@ export type DeleteArticleMutation = { __typename?: 'Mutation', deleteArticle: bo
 
 export type ChangeArticleStateMutationVariables = Exact<{
   id: Scalars['Float'];
-  state: Scalars['String'];
+  state: ArticleState;
 }>;
 
 
-export type ChangeArticleStateMutation = { __typename?: 'Mutation', changeArticleState: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
+export type ChangeArticleStateMutation = { __typename?: 'Mutation', changeArticleState: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category?: { __typename?: 'ArticleCategory', id: number, category: string } | null, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type RegenerateTokenMutationVariables = Exact<{
   id: Scalars['String'];
@@ -940,19 +1078,13 @@ export type RegenerateTokenMutationVariables = Exact<{
 
 export type RegenerateTokenMutation = { __typename?: 'Mutation', regenerateToken: { __typename?: 'AdminLoginResult', accessToken: string, refreshToken?: string | null, owner?: string | null } };
 
-export type AddAndroidVersionMutationVariables = Exact<{
+export type AddServiceVersionMutationVariables = Exact<{
   version: Scalars['String'];
+  os: Os;
 }>;
 
 
-export type AddAndroidVersionMutation = { __typename?: 'Mutation', addAndroidVersion: string };
-
-export type AddIosVersionMutationVariables = Exact<{
-  version: Scalars['String'];
-}>;
-
-
-export type AddIosVersionMutation = { __typename?: 'Mutation', addAndroidVersion: string };
+export type AddServiceVersionMutation = { __typename?: 'Mutation', addServiceVersion: { __typename?: 'Service', version: string, shouldUpdate: boolean, createdAt: any } };
 
 export type AdminLoginQueryVariables = Exact<{
   id: Scalars['String'];
@@ -987,21 +1119,30 @@ export type CountArticleQuery = { __typename?: 'Query', countArticle: Array<numb
 export type GetAreasQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAreasQuery = { __typename?: 'Query', getAreas: Array<{ __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean }> };
+export type GetAreasQuery = { __typename?: 'Query', getAreas: Array<{ __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean, images?: Array<{ __typename?: 'AreaImages', title?: string | null, image?: { __typename?: 'Image', id: number, path?: string | null } | null }> | null }> };
+
+export type SearchAreaDataQueryVariables = Exact<{
+  domestic: Scalars['Boolean'];
+  longitude: Scalars['String'];
+  latitude: Scalars['String'];
+}>;
+
+
+export type SearchAreaDataQuery = { __typename?: 'Query', searchAreaData: { __typename?: 'AreaData', code: string, region1depth: string, region2depth: string, name: string } };
 
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetArticleQuery = { __typename?: 'Query', getArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
+export type GetArticleQuery = { __typename?: 'Query', getArticle: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category?: { __typename?: 'ArticleCategory', id: number, category: string } | null, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type GetArticlesQueryVariables = Exact<{
   areaId?: InputMaybe<Scalars['Int']>;
 }>;
 
 
-export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, category: { __typename?: 'ArticleCategory', category: string }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null }> };
+export type GetArticlesQuery = { __typename?: 'Query', getArticles: Array<{ __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, category?: { __typename?: 'ArticleCategory', category: string } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null }> };
 
 export type GetArticleCategoriesQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -1014,25 +1155,40 @@ export type SearchArticlesQueryVariables = Exact<{
 }>;
 
 
-export type SearchArticlesQuery = { __typename?: 'Query', searchArticles: Array<{ __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, category: { __typename?: 'ArticleCategory', category: string }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null }> };
+export type SearchArticlesQuery = { __typename?: 'Query', searchArticles: Array<{ __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, category?: { __typename?: 'ArticleCategory', category: string } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null }> };
 
 export type GetArticleForEditQueryVariables = Exact<{
   id: Scalars['Int'];
 }>;
 
 
-export type GetArticleForEditQuery = { __typename?: 'Query', getArticleForEdit: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category: { __typename?: 'ArticleCategory', id: number, category: string }, area: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean }, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
+export type GetArticleForEditQuery = { __typename?: 'Query', getArticleForEdit: { __typename?: 'Article', id: number, updatedAt?: any | null, title: string, contents?: string | null, views: number, state: ArticleState, editor: string, category?: { __typename?: 'ArticleCategory', id: number, category: string } | null, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null, places?: Array<{ __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null }> | null, articleContents?: Array<{ __typename?: 'ArticleContent', id: number, index?: number | null, subtitle?: string | null, content?: string | null, image?: { __typename?: 'Image', path?: string | null, mimetype?: string | null } | null, place?: { __typename?: 'ArticlePlace', id: number, placeName?: string | null, placeURL?: string | null, category?: string | null } | null }> | null, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null } };
 
 export type CountPostAndCommentByAreaQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type CountPostAndCommentByAreaQuery = { __typename?: 'Query', countPostAndCommentByArea: Array<{ __typename?: 'CountResult', areaId: number, region2depth: string, posts: number, comments: number }> };
 
+export const ServiceFragmentDoc = gql`
+    fragment Service on Service {
+  version
+  shouldUpdate
+  createdAt
+}
+    `;
 export const LoginResultFragmentDoc = gql`
     fragment LoginResult on AdminLoginResult {
   accessToken
   refreshToken
   owner
+}
+    `;
+export const AreaDataFragmentDoc = gql`
+    fragment AreaData on AreaData {
+  code
+  region1depth
+  region2depth
+  name
 }
     `;
 export const ArticleUnitFragmentDoc = gql`
@@ -1142,6 +1298,13 @@ export const AreaUnitFragmentDoc = gql`
   symbol
   domestic
   activate
+  images {
+    image {
+      id
+      path
+    }
+    title
+  }
 }
     `;
 export const AddArticleCategoryDocument = gql`
@@ -1256,6 +1419,45 @@ export function useRemoveArticleCategoryMutation(baseOptions?: Apollo.MutationHo
 export type RemoveArticleCategoryMutationHookResult = ReturnType<typeof useRemoveArticleCategoryMutation>;
 export type RemoveArticleCategoryMutationResult = Apollo.MutationResult<RemoveArticleCategoryMutation>;
 export type RemoveArticleCategoryMutationOptions = Apollo.BaseMutationOptions<RemoveArticleCategoryMutation, RemoveArticleCategoryMutationVariables>;
+export const AddAreaImageDocument = gql`
+    mutation addAreaImage($input: AddAreaImageInput!) {
+  addAreaImage(input: $input) {
+    ...AreaUnit
+  }
+}
+    ${AreaUnitFragmentDoc}`;
+export type AddAreaImageMutationFn = Apollo.MutationFunction<AddAreaImageMutation, AddAreaImageMutationVariables>;
+export type AddAreaImageComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddAreaImageMutation, AddAreaImageMutationVariables>, 'mutation'>;
+
+    export const AddAreaImageComponent = (props: AddAreaImageComponentProps) => (
+      <ApolloReactComponents.Mutation<AddAreaImageMutation, AddAreaImageMutationVariables> mutation={AddAreaImageDocument} {...props} />
+    );
+    
+
+/**
+ * __useAddAreaImageMutation__
+ *
+ * To run a mutation, you first call `useAddAreaImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddAreaImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addAreaImageMutation, { data, loading, error }] = useAddAreaImageMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddAreaImageMutation(baseOptions?: Apollo.MutationHookOptions<AddAreaImageMutation, AddAreaImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddAreaImageMutation, AddAreaImageMutationVariables>(AddAreaImageDocument, options);
+      }
+export type AddAreaImageMutationHookResult = ReturnType<typeof useAddAreaImageMutation>;
+export type AddAreaImageMutationResult = Apollo.MutationResult<AddAreaImageMutation>;
+export type AddAreaImageMutationOptions = Apollo.BaseMutationOptions<AddAreaImageMutation, AddAreaImageMutationVariables>;
 export const CreateArticleDocument = gql`
     mutation createArticle($input: CreateArticleInput!) {
   createArticle(input: $input) {
@@ -1372,7 +1574,7 @@ export type DeleteArticleMutationHookResult = ReturnType<typeof useDeleteArticle
 export type DeleteArticleMutationResult = Apollo.MutationResult<DeleteArticleMutation>;
 export type DeleteArticleMutationOptions = Apollo.BaseMutationOptions<DeleteArticleMutation, DeleteArticleMutationVariables>;
 export const ChangeArticleStateDocument = gql`
-    mutation changeArticleState($id: Float!, $state: String!) {
+    mutation changeArticleState($id: Float!, $state: ArticleState!) {
   changeArticleState(id: $id, state: $state) {
     ...ArticleDetail
   }
@@ -1451,80 +1653,46 @@ export function useRegenerateTokenMutation(baseOptions?: Apollo.MutationHookOpti
 export type RegenerateTokenMutationHookResult = ReturnType<typeof useRegenerateTokenMutation>;
 export type RegenerateTokenMutationResult = Apollo.MutationResult<RegenerateTokenMutation>;
 export type RegenerateTokenMutationOptions = Apollo.BaseMutationOptions<RegenerateTokenMutation, RegenerateTokenMutationVariables>;
-export const AddAndroidVersionDocument = gql`
-    mutation addAndroidVersion($version: String!) {
-  addAndroidVersion(version: $version)
+export const AddServiceVersionDocument = gql`
+    mutation addServiceVersion($version: String!, $os: OS!) {
+  addServiceVersion(version: $version, os: $os) {
+    ...Service
+  }
 }
-    `;
-export type AddAndroidVersionMutationFn = Apollo.MutationFunction<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>;
-export type AddAndroidVersionComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>, 'mutation'>;
+    ${ServiceFragmentDoc}`;
+export type AddServiceVersionMutationFn = Apollo.MutationFunction<AddServiceVersionMutation, AddServiceVersionMutationVariables>;
+export type AddServiceVersionComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddServiceVersionMutation, AddServiceVersionMutationVariables>, 'mutation'>;
 
-    export const AddAndroidVersionComponent = (props: AddAndroidVersionComponentProps) => (
-      <ApolloReactComponents.Mutation<AddAndroidVersionMutation, AddAndroidVersionMutationVariables> mutation={AddAndroidVersionDocument} {...props} />
+    export const AddServiceVersionComponent = (props: AddServiceVersionComponentProps) => (
+      <ApolloReactComponents.Mutation<AddServiceVersionMutation, AddServiceVersionMutationVariables> mutation={AddServiceVersionDocument} {...props} />
     );
     
 
 /**
- * __useAddAndroidVersionMutation__
+ * __useAddServiceVersionMutation__
  *
- * To run a mutation, you first call `useAddAndroidVersionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddAndroidVersionMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useAddServiceVersionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddServiceVersionMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [addAndroidVersionMutation, { data, loading, error }] = useAddAndroidVersionMutation({
+ * const [addServiceVersionMutation, { data, loading, error }] = useAddServiceVersionMutation({
  *   variables: {
  *      version: // value for 'version'
+ *      os: // value for 'os'
  *   },
  * });
  */
-export function useAddAndroidVersionMutation(baseOptions?: Apollo.MutationHookOptions<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>) {
+export function useAddServiceVersionMutation(baseOptions?: Apollo.MutationHookOptions<AddServiceVersionMutation, AddServiceVersionMutationVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>(AddAndroidVersionDocument, options);
+        return Apollo.useMutation<AddServiceVersionMutation, AddServiceVersionMutationVariables>(AddServiceVersionDocument, options);
       }
-export type AddAndroidVersionMutationHookResult = ReturnType<typeof useAddAndroidVersionMutation>;
-export type AddAndroidVersionMutationResult = Apollo.MutationResult<AddAndroidVersionMutation>;
-export type AddAndroidVersionMutationOptions = Apollo.BaseMutationOptions<AddAndroidVersionMutation, AddAndroidVersionMutationVariables>;
-export const AddIosVersionDocument = gql`
-    mutation addIosVersion($version: String!) {
-  addAndroidVersion(version: $version)
-}
-    `;
-export type AddIosVersionMutationFn = Apollo.MutationFunction<AddIosVersionMutation, AddIosVersionMutationVariables>;
-export type AddIosVersionComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddIosVersionMutation, AddIosVersionMutationVariables>, 'mutation'>;
-
-    export const AddIosVersionComponent = (props: AddIosVersionComponentProps) => (
-      <ApolloReactComponents.Mutation<AddIosVersionMutation, AddIosVersionMutationVariables> mutation={AddIosVersionDocument} {...props} />
-    );
-    
-
-/**
- * __useAddIosVersionMutation__
- *
- * To run a mutation, you first call `useAddIosVersionMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAddIosVersionMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [addIosVersionMutation, { data, loading, error }] = useAddIosVersionMutation({
- *   variables: {
- *      version: // value for 'version'
- *   },
- * });
- */
-export function useAddIosVersionMutation(baseOptions?: Apollo.MutationHookOptions<AddIosVersionMutation, AddIosVersionMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<AddIosVersionMutation, AddIosVersionMutationVariables>(AddIosVersionDocument, options);
-      }
-export type AddIosVersionMutationHookResult = ReturnType<typeof useAddIosVersionMutation>;
-export type AddIosVersionMutationResult = Apollo.MutationResult<AddIosVersionMutation>;
-export type AddIosVersionMutationOptions = Apollo.BaseMutationOptions<AddIosVersionMutation, AddIosVersionMutationVariables>;
+export type AddServiceVersionMutationHookResult = ReturnType<typeof useAddServiceVersionMutation>;
+export type AddServiceVersionMutationResult = Apollo.MutationResult<AddServiceVersionMutation>;
+export type AddServiceVersionMutationOptions = Apollo.BaseMutationOptions<AddServiceVersionMutation, AddServiceVersionMutationVariables>;
 export const AdminLoginDocument = gql`
     query adminLogin($id: String!, $password: String!) {
   adminLogin(id: $id, password: $password) {
@@ -1762,6 +1930,49 @@ export function useGetAreasLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetAreasQueryHookResult = ReturnType<typeof useGetAreasQuery>;
 export type GetAreasLazyQueryHookResult = ReturnType<typeof useGetAreasLazyQuery>;
 export type GetAreasQueryResult = Apollo.QueryResult<GetAreasQuery, GetAreasQueryVariables>;
+export const SearchAreaDataDocument = gql`
+    query searchAreaData($domestic: Boolean!, $longitude: String!, $latitude: String!) {
+  searchAreaData(domestic: $domestic, longitude: $longitude, latitude: $latitude) {
+    ...AreaData
+  }
+}
+    ${AreaDataFragmentDoc}`;
+export type SearchAreaDataComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<SearchAreaDataQuery, SearchAreaDataQueryVariables>, 'query'> & ({ variables: SearchAreaDataQueryVariables; skip?: boolean; } | { skip: boolean; });
+
+    export const SearchAreaDataComponent = (props: SearchAreaDataComponentProps) => (
+      <ApolloReactComponents.Query<SearchAreaDataQuery, SearchAreaDataQueryVariables> query={SearchAreaDataDocument} {...props} />
+    );
+    
+
+/**
+ * __useSearchAreaDataQuery__
+ *
+ * To run a query within a React component, call `useSearchAreaDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSearchAreaDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSearchAreaDataQuery({
+ *   variables: {
+ *      domestic: // value for 'domestic'
+ *      longitude: // value for 'longitude'
+ *      latitude: // value for 'latitude'
+ *   },
+ * });
+ */
+export function useSearchAreaDataQuery(baseOptions: Apollo.QueryHookOptions<SearchAreaDataQuery, SearchAreaDataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SearchAreaDataQuery, SearchAreaDataQueryVariables>(SearchAreaDataDocument, options);
+      }
+export function useSearchAreaDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SearchAreaDataQuery, SearchAreaDataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SearchAreaDataQuery, SearchAreaDataQueryVariables>(SearchAreaDataDocument, options);
+        }
+export type SearchAreaDataQueryHookResult = ReturnType<typeof useSearchAreaDataQuery>;
+export type SearchAreaDataLazyQueryHookResult = ReturnType<typeof useSearchAreaDataLazyQuery>;
+export type SearchAreaDataQueryResult = Apollo.QueryResult<SearchAreaDataQuery, SearchAreaDataQueryVariables>;
 export const GetArticleDocument = gql`
     query getArticle($id: Int!) {
   getArticle(id: $id) {

@@ -20,6 +20,7 @@ import { getLoginToken } from '../utils/storageUtils';
 import useLogout from 'hooks/useLogout';
 import YardManage from 'pages/Manage/YardManage';
 import UserManage from 'pages/Manage/UserManage';
+import FeedManage from 'pages/Manage/FeedManage';
 
 
 const Routing = () => {
@@ -67,6 +68,7 @@ const Routing = () => {
                     <Route path="articles/:articleId" element={<ArticleDetail/>}/>
                     <Route path='article-edit/:articleId' element={<ArticleEditor />}/>
                     <Route path='manage-yard' element={<YardManage />}/>
+                    <Route path='manage-feed' element={<FeedManage />}/>
                     <Route path="manage-sns" element={<SnsManage/>}/>
                     <Route path="manage-users" element={<UserManage/>}/>
                     <Route path="setting" element={<Setting />} />

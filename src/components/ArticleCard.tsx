@@ -35,9 +35,9 @@ const ArticleCard = ({articleUnit, ...props} : ArticleProps) => {
               ? articleUnit.title
               : articleUnit.title.slice(0, 14) + '...'}
           </Title>
-          <Area domestic={articleUnit.area.domestic}>{articleUnit.area.region2depth}</Area>
+          <Area domestic={articleUnit.area?.domestic}>{articleUnit.area?.region2depth}</Area>
         </TitleInfo>
-        <SubTitle>{articleUnit.category.category}</SubTitle>
+        <SubTitle>{articleUnit.category?.category}</SubTitle>
       </ArticleInfo>
       <Writer>작성자 : {articleUnit.editor}</Writer>
       </ArticleContainer>
@@ -114,7 +114,7 @@ const Title = styled.div`
 `;
 
 
-const Area = styled.div<{domestic : boolean}>`
+const Area = styled.div<{domestic? : boolean}>`
   width:30px;
   height:20px;
   font-size : 12px;

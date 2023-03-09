@@ -1,7 +1,20 @@
+fragment Service on Service {
+  version
+  shouldUpdate
+  createdAt
+}
+
 fragment LoginResult on AdminLoginResult {
   accessToken
   refreshToken
   owner
+}
+
+fragment AreaData on AreaData {
+  code
+  region1depth
+  region2depth
+  name
 }
 
 
@@ -102,4 +115,11 @@ fragment AreaUnit on Area {
   symbol
   domestic
   activate
+  images {
+    image {
+      id
+      path
+    }
+    title
+  }
 }

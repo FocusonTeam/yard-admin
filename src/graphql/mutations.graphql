@@ -10,6 +10,12 @@ mutation removeArticleCategory($id: Int!){
   removeArticleCategory(id: $id)
 }
 
+mutation addAreaImage($input : AddAreaImageInput!){
+  addAreaImage(input: $input){
+    ...AreaUnit
+  }
+}
+
 mutation createArticle($input: CreateArticleInput!){
   createArticle(input: $input){
     ...ArticleDetail
@@ -26,7 +32,7 @@ mutation deleteArticle($id : Float!){
   deleteArticle(id: $id)
 }
 
-mutation changeArticleState($id: Float!, $state: String!){
+mutation changeArticleState($id: Float!, $state: ArticleState!){
   changeArticleState(id: $id, state: $state){
     ...ArticleDetail
   }
@@ -42,10 +48,8 @@ mutation regenerateToken($id: String!, $refreshToken: String!){
   }
 }
 
-mutation addAndroidVersion($version : String!){
-  addAndroidVersion(version : $version)
-}
-
-mutation addIosVersion($version : String!){
-  addAndroidVersion(version : $version)
+mutation addServiceVersion($version : String!, $os: OS!){
+  addServiceVersion(version : $version, os: $os){
+    ...Service
+  }
 }
