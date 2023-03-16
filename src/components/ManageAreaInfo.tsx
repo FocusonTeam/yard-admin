@@ -36,7 +36,7 @@ export default function ManageAreaInfo({theme, handleChange, handleContent} : an
   };
 
   const onClickAddArea = () => {
-    handleChange("Search Area");
+    handleChange("Add Area");
   }
 
   const onClickOpenArea = () => {
@@ -55,7 +55,6 @@ export default function ManageAreaInfo({theme, handleChange, handleContent} : an
     <>
     <Card>
       <CardHeader>
-        <Label text="야드 지역 정보" size="XL"/>
         <AddButton onClick={onClickAddArea}><IoAddSharp size="32"/></AddButton>
       </CardHeader>
       <Divider/>
@@ -114,7 +113,7 @@ const CardHeader = styled.div`
   display: inline-flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   margin-bottom: 10px;
 `
 
@@ -124,7 +123,7 @@ const CardBody = styled.div`
 `
 
 const AreaDetailContainer = styled.div`
-  width: 1400px;
+  width: 1200px;
   overflow: hidden;
   .react-horizontal-scrolling-menu--scroll-container::-webkit-scrollbar {
     display: none;
@@ -146,7 +145,7 @@ const AreaImage = styled.img`
 `;
 
 const ImageTitle = styled.div`
-  font-size: 24px;
+  font-size: 18px;
   color: ${COLORS.blackText};
   margin-left: 20px;
   margin-top: 10px;
@@ -155,7 +154,7 @@ const ImageTitle = styled.div`
 `
 
 const CardText = styled.div`
-  font-size: 24px;
+  font-size: 18px;
   color: ${COLORS.blackText};
   margin-left: 20px;
   margin-top: 10px;

@@ -28,8 +28,8 @@ query getAreas {
   }
 }
 
-query searchAreaData($domestic: Boolean!, $longitude: String!, $latitude: String!) {
-  searchAreaData(domestic : $domestic, longitude : $longitude, latitude: $latitude) {
+query searchAreaData($domestic: Boolean!, $keyword : String!) {
+  searchAreaData(domestic : $domestic, keyword : $keyword) {
     ...AreaData
   }
 }
@@ -68,5 +68,11 @@ query getArticleForEdit($id : Int!){
 query countPostAndCommentByArea {
   countPostAndCommentByArea {
     ...CountResult
+  }
+}
+
+query getCreations($reported: Boolean, $type: CreationsType){
+  getCreations(reported : $reported, type: $type) {
+    ...FeedUnit
   }
 }

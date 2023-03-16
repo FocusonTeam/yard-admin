@@ -10,6 +10,12 @@ mutation removeArticleCategory($id: Int!){
   removeArticleCategory(id: $id)
 }
 
+mutation addArea($input: CreateAreaInput!){
+  addArea(input : $input){
+    ...AreaUnit
+  }
+}
+
 mutation addAreaImage($input : AddAreaImageInput!){
   addAreaImage(input: $input){
     ...AreaUnit
@@ -52,4 +58,8 @@ mutation addServiceVersion($version : String!, $os: OS!){
   addServiceVersion(version : $version, os: $os){
     ...Service
   }
+}
+
+mutation changeCreationsState($id: Int!, $type: CreationsType!, $state: Boolean!){
+  changeCreationsState(id: $id, type: $type, state: $state)
 }

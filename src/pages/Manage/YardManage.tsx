@@ -12,15 +12,17 @@ import { Tab } from '@headlessui/react';
 import { classNames } from 'utils/classNames';
 import ManageAreaInfo from 'components/ManageAreaInfo';
 import { ImageInputButton } from 'components/atoms/ImageInputButton';
-import { UploadAreaImageInput, AddAreaImageInput } from '../../generated/graphql';
+import { UploadAreaImageInput, AddAreaImageInput, useSearchAreaDataLazyQuery, AreaData } from '../../generated/graphql';
 import RadioButton from 'components/atoms/RadioButton';
+import SearchBar from 'components/atoms/SearchBar';
+import AreaModal from 'pages/Modal/AreaModal';
 
 export default function YardManage() {
 
-
+  const [keyword, setKeyword] = useState("");
   const [actionInfo, setActionInfo] = useState<String>("");
   const [addInfo, setAddInfo] = useState({id: 0, name: ""});
-  const [location, setLocation] = useState({latitude: "", longtitude: ""})
+  const [areaData, setAreaData] = useState<AreaData[]>([]);
 
   let modalTitle = "";
   
@@ -33,18 +35,6 @@ export default function YardManage() {
     '아티클 카테고리': <ManageBasicInfo theme="categories" handleChange={setActionInfo} handleContent={setAddInfo}/>
   });
 
-
-  const [nationalOr, setNationalOr] = useState({ national : false, international: false }); // 지역 국내/외 선택
-  const onChangeNational = (e : any) => {
-    const { name } = e.target
-    if (name === 'international') {
-      setNationalOr({ national: false, international: true })
-    }
-    if (name === 'national') {
-      setNationalOr({ national: true, international: false })
-    }
-  }
-
   const [image, setImage] = useState([]);   // For 지역이미지 추가
 
   useEffect(() => {
@@ -53,7 +43,7 @@ export default function YardManage() {
 
   useEffect(() => {
     switch(actionInfo){
-      case "Search Area":
+      case "Add Area":
         modalTitle = "지역 추가"
         setIsActive(true);
         break;
@@ -81,17 +71,8 @@ export default function YardManage() {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     console.log(name, value);
-    
-    if(name === "latitude"){
-      setLocation({latitude : value, longtitude: location.longtitude});
-    }else if(name === "longtitude"){
-      setLocation({latitude : location.latitude, longtitude: value});
-    }else{
-      setAddInfo({id: addInfo.id, name: value});
-    }
+    setAddInfo({id: addInfo.id, name: value});
   };
-
-
 
   // Modal Active
   const [isActive, setIsActive] = useState(false);
@@ -110,21 +91,17 @@ export default function YardManage() {
 
   const transferData = useCallback(async () => {
     switch(actionInfo){
-      case "Search Area":
-        
-
-      break;
       case "Add Category":
-        const results = await createCategory({
+        const addCategoryResults = await createCategory({
           variables : {
             category : addInfo.name
           }
         })
-        if(results.data){
+        if(addCategoryResults.data){
           onClickModalOff();
           window.location.reload();
         }
-        if(results.errors){
+        if(addCategoryResults.errors){
           onClickModalOff();
           alerts({status : "error", title : "카테고리 추가를 할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
         }
@@ -179,10 +156,8 @@ export default function YardManage() {
         }
       break;
     }
-  }, []);
+  }, [setAreaData]);
 
-
-  //TODO :: Add Area + Search Modal(배민 참고) 만들기
 
   const renderModalComponent = (actionInfo : any) => {
     switch(actionInfo){
@@ -200,46 +175,9 @@ export default function YardManage() {
             />
           </CardModal>
         )
-      case "Search Area":
+      case "Add Area":
         return (
-          <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="검색" actionEvent={onClickAction}>
-            <Label text="지역을 추가하시겠습니까?" size="XL"/>
-            <Label text="추가할 지역을 검색해보세요" size="MD"/>
-            <div className='flex p-2 gap-4 bg-white items-center justify-center rounded-xl'>
-              <RadioButton
-                name="national"
-                id="national"
-                value="national"
-                text="국내"
-                onChange={onChangeNational}
-                checked={nationalOr.national}
-              />
-              <RadioButton
-                name="international"
-                id="international"
-                value="international"
-                text="해외"
-                onChange={onChangeNational}
-                checked={nationalOr.international}
-              />
-            </div>
-            <AreaInput
-                name="latitude"
-                onChange={(e) => handleChange(e)}
-                placeholder="* 위도 (latitude) " 
-                type="text" 
-                defaultValue={addInfo.name}
-              />
-            <Label text={"예) 37.3738"} size="MD"/>
-            <AreaInput
-                name="longtitude"
-                onChange={(e) => handleChange(e)}
-                placeholder="* 경도 (longtitude) " 
-                type="text" 
-                defaultValue={addInfo.name}
-              />
-            <Label text={"예) 128.4009"} size="MD"/>
-          </CardModal>
+          <AreaModal />
         )
       case "Open Area":
         return (
@@ -274,7 +212,7 @@ export default function YardManage() {
             <CategoryInput
               name="addImageTitle"
               onChange={(e) => handleChange(e)}
-              placeholder="* 추가할 이미지의 지역명을 입력하세요" 
+              placeholder="* 추가할 이미지의 제목을 입력하세요" 
               type="text" 
               defaultValue={addInfo.name}
             />
@@ -297,7 +235,7 @@ export default function YardManage() {
               key={category}
               className={({ selected }) =>
                 classNames(
-                  'p-2 mr-6 border-b-4 transition-colors duration-300 text-3xl',
+                  'p-2 mr-6 border-b-4 transition-colors duration-300 text-2xl',
                   selected
                     ? 'border-gray-500 font-bold'
                     : 'font-medium border-transparent hover:bg-white/[0.12] hover:text-gray-500'
