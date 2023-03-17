@@ -84,10 +84,9 @@ export default function WriteArticle() {
   }, [contentCards, title, area, categoryId]);
 
 
-  //TODO :: 배포하기
-  const onReviewContent = useCallback(() => {
+  const onReviewContent = useCallback(async() => {
     if(categoryId !== 0 || area !== 0 || title !== "" || contentCards === null){
-
+      // TODO : 처음 쓰자마자 검토 등록 / 원래 있던 것에서 검토 나눠서 해야함
     }else{
       alerts({status : "warning", title : "아티클을 모두 작성해주세요"});
     }

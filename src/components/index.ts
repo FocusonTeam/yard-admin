@@ -9,7 +9,6 @@ export * from './ArticleCard';
 export * from './PreviewArticle';
 
 export * from './atoms/SelectBox';
-export * from '../utils/alerts';
 export * from './atoms/Button';
 export * from './atoms/FontButton';
 export * from './atoms/AreaPieChart';
@@ -23,3 +22,7 @@ export * from './atoms/SubTitle';
 export * from './atoms/Label';
 export * from './atoms/RadioButton';
 export * from './atoms/ImageInputButton';
+export * from './atoms/AreaPickCell';
+export * from './atoms/AreaPieChart';
+export * from './atoms/TableFill';
+export * from './atoms/PageButton';

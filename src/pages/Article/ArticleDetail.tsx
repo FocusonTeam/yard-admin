@@ -27,7 +27,7 @@ export default function ArticleDetail() {
   const navigate = useNavigate();
   const {state} = useLocation();
   const windowsize = useWindowSize().windowSize;
-  const [actionInfo, setActionInfo] = useState<string>("");
+  const [actionModal, setActionModal] = useState<string>("");
 
   const {data, refetch, loading, error} = useGetArticleForEditQuery({
     fetchPolicy: 'no-cache',
@@ -56,7 +56,7 @@ export default function ArticleDetail() {
 
   const onClickModalOff = () => {
     setIsActive(false);
-    setActionInfo("");
+    setActionModal("");
   };
 
   const onClickCardRemove = useCallback(async () => {
@@ -72,7 +72,7 @@ export default function ArticleDetail() {
       //TODO :: 삭제된 아티클인 경우와 다른 error 분기 나누기
       alerts({status : "error", title : "아티클을 삭제할 수 없습니다"});
     }
-    setActionInfo("");
+    setActionModal("");
     
   }, []);
 
@@ -83,16 +83,16 @@ export default function ArticleDetail() {
   // 아티클 상태 변경
 
   useEffect(() => {
-    if(actionInfo === ""){
+    if(actionModal === ""){
       setIsActive(false);
     }else{
       setIsActive(true);
     }
-  }, [actionInfo]);
+  }, [actionModal]);
 
   const onClickChangeState = useCallback(async () => {
-    console.log(actionInfo);
-    switch(actionInfo){
+    console.log(actionModal);
+    switch(actionModal){
       case "GO_REVIEW":
         const results_inprogress = await changeArticleState({
           variables: {
@@ -139,7 +139,7 @@ export default function ArticleDetail() {
         }
         break;
     }
-    setActionInfo("");
+    setActionModal("");
   }, [])
 
 
@@ -186,7 +186,7 @@ export default function ArticleDetail() {
             </div>
             <div className='flex gap-2'>
               <FontButton onClick={onClickEdit} label='수정' textColor='text-gray-800' size='large'/>
-              <FontButton onClick={() => setActionInfo("REMOVE")} label='삭제' textColor='text-gray-800' size='large'/>
+              <FontButton onClick={() => setActionModal("REMOVE")} label='삭제' textColor='text-gray-800' size='large'/>
             </div>
           </div>
         </HeadWrapper>
@@ -209,30 +209,30 @@ export default function ArticleDetail() {
               contents={element.content}/>
           ))}
         {data?.getArticleForEdit.state === "INPROGRESS" ? (
-          <DeployButton deployNum={0} onClick={() => setActionInfo("GO_REVIEW")}>배포 전 검토하기</DeployButton>
+          <DeployButton deployNum={0} onClick={() => setActionModal("GO_REVIEW")}>배포 전 검토하기</DeployButton>
         ) : (
           data?.getArticleForEdit.state === "DONE"? (
-            <DeployButton deployNum={1} onClick={() => setActionInfo("GO_DEPLOY")}>배포하기</DeployButton>
+            <DeployButton deployNum={1} onClick={() => setActionModal("GO_DEPLOY")}>배포하기</DeployButton>
           ) : (
-            <DeployButton deployNum={2} onClick={() => setActionInfo("TAKEDOWN")}>배포 완료됨</DeployButton>
+            <DeployButton deployNum={2} onClick={() => setActionModal("TAKEDOWN")}>배포 완료됨</DeployButton>
         ))}
 
       </DetailContainer>
     </Container>
       <ModalBase active={isActive} closeEvent={onClickModalOff}>
-        {actionInfo === "GO_REVIEW"? (<>
+        {actionModal === "GO_REVIEW"? (<>
           <CardModal closeEvent={onClickModalOff} title="" actionMsg="확인" actionEvent={onClickChangeState}>
             <Label text="아티클을 검토하시겠습니까?" size="XL"/>
             <Label text="아티클 검토 이후 배포를 요청해주세요" size="MD"/>
           </CardModal>
         
-        </>) : actionInfo === "GO_DEPLOY" ? (<>
+        </>) : actionModal === "GO_DEPLOY" ? (<>
           <CardModal closeEvent={onClickModalOff} title="" actionMsg="수정" actionEvent={onClickChangeState}>
             <Label text="아티클을 배포하시겠습니까?" size="XL"/>
             <Label text="배포 즉시 앱에 반영됩니다" size="MD"/>
           </CardModal>
         
-        </>) : actionInfo === "TAKEDOWN" ? (
+        </>) : actionModal === "TAKEDOWN" ? (
           <CardModal closeEvent={onClickModalOff} title="" actionMsg="수정" actionEvent={onClickChangeState}>
             <Label text="아티클을 검토 단계로 변경하시겠습니까?" size="XL"/>
             <Label text="즉시 앱에 반영되어 아티클이 내려갑니다" size="MD"/>

@@ -11,29 +11,13 @@ import { AiOutlineEllipsis } from 'react-icons/ai';
 import { IoAddSharp } from 'react-icons/io5';
 
 export default function ManageBasicInfo({theme, handleChange, handleContent} : any) {
-
-  const [areaResult, setAreaResult] = useGetAreasLazyQuery();
+  
   const [categoryResult, setCategoryResult] = useGetArticleCategoriesLazyQuery();
   const [infoDataList, setInfoDataList] = useState<InfoModel[]>([]);
-  const [areaDataList, setAreaDataList] = useState<AreaUnitFragment[]>([]);
 
   useEffect(() => {
     getCategoryList();
   }, [setInfoDataList]);
-
-  // const getAreaList = async() => {
-  //   const result = await areaResult({});
-  //   if(result.data?.getAreas){
-  //     let datalist = result.data?.getAreas.map((item) => {
-  //       return {id: item.id, name: item.region2depth + item.symbol, activate : item.activate, domestice: item.domestic}
-  //     })
-  //     setInfoDataList(datalist);
-  //     setAreaDataList(result.data.getAreas);
-  //   }
-  //   if(result.error){
-  //     console.log("area 못 불러와요");
-  //   }
-  // };
 
   const getCategoryList = async() => {
     const result = await categoryResult({});

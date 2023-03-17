@@ -5,5 +5,4 @@ export * from './helpers';
 export * from './enums';
 export * from './handleError';
 export * from './alerts';
-export * from './tableColumn';
 export * from './classNames';

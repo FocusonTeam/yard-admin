@@ -9,3 +9,5 @@ export * from './Manage/FeedManage';
 export * from './Manage/SnsManage';
 export * from './Manage/UserManage';
 export * from './Manage/YardManage';
+
+export * from './Modal/AreaModal';
