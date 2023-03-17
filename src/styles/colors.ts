@@ -23,4 +23,14 @@ export const COLORS = {
   neutral_400: '#CDD1D5',
   neutral_500: '#A9A9A9',
   neutral_600: '#4B5059',
+
+  red_100: '#FFDADB',
+  red_200: '#FFBFBF',
+  red_300: '#FF8585',
+  red_400: '#FF5454',
+  red_500: '#EF2B2A',
+  red_600: '#DA120D',
+  red_700: '#BF0A03',
+  red_800: '#9F0A01',
+  red_900: '#7D0800',
 };

@@ -86,7 +86,7 @@ export default function ManageAreaInfo({theme, handleChange, handleContent} : an
                               <AreaImageCard>
                                 <AreaImage src={CLOUD_STORAGE_BASE_URL! + image.image?.path}/>
                                 <ImageTitle>{image.title}</ImageTitle>
-                                <DeleteButton onClick={() => onClickRemoveAreaImage(item.id, image.image?.id!)}></DeleteButton>
+                                <DeleteButton onClick={() => onClickRemoveAreaImage(item.id, image.image?.id!)}>삭제</DeleteButton>
                               </AreaImageCard>
                               </>
                             ))
@@ -172,10 +172,13 @@ const CardText = styled.div`
 
 const DeleteButton = styled.button`
   position : absolute;
-  top:10px;
+  top:4px;
+  left: 4px;
   width: 50px;
-  height: 20px;
-  background-color: rebeccapurple;
+  height: 30px;
+  background-color: ${COLORS.red_500};
+  color: white;
+  border-radius: 4px;
 `
 
 const AddButton = styled.button`
