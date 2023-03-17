@@ -1057,6 +1057,14 @@ export type AddAreaImageMutationVariables = Exact<{
 
 export type AddAreaImageMutation = { __typename?: 'Mutation', addAreaImage: { __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean, images?: Array<{ __typename?: 'AreaImages', title?: string | null, image?: { __typename?: 'Image', id: number, path?: string | null } | null }> | null } };
 
+export type RemoveAreaImageMutationVariables = Exact<{
+  areaId: Scalars['Float'];
+  imageId: Scalars['Float'];
+}>;
+
+
+export type RemoveAreaImageMutation = { __typename?: 'Mutation', removeAreaImage: { __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean, images?: Array<{ __typename?: 'AreaImages', title?: string | null, image?: { __typename?: 'Image', id: number, path?: string | null } | null }> | null } };
+
 export type CreateArticleMutationVariables = Exact<{
   input: CreateArticleInput;
 }>;
@@ -1546,6 +1554,46 @@ export function useAddAreaImageMutation(baseOptions?: Apollo.MutationHookOptions
 export type AddAreaImageMutationHookResult = ReturnType<typeof useAddAreaImageMutation>;
 export type AddAreaImageMutationResult = Apollo.MutationResult<AddAreaImageMutation>;
 export type AddAreaImageMutationOptions = Apollo.BaseMutationOptions<AddAreaImageMutation, AddAreaImageMutationVariables>;
+export const RemoveAreaImageDocument = gql`
+    mutation removeAreaImage($areaId: Float!, $imageId: Float!) {
+  removeAreaImage(areaId: $areaId, imageId: $imageId) {
+    ...AreaUnit
+  }
+}
+    ${AreaUnitFragmentDoc}`;
+export type RemoveAreaImageMutationFn = Apollo.MutationFunction<RemoveAreaImageMutation, RemoveAreaImageMutationVariables>;
+export type RemoveAreaImageComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<RemoveAreaImageMutation, RemoveAreaImageMutationVariables>, 'mutation'>;
+
+    export const RemoveAreaImageComponent = (props: RemoveAreaImageComponentProps) => (
+      <ApolloReactComponents.Mutation<RemoveAreaImageMutation, RemoveAreaImageMutationVariables> mutation={RemoveAreaImageDocument} {...props} />
+    );
+    
+
+/**
+ * __useRemoveAreaImageMutation__
+ *
+ * To run a mutation, you first call `useRemoveAreaImageMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useRemoveAreaImageMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [removeAreaImageMutation, { data, loading, error }] = useRemoveAreaImageMutation({
+ *   variables: {
+ *      areaId: // value for 'areaId'
+ *      imageId: // value for 'imageId'
+ *   },
+ * });
+ */
+export function useRemoveAreaImageMutation(baseOptions?: Apollo.MutationHookOptions<RemoveAreaImageMutation, RemoveAreaImageMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<RemoveAreaImageMutation, RemoveAreaImageMutationVariables>(RemoveAreaImageDocument, options);
+      }
+export type RemoveAreaImageMutationHookResult = ReturnType<typeof useRemoveAreaImageMutation>;
+export type RemoveAreaImageMutationResult = Apollo.MutationResult<RemoveAreaImageMutation>;
+export type RemoveAreaImageMutationOptions = Apollo.BaseMutationOptions<RemoveAreaImageMutation, RemoveAreaImageMutationVariables>;
 export const CreateArticleDocument = gql`
     mutation createArticle($input: CreateArticleInput!) {
   createArticle(input: $input) {

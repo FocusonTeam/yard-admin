@@ -12,9 +12,7 @@ import { Tab } from '@headlessui/react';
 import { classNames } from 'utils/classNames';
 import ManageAreaInfo from 'components/ManageAreaInfo';
 import { ImageInputButton } from 'components/atoms/ImageInputButton';
-import { UploadAreaImageInput, AddAreaImageInput, useSearchAreaDataLazyQuery, AreaData } from '../../generated/graphql';
-import RadioButton from 'components/atoms/RadioButton';
-import SearchBar from 'components/atoms/SearchBar';
+import { UploadAreaImageInput, AddAreaImageInput, AreaData, useRemoveAreaImageMutation } from '../../generated/graphql';
 import AreaModal from 'pages/Modal/AreaModal';
 
 export default function YardManage() {
@@ -29,6 +27,7 @@ export default function YardManage() {
   const [createCategory] = useAddArticleCategoryMutation({fetchPolicy: 'network-only'});
   const [editCategory] = useEditArticleCategoryMutation({fetchPolicy: 'network-only'});
   const [addAreaImage] = useAddAreaImageMutation({fetchPolicy: 'network-only'});
+  const [removeAreaImage] = useRemoveAreaImageMutation({fetchPolicy: 'network-only'});
 
   const [tabCategory, setTabCategory] = useState({
     '지역 정보': <ManageAreaInfo handleChange={setActionInfo} handleContent={setAddInfo}/>,
@@ -107,7 +106,7 @@ export default function YardManage() {
         }
         break;
       case "Edit Category":
-        console.log(addInfo.id, addInfo.name);
+        console.log("Edit Category", addInfo.id, addInfo.name);
         const editresults = await editCategory({
           variables : {
             id: addInfo.id,
@@ -153,6 +152,23 @@ export default function YardManage() {
         if(addImageResults.errors){
           onClickModalOff();
           alerts({status : "error", title : "지역 이미지 추가를 할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
+        }
+      break;
+      case "Remove Area Image":
+        console.log("Remove Image", addInfo.id, addInfo.name);
+        const removeResults = await removeAreaImage({
+          variables : {
+            areaId: addInfo.id,
+            imageId : Number(addInfo.name)
+          }
+        })
+        if(removeResults.data?.removeAreaImage){
+          onClickModalOff();
+          window.location.reload();
+        }
+        if(removeResults.errors){
+          onClickModalOff();
+          alerts({status : "error", title : "지역 이미지 삭제를 할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
         }
       break;
     }
@@ -218,7 +234,13 @@ export default function YardManage() {
             />
           </CardModal>
         )
-      
+      case "Remove Area Image":
+        return (
+          <CardModal closeEvent={onClickModalOff} title={modalTitle} actionMsg="저장" actionEvent={onClickAction}>
+            <Label text="지역 이미지를 삭제하시겠습니까?" size="XL"/>
+            <Label text="수정 즉시 앱에 반영됩니다" size="MD"/>
+          </CardModal>
+        )
       default:
         break;
     }

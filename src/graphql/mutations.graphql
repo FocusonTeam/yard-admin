@@ -22,6 +22,12 @@ mutation addAreaImage($input : AddAreaImageInput!){
   }
 }
 
+mutation removeAreaImage($areaId: Float!, $imageId: Float!){
+  removeAreaImage(areaId: $areaId, imageId: $imageId){
+    ...AreaUnit
+  }
+}
+
 mutation createArticle($input: CreateArticleInput!){
   createArticle(input: $input){
     ...ArticleDetail

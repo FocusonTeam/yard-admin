@@ -49,6 +49,12 @@ export default function ManageAreaInfo({theme, handleChange, handleContent} : an
     handleContent({id: areaId, name: ""});
   }
 
+  const onClickRemoveAreaImage = (areaId: number, imageId: number) => {
+    console.log("action remove image", areaId, imageId)
+    handleChange("Remove Area Image");
+    handleContent({id: areaId, name: imageId.toString});
+  }
+
 
 
   return (
@@ -80,6 +86,7 @@ export default function ManageAreaInfo({theme, handleChange, handleContent} : an
                               <AreaImageCard>
                                 <AreaImage src={CLOUD_STORAGE_BASE_URL! + image.image?.path}/>
                                 <ImageTitle>{image.title}</ImageTitle>
+                                <DeleteButton onClick={() => onClickRemoveAreaImage(item.id, image.image?.id!)}></DeleteButton>
                               </AreaImageCard>
                               </>
                             ))
@@ -135,6 +142,7 @@ const AreaDetailContainer = styled.div`
 `;
 
 const AreaImageCard = styled.div`
+  position : relative;
   width: 300px;
 `
 
@@ -162,8 +170,12 @@ const CardText = styled.div`
   height: 40px;
 `
 
-const EditButton = styled.button`
-  padding-right: 10px;
+const DeleteButton = styled.button`
+  position : absolute;
+  top:10px;
+  width: 50px;
+  height: 20px;
+  background-color: rebeccapurple;
 `
 
 const AddButton = styled.button`
