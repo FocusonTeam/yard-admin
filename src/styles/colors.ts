@@ -15,4 +15,12 @@ export const COLORS = {
   kakao: '#FEE500',
   pink: '#E73E8F',
   transparent: 'transparent',
+
+  neutral_0: '#ffffff',
+  neutral_100: '#f2f2f2',
+  neutral_200: '#f5f6f8',
+  neutral_300: '#e5e5e5',
+  neutral_400: '#CDD1D5',
+  neutral_500: '#A9A9A9',
+  neutral_600: '#4B5059',
 };

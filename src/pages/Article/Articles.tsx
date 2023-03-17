@@ -107,7 +107,7 @@ export default function Articles(props : any) {
   return (
     <div className='flex flex-col relative'>
       <div className='h-16 px-4 flex justify-between items-center'>
-        <SearchBar handleChange={setKeyword} />
+        <SearchBar handleChange={setKeyword} placeholder="Search ..." />
         <div className='flex gap-2 z-10'>
           <SelectBox theme="areas" handleChange={setAreaId} />
           <Button onClick={() => navigate("/write")} primary={true} label={"아티클 쓰기"}/>

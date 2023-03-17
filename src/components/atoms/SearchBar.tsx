@@ -1,7 +1,7 @@
 import React, { forwardRef, useEffect, useState } from "react";
 import {HiOutlineSearch} from 'react-icons/hi'
 
-const SearchBar = ({handleChange} : any) => {
+const SearchBar = ({handleChange, placeholder} : any) => {
 
   const [keyword, setKeyword] = useState("");
 
@@ -26,7 +26,7 @@ const SearchBar = ({handleChange} : any) => {
         type="text"
         onChange={onChange}
         onKeyDown={handleEnterPress}
-        placeholder="Search..."
+        placeholder={placeholder}
         className="text-sm focus:outline-none active:outline-none h-10 w-[24rem] border border-gray-300 rounded-md pl-11 pr-4"
       />
     </div>

@@ -1,159 +1,158 @@
-
-import React, { useMemo } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import FeedTable from 'components/FeedTable';
-import { FEEDCOLUMNS } from 'utils/tableColumn';
+import { CreationsType, useGetCreationsQuery } from 'generated/graphql';
+import { Creations } from '../../generated/graphql';
+import DataTable, { TableColumn } from 'react-data-table-component';
+import Label from 'components/atoms/Label';
+import { TypeFill } from 'components/atoms/TableFill';
+import { FaRegEyeSlash } from 'react-icons/fa';
 
-const getData = () => [
-  {
-    name: "Jane Cooper",
-    email: "jane.cooper@example.com",
-    title: "Regional Paradigm Technician",
-    department: "Optimization",
-    status: "Active",
-    role: "Admin",
-    imgUrl:
-      "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+const customStyles = {
+  rows: {
+      style: {
+        paddingTop: '4px',
+        paddingBottom: '4px',
+      },
+      highlightOnHoverStyle: {
+        backgroundColor: 'rgb(230, 240, 244)',
+        borderBottomColor: '#FFFFFF',
+        outline: '1px solid #FFFFFF',
+      },
   },
-  {
-    name: "Cody Fisher",
-    email: "cody.fisher@example.com",
-    title: "Product Directives Officer",
-    department: "Intranet",
-    status: "Active",
-    role: "Owner",
-    imgUrl:
-      "https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+  headCells: {
+      style: {
+        backgroundColor: '#ebebeb',
+        fontSize: '14px',
+        fontWeight: 600,
+        paddingLeft: '8px', // override the cell padding for head cells
+        paddingRight: '8px',
+      },
   },
-  {
-    name: "Esther Howard",
-    email: "esther.howard@example.com",
-    title: "Forward Response Developer",
-    department: "Directives",
-    status: "Active",
-    role: "Member",
-    imgUrl:
-      "https://images.unsplash.com/photo-1520813792240-56fc4a3765a7?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
+  cells: {
+      style: {
+          paddingLeft: '8px', // override the cell padding for data cells
+          paddingRight: '8px',
+      },
   },
-  {
-    name: "Jenny Wilson",
-    email: "jenny.wilson@example.com",
-    title: "Central Security Manager",
-    department: "Program",
-    status: "Active",
-    role: "Member",
-    imgUrl:
-      "https://images.unsplash.com/photo-1498551172505-8ee7ad69f235?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-  {
-    name: "Kristin Watson",
-    email: "kristin.watson@example.com",
-    title: "Lean Implementation Liaison",
-    department: "Mobility",
-    status: "Active",
-    role: "Admin",
-    imgUrl:
-      "https://images.unsplash.com/photo-1532417344469-368f9ae6d187?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-  {
-    name: "Cameron Williamson",
-    email: "cameron.williamson@example.com",
-    title: "Internal Applications Engineer",
-    department: "Security",
-    status: "Active",
-    role: "Member",
-    imgUrl:
-      "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },  {
-    name: "Cameron Williamson",
-    email: "cameron.williamson@example.com",
-    title: "Internal Applications Engineer",
-    department: "Security",
-    status: "Active",
-    role: "Member",
-    imgUrl:
-      "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },  {
-    name: "Cameron Williamson",
-    email: "cameron.williamson@example.com",
-    title: "Internal Applications Engineer",
-    department: "Security",
-    status: "Active",
-    role: "Member",
-    imgUrl:
-      "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },  {
-    name: "Cameron Williamson",
-    email: "cameron.williamson@example.com",
-    title: "Internal Applications Engineer",
-    department: "Security",
-    status: "Active",
-    role: "Member",
-    imgUrl:
-      "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },  {
-    name: "Cameron Williamson",
-    email: "cameron.williamson@example.com",
-    title: "Internal Applications Engineer",
-    department: "Security",
-    status: "Active",
-    role: "Member",
-    imgUrl:
-      "https://images.unsplash.com/photo-1566492031773-4f4e44671857?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60",
-  },
-];
+};
 
-const MOCK_DATA = [
-  {"id":1,"first_name":"Dallis","last_name":"Balchen","email":"dbalchen0@craigslist.org","gender":"Female"},
-  {"id":2,"first_name":"Jarred","last_name":"Lias","email":"jlias1@statcounter.com","gender":"Male"},
-  {"id":3,"first_name":"Doralynne","last_name":"McGarrahan","email":"dmcgarrahan2@fema.gov","gender":"Female"},
-  {"id":4,"first_name":"Thatch","last_name":"Belk","email":"tbelk3@ycombinator.com","gender":"Male"},
-  {"id":5,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":6,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":7,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":8,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":9,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":10,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":11,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":12,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":13,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-  {"id":14,"first_name":"Dwain","last_name":"Ledwitch","email":"dledwitch4@paginegialle.it","gender":"Male"},
-]
+
 
 export default function FeedManage() {
 
-  // const columns = useMemo(
-  //   () => [
-  //     {
-  //       Header: "Name",
-  //       accessor: "name",
-  //     },
-  //     {
-  //       Header: "Title",
-  //       accessor: "title",
-  //     },
-  //     {
-  //       Header: "Status",
-  //       accessor: "status",
-  //     },
-  //     {
-  //       Header: "Role",
-  //       accessor: "role",
-  //     },
-  //   ],
-  //   []
-  // );
+  const [type, setType] = useState<CreationsType | null>(null);
+  const [reported, setReported] = useState<boolean | null>(null);
+  const [dataArray, setDataArray] = useState<Creations[]>([]);
 
-  //const data = useMemo(() => getData(), []);
+  const {data, refetch, loading, error} = useGetCreationsQuery({
+    fetchPolicy: 'cache-and-network',
+    variables: {type : null, reported: null}
+  });
 
-  const columns = useMemo(() => FEEDCOLUMNS, [])
-  const data = useMemo(() => MOCK_DATA, [])
+  useEffect(() => {
+      if(data){
+          console.log("tableData", data.getCreations);
+      }
+      if(error){
+          alert("피드를 불러올 수 없습니다😅");
+      }
+  }, [data, error])
+
+  const columns = [
+    {
+      name: 'ID',
+      selector: (row : any) => row.id,
+      sortable: true,
+      maxWidth: '80px',
+    },
+    {
+        name: 'Creator',
+        selector: (row : any) => row.creator,
+        sortable: true,
+        maxWidth: '120px', 
+    },
+    {
+        name: 'contents',
+        selector: (row : any) => row.contents,
+        cell: (row : any) => (
+          <div className="w-96 whitespace-normal">
+            {row.contents}
+          </div>
+        ),
+        minWidth: '240px'
+    },
+    {
+      name: 'type',
+      selector: (row : any) => row.type,
+      cell: (row: any) => (
+        TypeFill(row.type)
+      ),
+      maxWidth: '80px', 
+    },
+    {
+      name : '신고',
+      selector: (row : any) => row.reported,
+      cell: (row : any) => (
+          <div className="flex justify-center">
+              <h3>{row.reported ? ("🚨") : ("")}</h3>
+          </div>
+      ),
+      sortable: true,
+      maxWidth: '60px',
+    },
+    {
+      name: '작성일자',
+      selector: (row : any) => row.createdAt,
+      sortable: true,
+      maxWidth: '200px',
+    },
+    {
+      name: '상태',
+      button: true,
+      cell: (row: any) => (
+        <div className='flex justify-center'>
+          {row.open ? (<></>) : (<FaRegEyeSlash />)}
+        </div>
+      )
+    },
+    // {
+    //   cell: (row : any) => <MaterialMenu on />,
+    //   allowOverflow: true,
+    //   button: true,
+    //   width: '56px',
+    // },
+  ];
+
+
+  const handleChange = ({ selectedRows } : any) => {
+    // You can set state or dispatch with something like Redux so we can use the retrieved data
+    console.log('Selected Rows: ', selectedRows);
+  };
+
+
+  if(loading){
+    return (
+      <div>
+        <Label text="데이터를 불러오고 있습니다" />
+      </div>
+    )
+  }
 
   return (
     <Container>
       <>
       <div>
-        <FeedTable />
+        <DataTable
+          title="YARD 피드 관리"
+          columns={columns}
+          data={data?.getCreations!}
+          pagination
+          fixedHeader={true}
+          selectableRows
+          onSelectedRowsChange={handleChange}
+          customStyles={customStyles}
+          highlightOnHover
+        />
       </div>
       </>
     </Container>

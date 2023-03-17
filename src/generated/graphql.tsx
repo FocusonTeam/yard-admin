@@ -96,6 +96,8 @@ export type Area = {
 export type AreaData = {
   __typename?: 'AreaData';
   code: Scalars['String'];
+  latitude: Scalars['String'];
+  longitude: Scalars['String'];
   name: Scalars['String'];
   region1depth: Scalars['String'];
   region2depth: Scalars['String'];
@@ -103,6 +105,8 @@ export type AreaData = {
 
 export type AreaDataInput = {
   code: Scalars['String'];
+  latitude: Scalars['String'];
+  longitude: Scalars['String'];
   name: Scalars['String'];
   region1depth: Scalars['String'];
   region2depth: Scalars['String'];
@@ -387,8 +391,10 @@ export type Creations = {
   id: Scalars['Int'];
   /** POST인 경우 이미지 */
   images?: Maybe<Array<Image>>;
-  /** 신고 여부 */
-  reported: Scalars['Boolean'];
+  /** 공개 여부 */
+  open: Scalars['Boolean'];
+  /** 신고 당한 횟수 */
+  reported: Scalars['Int'];
   /** POST or COMMENT */
   type?: Maybe<CreationsType>;
 };
@@ -403,8 +409,10 @@ export type CreationsInput = {
   id: Scalars['Int'];
   /** POST인 경우 이미지 */
   images?: InputMaybe<Array<ImageInput>>;
-  /** 신고 여부 */
-  reported: Scalars['Boolean'];
+  /** 공개 여부 */
+  open: Scalars['Boolean'];
+  /** 신고 당한 횟수 */
+  reported: Scalars['Int'];
   /** POST or COMMENT */
   type?: InputMaybe<CreationsType>;
 };
@@ -795,7 +803,7 @@ export type Query = {
   getPost: Post;
   getReports: Array<PostReport>;
   loginExtension: AdminLoginResult;
-  searchAreaData: AreaData;
+  searchAreaData: Array<AreaData>;
   searchArticles: Array<Article>;
 };
 
@@ -850,8 +858,7 @@ export type QueryLoginExtensionArgs = {
 
 export type QuerySearchAreaDataArgs = {
   domestic: Scalars['Boolean'];
-  latitude: Scalars['String'];
-  longitude: Scalars['String'];
+  keyword: Scalars['String'];
 };
 
 
@@ -994,7 +1001,7 @@ export type ServiceFragment = { __typename?: 'Service', version: string, shouldU
 
 export type LoginResultFragment = { __typename?: 'AdminLoginResult', accessToken: string, refreshToken?: string | null, owner?: string | null };
 
-export type AreaDataFragment = { __typename?: 'AreaData', code: string, region1depth: string, region2depth: string, name: string };
+export type AreaDataFragment = { __typename?: 'AreaData', code: string, region1depth: string, region2depth: string, name: string, longitude: string, latitude: string };
 
 export type ArticleUnitFragment = { __typename?: 'Article', id: number, title: string, editor: string, state: ArticleState, area?: { __typename?: 'Area', id: number, region2depth: string, domestic: boolean } | null, category?: { __typename?: 'ArticleCategory', category: string } | null, thumbnail?: { __typename?: 'Image', id: number, path?: string | null } | null };
 
@@ -1011,6 +1018,8 @@ export type ArticleImageFragment = { __typename?: 'Image', id: number, path?: st
 export type CountResultFragment = { __typename?: 'CountResult', areaId: number, region2depth: string, posts: number, comments: number };
 
 export type AreaUnitFragment = { __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean, images?: Array<{ __typename?: 'AreaImages', title?: string | null, image?: { __typename?: 'Image', id: number, path?: string | null } | null }> | null };
+
+export type FeedUnitFragment = { __typename?: 'Creations', id: number, type?: CreationsType | null, creator: string, contents: string, open: boolean, reported: number, createdAt: any, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null };
 
 export type AddArticleCategoryMutationVariables = Exact<{
   category: Scalars['String'];
@@ -1033,6 +1042,13 @@ export type RemoveArticleCategoryMutationVariables = Exact<{
 
 
 export type RemoveArticleCategoryMutation = { __typename?: 'Mutation', removeArticleCategory: boolean };
+
+export type AddAreaMutationVariables = Exact<{
+  input: CreateAreaInput;
+}>;
+
+
+export type AddAreaMutation = { __typename?: 'Mutation', addArea: { __typename?: 'Area', id: number, region2depth: string, symbol: string, domestic: boolean, activate: boolean, images?: Array<{ __typename?: 'AreaImages', title?: string | null, image?: { __typename?: 'Image', id: number, path?: string | null } | null }> | null } };
 
 export type AddAreaImageMutationVariables = Exact<{
   input: AddAreaImageInput;
@@ -1086,6 +1102,15 @@ export type AddServiceVersionMutationVariables = Exact<{
 
 export type AddServiceVersionMutation = { __typename?: 'Mutation', addServiceVersion: { __typename?: 'Service', version: string, shouldUpdate: boolean, createdAt: any } };
 
+export type ChangeCreationsStateMutationVariables = Exact<{
+  id: Scalars['Int'];
+  type: CreationsType;
+  state: Scalars['Boolean'];
+}>;
+
+
+export type ChangeCreationsStateMutation = { __typename?: 'Mutation', changeCreationsState: boolean };
+
 export type AdminLoginQueryVariables = Exact<{
   id: Scalars['String'];
   password: Scalars['String'];
@@ -1123,12 +1148,11 @@ export type GetAreasQuery = { __typename?: 'Query', getAreas: Array<{ __typename
 
 export type SearchAreaDataQueryVariables = Exact<{
   domestic: Scalars['Boolean'];
-  longitude: Scalars['String'];
-  latitude: Scalars['String'];
+  keyword: Scalars['String'];
 }>;
 
 
-export type SearchAreaDataQuery = { __typename?: 'Query', searchAreaData: { __typename?: 'AreaData', code: string, region1depth: string, region2depth: string, name: string } };
+export type SearchAreaDataQuery = { __typename?: 'Query', searchAreaData: Array<{ __typename?: 'AreaData', code: string, region1depth: string, region2depth: string, name: string, longitude: string, latitude: string }> };
 
 export type GetArticleQueryVariables = Exact<{
   id: Scalars['Int'];
@@ -1169,6 +1193,14 @@ export type CountPostAndCommentByAreaQueryVariables = Exact<{ [key: string]: nev
 
 export type CountPostAndCommentByAreaQuery = { __typename?: 'Query', countPostAndCommentByArea: Array<{ __typename?: 'CountResult', areaId: number, region2depth: string, posts: number, comments: number }> };
 
+export type GetCreationsQueryVariables = Exact<{
+  reported?: InputMaybe<Scalars['Boolean']>;
+  type?: InputMaybe<CreationsType>;
+}>;
+
+
+export type GetCreationsQuery = { __typename?: 'Query', getCreations: Array<{ __typename?: 'Creations', id: number, type?: CreationsType | null, creator: string, contents: string, open: boolean, reported: number, createdAt: any, images?: Array<{ __typename?: 'Image', id: number, path?: string | null }> | null }> };
+
 export const ServiceFragmentDoc = gql`
     fragment Service on Service {
   version
@@ -1189,6 +1221,8 @@ export const AreaDataFragmentDoc = gql`
   region1depth
   region2depth
   name
+  longitude
+  latitude
 }
     `;
 export const ArticleUnitFragmentDoc = gql`
@@ -1307,6 +1341,21 @@ export const AreaUnitFragmentDoc = gql`
   }
 }
     `;
+export const FeedUnitFragmentDoc = gql`
+    fragment FeedUnit on Creations {
+  id
+  type
+  creator
+  contents
+  images {
+    id
+    path
+  }
+  open
+  reported
+  createdAt
+}
+    `;
 export const AddArticleCategoryDocument = gql`
     mutation addArticleCategory($category: String!) {
   addArticleCategory(category: $category)
@@ -1419,6 +1468,45 @@ export function useRemoveArticleCategoryMutation(baseOptions?: Apollo.MutationHo
 export type RemoveArticleCategoryMutationHookResult = ReturnType<typeof useRemoveArticleCategoryMutation>;
 export type RemoveArticleCategoryMutationResult = Apollo.MutationResult<RemoveArticleCategoryMutation>;
 export type RemoveArticleCategoryMutationOptions = Apollo.BaseMutationOptions<RemoveArticleCategoryMutation, RemoveArticleCategoryMutationVariables>;
+export const AddAreaDocument = gql`
+    mutation addArea($input: CreateAreaInput!) {
+  addArea(input: $input) {
+    ...AreaUnit
+  }
+}
+    ${AreaUnitFragmentDoc}`;
+export type AddAreaMutationFn = Apollo.MutationFunction<AddAreaMutation, AddAreaMutationVariables>;
+export type AddAreaComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<AddAreaMutation, AddAreaMutationVariables>, 'mutation'>;
+
+    export const AddAreaComponent = (props: AddAreaComponentProps) => (
+      <ApolloReactComponents.Mutation<AddAreaMutation, AddAreaMutationVariables> mutation={AddAreaDocument} {...props} />
+    );
+    
+
+/**
+ * __useAddAreaMutation__
+ *
+ * To run a mutation, you first call `useAddAreaMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAddAreaMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [addAreaMutation, { data, loading, error }] = useAddAreaMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAddAreaMutation(baseOptions?: Apollo.MutationHookOptions<AddAreaMutation, AddAreaMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<AddAreaMutation, AddAreaMutationVariables>(AddAreaDocument, options);
+      }
+export type AddAreaMutationHookResult = ReturnType<typeof useAddAreaMutation>;
+export type AddAreaMutationResult = Apollo.MutationResult<AddAreaMutation>;
+export type AddAreaMutationOptions = Apollo.BaseMutationOptions<AddAreaMutation, AddAreaMutationVariables>;
 export const AddAreaImageDocument = gql`
     mutation addAreaImage($input: AddAreaImageInput!) {
   addAreaImage(input: $input) {
@@ -1693,6 +1781,45 @@ export function useAddServiceVersionMutation(baseOptions?: Apollo.MutationHookOp
 export type AddServiceVersionMutationHookResult = ReturnType<typeof useAddServiceVersionMutation>;
 export type AddServiceVersionMutationResult = Apollo.MutationResult<AddServiceVersionMutation>;
 export type AddServiceVersionMutationOptions = Apollo.BaseMutationOptions<AddServiceVersionMutation, AddServiceVersionMutationVariables>;
+export const ChangeCreationsStateDocument = gql`
+    mutation changeCreationsState($id: Int!, $type: CreationsType!, $state: Boolean!) {
+  changeCreationsState(id: $id, type: $type, state: $state)
+}
+    `;
+export type ChangeCreationsStateMutationFn = Apollo.MutationFunction<ChangeCreationsStateMutation, ChangeCreationsStateMutationVariables>;
+export type ChangeCreationsStateComponentProps = Omit<ApolloReactComponents.MutationComponentOptions<ChangeCreationsStateMutation, ChangeCreationsStateMutationVariables>, 'mutation'>;
+
+    export const ChangeCreationsStateComponent = (props: ChangeCreationsStateComponentProps) => (
+      <ApolloReactComponents.Mutation<ChangeCreationsStateMutation, ChangeCreationsStateMutationVariables> mutation={ChangeCreationsStateDocument} {...props} />
+    );
+    
+
+/**
+ * __useChangeCreationsStateMutation__
+ *
+ * To run a mutation, you first call `useChangeCreationsStateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChangeCreationsStateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [changeCreationsStateMutation, { data, loading, error }] = useChangeCreationsStateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      type: // value for 'type'
+ *      state: // value for 'state'
+ *   },
+ * });
+ */
+export function useChangeCreationsStateMutation(baseOptions?: Apollo.MutationHookOptions<ChangeCreationsStateMutation, ChangeCreationsStateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<ChangeCreationsStateMutation, ChangeCreationsStateMutationVariables>(ChangeCreationsStateDocument, options);
+      }
+export type ChangeCreationsStateMutationHookResult = ReturnType<typeof useChangeCreationsStateMutation>;
+export type ChangeCreationsStateMutationResult = Apollo.MutationResult<ChangeCreationsStateMutation>;
+export type ChangeCreationsStateMutationOptions = Apollo.BaseMutationOptions<ChangeCreationsStateMutation, ChangeCreationsStateMutationVariables>;
 export const AdminLoginDocument = gql`
     query adminLogin($id: String!, $password: String!) {
   adminLogin(id: $id, password: $password) {
@@ -1931,8 +2058,8 @@ export type GetAreasQueryHookResult = ReturnType<typeof useGetAreasQuery>;
 export type GetAreasLazyQueryHookResult = ReturnType<typeof useGetAreasLazyQuery>;
 export type GetAreasQueryResult = Apollo.QueryResult<GetAreasQuery, GetAreasQueryVariables>;
 export const SearchAreaDataDocument = gql`
-    query searchAreaData($domestic: Boolean!, $longitude: String!, $latitude: String!) {
-  searchAreaData(domestic: $domestic, longitude: $longitude, latitude: $latitude) {
+    query searchAreaData($domestic: Boolean!, $keyword: String!) {
+  searchAreaData(domestic: $domestic, keyword: $keyword) {
     ...AreaData
   }
 }
@@ -1957,8 +2084,7 @@ export type SearchAreaDataComponentProps = Omit<ApolloReactComponents.QueryCompo
  * const { data, loading, error } = useSearchAreaDataQuery({
  *   variables: {
  *      domestic: // value for 'domestic'
- *      longitude: // value for 'longitude'
- *      latitude: // value for 'latitude'
+ *      keyword: // value for 'keyword'
  *   },
  * });
  */
@@ -2219,3 +2345,45 @@ export function useCountPostAndCommentByAreaLazyQuery(baseOptions?: Apollo.LazyQ
 export type CountPostAndCommentByAreaQueryHookResult = ReturnType<typeof useCountPostAndCommentByAreaQuery>;
 export type CountPostAndCommentByAreaLazyQueryHookResult = ReturnType<typeof useCountPostAndCommentByAreaLazyQuery>;
 export type CountPostAndCommentByAreaQueryResult = Apollo.QueryResult<CountPostAndCommentByAreaQuery, CountPostAndCommentByAreaQueryVariables>;
+export const GetCreationsDocument = gql`
+    query getCreations($reported: Boolean, $type: CreationsType) {
+  getCreations(reported: $reported, type: $type) {
+    ...FeedUnit
+  }
+}
+    ${FeedUnitFragmentDoc}`;
+export type GetCreationsComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<GetCreationsQuery, GetCreationsQueryVariables>, 'query'>;
+
+    export const GetCreationsComponent = (props: GetCreationsComponentProps) => (
+      <ApolloReactComponents.Query<GetCreationsQuery, GetCreationsQueryVariables> query={GetCreationsDocument} {...props} />
+    );
+    
+
+/**
+ * __useGetCreationsQuery__
+ *
+ * To run a query within a React component, call `useGetCreationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetCreationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetCreationsQuery({
+ *   variables: {
+ *      reported: // value for 'reported'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useGetCreationsQuery(baseOptions?: Apollo.QueryHookOptions<GetCreationsQuery, GetCreationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetCreationsQuery, GetCreationsQueryVariables>(GetCreationsDocument, options);
+      }
+export function useGetCreationsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetCreationsQuery, GetCreationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetCreationsQuery, GetCreationsQueryVariables>(GetCreationsDocument, options);
+        }
+export type GetCreationsQueryHookResult = ReturnType<typeof useGetCreationsQuery>;
+export type GetCreationsLazyQueryHookResult = ReturnType<typeof useGetCreationsLazyQuery>;
+export type GetCreationsQueryResult = Apollo.QueryResult<GetCreationsQuery, GetCreationsQueryVariables>;

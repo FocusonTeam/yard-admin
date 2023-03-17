@@ -15,7 +15,7 @@ const Login = () => {
 
   const [adminID, setAdminID] = useState("");
   const [password, setPassword] = useState("");
-  const [mismatchError, setMismatchError] = useState<Boolean>();
+  const [mismatchError, setMismatchError] = useState<string | null>(null);
 
   const [loginResult, setLoginResult] = useAdminLoginLazyQuery();
   const [loginExt, loginExtResult] = useLoginExtensionLazyQuery();
@@ -44,7 +44,7 @@ const Login = () => {
 
     const result = await loginResult({variables: {id : adminID, password: password}});
     if(result.data){
-      setMismatchError(false);
+      setMismatchError(null);
 
       setLoginToken('accessToken', result.data.adminLogin.accessToken);
       setLoginToken('refreshToken', result.data.adminLogin.refreshToken);
@@ -59,7 +59,7 @@ const Login = () => {
     if(result.error){
       console.log(result.error);
       isLoggedVar(false);
-      setMismatchError(true);
+      setMismatchError('계정 정보가 일치하지 않습니다');
     }
 
   }, [loginResult, setLoginToken, navigate, adminID, password, userNameVar]);
@@ -82,7 +82,7 @@ const Login = () => {
         defaultValue={password}
         onKeyPress={handleEnterPress}
         onChange={onChange} />
-      { mismatchError ? <ErrorMsg>계정 정보가 일치하지 않습니다.</ErrorMsg> : <></>}
+      { mismatchError ? <ErrorMsg>{mismatchError}</ErrorMsg> : undefined }
       <LoginButton onClick={loginWithAccount} >Login</LoginButton>
     </Container>
   )
