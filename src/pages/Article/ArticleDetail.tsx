@@ -112,7 +112,7 @@ export default function ArticleDetail() {
       case "GO_DEPLOY":
         const results_done = await changeArticleState({
           variables: {
-            id: state,
+            id: state.id,
             state : ArticleState.Uploaded
           }
         })
