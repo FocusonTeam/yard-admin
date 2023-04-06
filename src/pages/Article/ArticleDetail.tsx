@@ -91,16 +91,17 @@ export default function ArticleDetail() {
   }, [actionModal]);
 
   const onClickChangeState = useCallback(async () => {
-    console.log(actionModal);
+    console.log("actionModal", actionModal, state);
     switch(actionModal){
       case "GO_REVIEW":
         const results_inprogress = await changeArticleState({
           variables: {
-            id: state,
+            id: state.id,
             state : ArticleState.Done
           }
         })
         if(results_inprogress.data){
+          console.log(results_inprogress.data);
           onClickModalOff();
           window.location.reload();
         }
@@ -116,6 +117,7 @@ export default function ArticleDetail() {
           }
         })
         if(results_done.data){
+          console.log(results_done.data);
           onClickModalOff();
           window.location.reload();
         }
@@ -140,7 +142,7 @@ export default function ArticleDetail() {
         break;
     }
     setActionModal("");
-  }, [])
+  }, [actionModal])
 
 
   if(data?.getArticleForEdit.contents === undefined || error){

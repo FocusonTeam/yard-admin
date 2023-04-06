@@ -4,6 +4,8 @@ import { RiHome6Fill, RiUserSettingsFill, RiSettings4Fill, RiInstagramFill } fro
 import {CgFeed} from 'react-icons/cg';
 import { NavLink } from "react-router-dom";
 import useWindowSize from "../hooks/useWindowSize";
+import styled from "styled-components";
+import { YardIcon, YardLogo } from 'assets/images';
 
 
 const SideBar = () => {
@@ -39,9 +41,9 @@ const SideBar = () => {
 
   return (
     <div className="bg-white w-24 flex flex-col text-black border" >
-        <div className="flex items-center gap-2 px-2.5 py-3 mb-2 mt-2">
-          {/* <Logo src={YardLogo} alt="yard" /> */}
-          <img src={require("../assets/images/yardlogo.png")} />
+        <div className="flex justify-items-center items-center px-2.5 py-3 mb-2 mt-2">
+          <Logo src={YardLogo} alt="yard" />
+          {/* <img src={require("../assets/images/yardlogo.png")} /> */}
         </div>
         <div className="flex-1 px-2 py-2">
           {menus.map((menu, index) => {
@@ -83,3 +85,7 @@ const SideBarWideIcon = ({icon, text} : any) => (
 const Divider = () => <hr className="sidebar-hr" />;
 
 export default SideBar;
+
+const Logo = styled.img`
+  max-width: 80px;
+`
