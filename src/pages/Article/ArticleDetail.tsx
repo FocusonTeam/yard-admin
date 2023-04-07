@@ -20,7 +20,7 @@ import { State, alerts } from 'utils/index'
 import _ from 'lodash';
 import { ArticleState } from 'generated/graphql';
 
-const CLOUD_STORAGE_BASE_URL = process.env.REACT_APP_AWS_S3_URL;
+const CLOUD_STORAGE_BASE_URL = process.env.REACT_APP_AWS_S3_PROD_URL;
 
 export default function ArticleDetail() {
 
