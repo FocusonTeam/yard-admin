@@ -103,7 +103,6 @@ export default function ArticleDetail() {
         if(results_inprogress.data){
           console.log(results_inprogress.data);
           onClickModalOff();
-          window.location.reload();
         }
         if(results_inprogress.errors){
           alerts({status : "error", title : "아티클 검토로 변경 할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
@@ -119,7 +118,6 @@ export default function ArticleDetail() {
         if(results_done.data){
           console.log(results_done.data);
           onClickModalOff();
-          window.location.reload();
         }
         if(results_done.errors){
           alerts({status : "error", title : "아티클을 배포할 수 없습니다. 잠시 후 다시 시도해주세요😂"});
@@ -134,7 +132,6 @@ export default function ArticleDetail() {
         })
         if(results_down.data){
           onClickModalOff();
-          window.location.reload();
         }
         if(results_down.errors){
           alerts({status : "error", title : "아티클을 내릴 수 없습니다. 잠시 후 다시 시도해주세요😂"});
@@ -229,13 +226,13 @@ export default function ArticleDetail() {
           </CardModal>
         
         </>) : actionModal === "GO_DEPLOY" ? (<>
-          <CardModal closeEvent={onClickModalOff} title="" actionMsg="수정" actionEvent={onClickChangeState}>
+          <CardModal closeEvent={onClickModalOff} title="" actionMsg="확인" actionEvent={onClickChangeState}>
             <Label text="아티클을 배포하시겠습니까?" size="XL"/>
             <Label text="배포 즉시 앱에 반영됩니다" size="MD"/>
           </CardModal>
         
         </>) : actionModal === "TAKEDOWN" ? (
-          <CardModal closeEvent={onClickModalOff} title="" actionMsg="수정" actionEvent={onClickChangeState}>
+          <CardModal closeEvent={onClickModalOff} title="" actionMsg="확인" actionEvent={onClickChangeState}>
             <Label text="아티클을 검토 단계로 변경하시겠습니까?" size="XL"/>
             <Label text="즉시 앱에 반영되어 아티클이 내려갑니다" size="MD"/>
           </CardModal>

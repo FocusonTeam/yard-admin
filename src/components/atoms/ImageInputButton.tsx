@@ -56,7 +56,7 @@ export function ImageInputButton({savePath, handleImage} : any) {
       const filekey = `${savePath === "ARTICLE" ? ARTICLES_IMAGES_REF: AREA_IMAGES_REF}/${fileName}${compressedImage.name}`
 
       const params = {
-        Bucket: "yard-image-dev",
+        Bucket: "yard-image",
         Key: filekey,
         Body: compressedImage,
         ACL: 'public-read'

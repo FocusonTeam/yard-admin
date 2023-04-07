@@ -137,7 +137,7 @@ export default function ArticleEditor () {
           </>
           <div>
             <Button label='임시저장' onClick={onSaveContent} tailStyle='text-[#19A2F7] mx-8 font-semibold'/>
-            <Button label='검토하기' primary={true}/>
+            {/* <Button label='검토하기' primary={true}/> */}
           </div>
         </ButtonContainer>
       <TitleInput 
