@@ -19,8 +19,7 @@ import Label from 'components/atoms/Label'
 import { State, alerts } from 'utils/index'
 import _ from 'lodash';
 import { ArticleState } from 'generated/graphql';
-
-const CLOUD_STORAGE_BASE_URL = process.env.REACT_APP_AWS_S3_PROD_URL;
+import { CLOUD_STORAGE_BASE_URL } from 'utils/constants';
 
 export default function ArticleDetail() {
 
